@@ -1,0 +1,328 @@
+﻿@using AutoSale.Domain.Enum.Car
+@model AutoSale.Domain.ViewModels.CarAd.CreateCarAdViewModel
+
+@{
+    ViewData["Title"] = "Creating ad";
+}
+
+<main class="main main-carad-add">
+    <div class="container container-carad-add">
+        <h1 class="mb-3">Creating ad</h1>
+        <form asp-action="Create" asp-controller="CarAd" method="post" enctype="multipart/form-data">
+            <input required type="hidden" asp-for="UserId">
+            <div class="h4 fw-bold">Add some image of your car:</div>
+            <div class="input-group input-file mb-3">
+                <label asp-for="Images" class="form-label"></label>
+                <div>
+                    <input asp-for="Images" required accept="image/jpeg, image/png" multiple type="file" class="form-control" id="exampleInputPhotos">
+                </div>
+                <span asp-validation-for="Images" class="text-danger"></span>
+                <div class="error-form-validation hidden">
+                    <span>You have chosen too many images</span>
+                </div>
+                <div style="gap: 10px;" class="images images-block d-flex justify-content-start mt-2 hidden"></div>
+            </div>
+            <hr class="my-4">
+            <div class="h4 fw-bold ">Basic information:</div>
+            <div class="mb-3">
+                <label asp-for="CarBrandId" class="form-label"></label>
+                <select asp-for="CarBrandId" asp-items="Model.CarBrands" required class="form-select" id="inputCarBrand">
+                    <option disabled selected>Chose car brand</option>
+                </select>
+                <span asp-validation-for="CarBrandId" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="CarModelId" class="form-label"></label>
+                <select asp-for="CarModelId" asp-items="Model.CarModels" required class="form-select" id="inputCarModel">
+                    <option disabled selected>Chose car model</option>
+                </select>
+                <span asp-validation-for="CarModelId" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="YearOfProduction" class="form-label"></label>
+                <select asp-for="YearOfProduction" required class="form-select" id="inputCarYearOfProduction">
+                    <option disabled selected>Chose year</option>
+                    @for (int i = DateTime.Now.Year; i >= 1900; i--)
+                    {
+                        <option value="@i">@i</option>
+                    }
+                </select>
+                <span asp-validation-for="YearOfProduction" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Mileage" class="form-label"></label>
+                <input asp-for="Mileage" required type="text" class="form-control" placeholder="Example: 220" id="inputMileage">
+                <div class="error-form-validation hidden">
+                    <span>You made a mistake when entering the mileage</span>
+                </div>
+                <span asp-validation-for="Mileage" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Region" class="form-label"></label>
+                <select asp-for="Region" asp-items="Html.GetEnumSelectList<Region>()" required class="form-select" id="inputRegion">
+                    <option disabled selected>Chose region</option>
+                </select>
+                <span asp-validation-for="Region" class="text-danger"></span>
+            </div>
+            <hr class="my-4">
+            <div class="h4 fw-bold">Car features:</div>
+            <div class="mb-3">
+                <label asp-for="Transmission" for="inputRegion" class="form-label"></label>
+                <select asp-for="Transmission" required class="form-select" id="inputRegion" asp-items="Html.GetEnumSelectList<Transmission>()">
+                    <option disabled selected>Chose Transmission</option>
+                </select>
+                <span asp-validation-for="Transmission" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Fuel" class="form-label"></label>
+                <select asp-for="Fuel" required class="form-select" id="inputFuel" asp-items="Html.GetEnumSelectList<Fuel>()">
+                    <option disabled selected>Chose fuel</option>
+                </select>
+                <span asp-validation-for="Fuel" class="text-danger"></span>
+            </div>
+            <div class="mb-3" id="inputEngineCapacityBlock">
+                <label asp-for="EngineCapacity" class="form-label"></label>
+                <input asp-for="EngineCapacity" type="text" class="form-control" placeholder="Example: 2.2" id="inputEngineCapacity">
+                <div class="error-form-validation hidden">
+                    <span>You made a mistake when entering the engine capacity</span>
+                </div>
+                <span asp-validation-for="EngineCapacity" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="WheelDrive" class="form-label"></label>
+                <select asp-for="WheelDrive" required class="form-select" id="inputWheelDrive" asp-items="Html.GetEnumSelectList<WheelDrive>()">
+                    <option disabled selected>Chose wheel drive</option>
+                </select>
+                <span asp-validation-for="WheelDrive" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Color" class="form-label"></label>
+                <select asp-for="Color" required class="form-select" id="inputColor" asp-items="Html.GetEnumSelectList<Color>()">
+                    <option disabled selected>Chose color</option>
+                </select>
+                <span asp-validation-for="Color" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="NumberOfSeats" class="form-label"></label>
+                <select asp-for="NumberOfSeats" required class="form-select" id="inputCarNumberOfSeats">
+                    <option disabled selected>Chose number of seats</option>
+                    @for (int i = 1; i <= 60; i++)
+                    {
+                        <option value="@i">@i</option>
+                    }
+                </select>
+                <span asp-validation-for="NumberOfSeats" class="text-danger"></span>
+            </div>
+            <hr class="my-4">
+            <div class="h4 fw-bold">Додаткові опції:</div>
+            <div class="mb-3">
+                <label asp-for="AdditionalOptions" class="form-label"></label>
+                <textarea asp-for="AdditionalOptions" class="form-control" placeholder="Example: On-board computer, rear camera, fog lights, carplay" id="FormControlTextareaAdditionalOptions" style="height: 70px; resize: none;"></textarea>
+                <span asp-validation-for="AdditionalOptions" class="text-danger"></span>
+            </div>
+            <hr class="my-4">
+            <div class="h4 fw-bold">Description of the car:</div>
+            <div class="mb-3">
+                <label asp-for="Title" class="form-label"></label>
+                <input asp-for="Title" id="FormControlTextareaTitle" placeholder="Example: BMW X5 2015" required type="text" class="form-control">
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Text" class="form-label"></label>
+                <textarea asp-for="Text" required class="form-control" id="FormControlTextareaText" style="height: 150px; resize: none;"></textarea>
+                <span asp-validation-for="Text" class="text-danger"></span>
+            </div>
+            <hr class="my-4">
+            <div class="h4 fw-bold">Price:</div>
+            <div class="mb-3">
+                <label asp-for="Price" class="form-label"></label>
+                <div class="d-flex  row m-0 gap-2 flex-row" id="inputPriceWrapper">
+                    <div class="col p-0">
+                        <input asp-for="Price" required type="text" class="form-control" placeholder="Example: 7500" id="inputPrice">
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                        <div class="error-form-validation error-form-validation-front hidden">
+                            <span>You made a mistake when entering the price</span>
+                        </div>
+                    </div>
+                    <div class="col p-0">
+                        <select asp-for="CurrencyId" asp-items="Model.Currencies" required class="form-select" id="inputCarTypeOfCurrency">
+                            <option disabled selected>Chose currency</option>
+                        </select>
+                        <span asp-validation-for="CurrencyId" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4">
+            <button id="btn-add-ad" class="btn primary-color-bg primary-color-hover" type="submit">Create ad</button>
+        </form>
+    </div>
+</main>
+
+@section Scripts {
+
+    <script defer>
+        function isInt(value) {
+            return !isNaN(value) && parseInt(Number(value)) == value && !isNaN(parseInt(value, 10));
+        }
+        const inputEngineCapacityBlock = document.getElementById("inputEngineCapacityBlock");
+        const inputFuel = document.getElementById("inputFuel");
+        const MAX_ALLOWED_IMAGE_COUNT = 5;
+        const inputFiles = document.getElementById("exampleInputPhotos");
+        const buttonAddAd = document.getElementById("btn-add-ad");
+        const imagesBlock = document.querySelector(".container-carad-add .images");
+        const blockMessageErrorPhoto = document.querySelector(".container-carad-add .input-file .error-form-validation");
+        const blockMessageErrorMileage = document.querySelector(".container-carad-add #inputMileage+.error-form-validation");
+        const blockMessageErrorEngineCapacity = document.querySelector(".container-carad-add #inputEngineCapacity+.error-form-validation");
+        const blockMessageErrorPrice = document.querySelector(".container-carad-add #inputPriceWrapper .error-form-validation-front");
+        const inputMileage = document.getElementById("inputMileage");
+        const inputEngineCapacity = document.getElementById("inputEngineCapacity");
+        const inputPrice = document.getElementById("inputPrice");
+        window.addEventListener("load", () => {
+            if (inputFuel.value == 4) {
+                inputEngineCapacityBlock.classList.add("hidden");
+                inputEngineCapacity.value = "";
+            } else {
+                inputEngineCapacityBlock.classList.remove("hidden");
+            }
+            
+            if (inputMileage.value == 0) {
+                inputMileage.value = "";
+            }
+            if (inputEngineCapacity.value == 0) {
+                inputEngineCapacity.value = "";
+            }
+            if (inputPrice.value == 0) {
+                inputPrice.value = "";
+            }
+            
+        });
+        inputFuel.addEventListener("change", () => {
+            if (inputFuel.value == 5) {
+                inputEngineCapacityBlock.classList.add("hidden");
+                inputEngineCapacity.value = "";
+            } else {
+                inputEngineCapacityBlock.classList.remove("hidden");
+            }
+        });
+        inputPrice.addEventListener("input", () => {
+            inputPrice.value = inputPrice.value.replace(/[^\d.]/g, '');
+            if(isNaN(inputPrice.value) || parseFloat(inputPrice.value) <= 0 ) {
+                blockMessageErrorPrice.classList.remove("hidden");
+                buttonAddAd.setAttribute("disabled", "disabled");
+            } else {
+                blockMessageErrorPrice.classList.add("hidden");
+                buttonAddAd.removeAttribute("disabled");
+            }
+        });
+        inputEngineCapacity.addEventListener("input", () => {
+            inputEngineCapacity.value = inputEngineCapacity.value.replace(/[^\d.]/g, '');
+            if(isNaN(inputEngineCapacity.value) || parseFloat(inputEngineCapacity.value) <= 0 ) {
+                 blockMessageErrorEngineCapacity.classList.remove("hidden");
+                 buttonAddAd.setAttribute("disabled", "disabled");
+            } else {
+                blockMessageErrorEngineCapacity.classList.add("hidden");
+                buttonAddAd.removeAttribute("disabled");
+            }
+        });
+        inputMileage.addEventListener("input", () => {
+            inputMileage.value = inputMileage.value.replace(/[^\d]/g, '');
+            if(inputMileage.value != "" &&(!isInt(inputMileage.value) || (parseInt(inputMileage.value) > 999 || parseInt(inputMileage.value) < 1))) {
+                blockMessageErrorMileage.classList.remove("hidden");
+                buttonAddAd.setAttribute("disabled", "disabled");
+            } else {
+                blockMessageErrorMileage.classList.add("hidden");
+                buttonAddAd.removeAttribute("disabled");
+            }
+        });
+        inputFiles.addEventListener("change", () => {
+            imagesBlock.innerHTML = "";
+            if(inputFiles.files.length > MAX_ALLOWED_IMAGE_COUNT) {
+                buttonAddAd.setAttribute("disabled", "disabled");
+                blockMessageErrorPhoto.classList.remove("hidden");
+                imagesBlock.innerHTML = "";
+                imagesBlock.classList.add("hidden");
+            } else {
+                buttonAddAd.removeAttribute("disabled");
+                blockMessageErrorPhoto.classList.add("hidden");
+                imagesBlock.classList.remove("hidden");
+                for (let i = 0; i < inputFiles.files.length; i++) {
+                    const div = document.createElement("div");
+                    const div2 = document.createElement("div");
+                    const radio = document.createElement("input");
+                    radio.setAttribute("id", `radio-{${i}}`);
+                    radio.setAttribute("required", "required");
+                    const radioLabel = document.createElement("label");
+                    radioLabel.innerHTML = "main image";
+                    radioLabel.setAttribute("for", `radio-{${i}}`);
+                    const divRadioBlock = document.createElement("div");
+                    divRadioBlock.classList.add("radio-block");
+                    if(i === 0) {
+                        radio.setAttribute("checked", "checked");
+                    }
+                    radio.setAttribute("type", "radio");
+                    radio.setAttribute("name", "MainImage");
+                    radio.setAttribute("value", inputFiles.files[i].name);
+                    div2.classList.add("column");
+                    div.classList.add("selected_car_image_block");
+                    const image = document.createElement("img");
+                    image.classList.add("img-thumbnail");
+                    image.setAttribute("alt", "Car image");
+                    image.src = URL.createObjectURL(inputFiles.files[i]);
+                    div.appendChild(image);
+                    div2.appendChild(div);
+                    divRadioBlock.appendChild(radio);
+                    divRadioBlock.appendChild(radioLabel);
+                    div2.appendChild(divRadioBlock);
+                    imagesBlock.appendChild(div2);
+                }
+            }
+        });
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script defer>
+        $(document).ready(function () {
+            function createCarModelsSelect(modelsList) {
+                const select = document.getElementById("inputCarModel");
+                if (modelsList !== null) {
+                    select.innerHTML = "";
+                    const option = document.createElement("option");
+                    option.setAttribute("value", "-1");
+                    option.setAttribute("disabled", "disabled");
+                    option.setAttribute("selected", "selected");
+                    option.innerHTML = "Chose car model";
+                    select.appendChild(option);
+                    for (let i = 0; i < modelsList.length; i++) {
+                        const option = document.createElement("option");
+                        option.setAttribute("value", modelsList[i].id);
+                        option.innerHTML = modelsList[i].name;
+                        select.appendChild(option);
+                    }
+                } else {
+                    select.innerHTML = "";
+                    const option = document.createElement("option");
+                    option.setAttribute("value", "-1");
+                    option.setAttribute("disabled", "disabled");
+                    option.setAttribute("selected", "selected");
+                    option.innerHTML = "Choose model";
+                    select.appendChild(option);
+                }
+            }
+            let inputCarBrand = document.getElementById("inputCarBrand");
+            inputCarBrand.addEventListener("change", () => {
+                let value = inputCarBrand.value;
+                $.ajax({
+                    url: "/CarModel/GetAll",
+                    method: "POST",
+                    data: {
+                        carBrandId: Number(value),
+                    },
+                    success: function (response) {
+                        createCarModelsSelect(response);
+                    },
+                    dataType: "json"
+                });
+            })
+        });
+    </script>
+
+}

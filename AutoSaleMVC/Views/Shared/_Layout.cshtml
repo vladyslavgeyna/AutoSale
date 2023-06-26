@@ -1,0 +1,129 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using AutoSale.Domain.Models
+@using AutoSale.Service.Interfaces
+@using AutoSale.Domain.Enum
+@inject UserManager<User> userManager
+@inject IImageService imageService
+@{
+    Image? currentUserImage = null;
+    if (User.Identity.IsAuthenticated)
+    {
+        var currentUser = await userManager.FindByNameAsync(User.Identity.Name);
+        if (currentUser?.ImageId is not null)
+        {
+            var currentUserImageResponse = await imageService.GetByIdAsync((int)currentUser.ImageId);
+            if (currentUserImageResponse.Code is ResponseCode.Ok)
+            {
+                currentUserImage = currentUserImageResponse.Data;
+            }
+        }
+    }
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@ViewData["Title"] - Auto Sale</title>
+    <link type="image/x-icon" href="~/favicon.png" rel="shortcut icon">
+    <link rel="stylesheet" href="~/lib/bootstrap/icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+</head>
+<body>
+<div class="wrapper-layout">
+    <header class="pt-3 pb-3 header-layout">
+        <nav class="navbar primary-color-bg navbar-expand-lg navbar-dark fixed-top pt-lg-0 pb-lg-0">
+            <div class="container align-items-center">
+                <a class="navbar-brand " href="/">
+                    <i class="bi bi-car-front-fill" style="font-size: 35px"></i>
+                </a>
+                <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse align-items-center collapse" id="navbarCollapse" >
+                    <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="/">Home</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex align-items-start align-items-md-stretch navbar-buttons flex-column gap-2 flex-md-row">
+
+                        @if(User.Identity.IsAuthenticated)
+                        {
+
+                            <a asp-controller="Home" asp-action="Index"  class="btn btn-icon primary-color-bg-hover primary-color"><span>Comparison</span><i class="fa-solid fa-scale-balanced"></i></a>
+                            <a asp-controller="Home" asp-action="Index"  class="btn btn-icon primary-color-bg-hover primary-color"><span>Favorite</span><i class="fa-solid fa-heart"></i></a>
+                            <a asp-controller="CarAd" asp-action="Create"  class="btn btn-icon primary-color-bg-hover primary-color"><span>Create ad</span><i class="bi bi-plus-circle-fill"></i></a>
+                            <div class="dropdown text-end">
+                                <a style="cursor: pointer;" class="d-block link-triangle link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    @if (currentUserImage is not null)
+                                    {
+                                        <img src="~/images/@currentUserImage.Name" alt="User's image" width="34" height="34" class="rounded-circle">
+                                    }
+                                    else
+                                    {
+                                        <img src="~/images/site/default_avatar.svg" alt="User's image" width="34" height="34" class="rounded-circle">
+                                    }
+                                </a>
+                                <ul class="dropdown-menu text-small">
+                                    <li><a class="dropdown-item" asp-controller="Home" asp-action="Index" >Profile</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Home" asp-action="Index" >My ads</a></li>
+                                    @* <li><a class="dropdown-item" asp-controller="Home" asp-action="Index" >Повідомлення адміну</a></li> *@
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <form method="post" asp-controller="Account" asp-action="Logout">
+                                            <button type="submit" class="dropdown-item dropdown-item-flex d-flex align-items-center"><span>Log out</span><i style="font-size: 24px" class="bi bi-box-arrow-right"></i></button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                        }
+                        else
+                        {
+                            <a asp-controller="Account" asp-action="Register" class="btn btn-icon btn-light primary-color-bg-hover primary-color"><span>Sign up</span><i class="bi bi-person-plus-fill"></i></a>
+                            <a asp-controller="Account" asp-action="Login" class="btn btn-icon btn-light primary-color-bg-hover primary-color"><span>Sign in</span><i class="bi bi-person-check-fill"></i></a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    @RenderBody()
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 mt-5 border-top container">
+        <div class="col-md-4 d-flex align-items-center footer-left-flex">
+            <a href="/" class="mb-3 me-2 mb-md-0 text-decoration-none lh-1 primary-color-hover footer-logo">
+                <i class="bi bi-car-front-fill" style="font-size: 33px"></i>
+            </a>
+            <span class="mb-3 mb-md-0 text-muted">© @DateTime.Now.Year.ToString() auto-sale by <a target="_blank" style="color: inherit" href="https://github.com/vladyslavgeyna">Vladyslav Geyna</a></span>
+        </div>
+        <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+            <li >
+                <a target="_blank" class="footer-logo footer-logo-telegram" href="https://t.me/what_is_lovechik">
+                    <i class="bi bi-telegram"></i>
+                </a>
+            </li>
+            <li >
+                <a target="_blank" class="footer-logo footer-logo-instagram" href="https://www.instagram.com/_what_is_lovechik_/">
+                    <i  class="bi bi-instagram"></i>
+                </a>
+            </li>
+            <li >
+                <a target="_blank" class="footer-logo footer-logo-facebook" href="https://www.facebook.com/profile.php?id=100072210826751">
+                    <i class="bi bi-facebook"></i>
+                </a>
+            </li>
+        </ul>
+    </footer>
+</div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://kit.fontawesome.com/8a5dbfaed5.js" crossorigin="anonymous"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+</script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,1861 @@
+@import url("fonts.css");
+
+html *:not(i) {
+  font-family: "Nunito", sans-serif !important;
+}
+body, html {
+  height: 100%;
+  font-weight: 400;
+}
+.wrapper-admin-layout {
+  min-width: 320px;
+}
+/*Все що з адміном*/
+.admin-main-error {
+  margin: auto;
+  height: 100%;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+}
+.admin-main-error div div {
+  margin-top: 50px;
+}
+.wrapper-admin-layout nav.main-header .nav-item a {
+  font-weight: 700;
+  font-size: 18px;
+}
+.wrapper-admin-layout nav.main-header .nav-item:not(:first-child) a {
+}
+.nav-pills .nav-link {
+  border-radius: 25px;
+}
+.sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active {
+  background-color: rgb(112.520718,44.062154,249.437846) ;
+}
+.section-index-admin .small-box {
+  border-radius: 25px;
+}
+.section-index-admin .small-box-footer {
+  border-radius: 0 0 25px 25px;
+}
+
+ul.nav-pills.nav-sidebar .nav-link {
+  transition: padding 0.3s ease-in-out;
+}
+div.os-host-scrollbar-horizontal-hidden .nav-link {
+  padding: .5rem .3rem;
+}
+
+/*Головний шаблон*/
+
+.wrapper-layout {
+  padding-top: 4rem;
+  min-height: 100%;
+  overflow: hidden;
+  display: flex;
+  min-width: 320px;
+  flex-direction: column;
+}
+
+main.main {
+  flex: 1 1 auto;
+}
+
+a {
+  transition: all 0.3s ease;
+}
+.primary-color {
+  color: rgb(112.520718,44.062154,249.437846) ;
+}
+
+.primary-color-bg {
+  background-color: rgb(112.520718,44.062154,249.437846) ;
+}
+.primary-color-bg-hover:hover {
+  background-color: rgb(112.520718,44.062154,249.437846) ;
+}
+.primary-color-hover:hover {
+  color: rgb(112.520718,44.062154,249.437846) ;
+}
+
+.header-layout .navbar-brand {
+  padding: 5px;
+}
+.header-layout .navbar-brand:hover {
+  opacity: 0.7;
+}
+.header-layout .nav-link {
+  font-weight: 700;
+  padding: 10px;
+  font-size: 18px;
+  color: white !important;
+  line-height: 120%;
+  position: relative;
+}
+@media (min-width:768px) {
+  .dropdown-menu[data-bs-popper] {
+    left: unset;
+    right: 0;
+  }
+}
+
+
+@media (min-width:992px) {
+  .header-layout .nav-link:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 8%;
+    width: 85%;
+    background-color: #fff;
+    opacity: 0;
+    height: 2px;
+    text-align: center;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    transform: scale(0);
+  }
+  .header-layout .nav-link:hover:after {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+}
+
+.footer-logo {
+  color: #333;
+  font-size: 24px;
+}
+
+.footer-left-flex {
+  column-gap: 15px;
+}
+.footer-logo-telegram:hover {
+  color: #229ED9;
+}
+.footer-logo-instagram:hover {
+  color: #f58229;
+}
+.footer-logo-facebook:hover {
+  color: #3b5998;
+}
+footer ul {
+  column-gap: 20px;
+}
+.header-layout .navbar-buttons {
+  column-gap: 20px;
+}
+.header-layout .navbar-buttons a, .header-layout .navbar-buttons button {
+  transition: all 0.3s ease;
+  font-size: 18px;
+  font-weight: 700;
+  border-radius: 25px;
+  border: 3px solid #fff;
+  background-color: #fff;
+}
+.dropdown-toggle::after {
+  transition: all 0.2s ease;
+  vertical-align: 0.1em !important;
+}
+.dropdown-toggle.show::after {
+  transform: rotate(180deg);
+}
+.link-dark {
+  color: black !important;
+}
+.header-layout .navbar-buttons a.link-triangle {
+  font-size: 20px;
+  color: black;
+}
+.header-layout .navbar-buttons a:not(.link-triangle):hover, .header-layout .navbar-buttons button:not(.link-triangle):hover {
+  color: white;
+  border: 3px solid #fff;
+  background-color: rgb(112.520718,44.062154,249.437846) !important;
+}
+.dropdown-item {
+  color: rgb(112.520718,44.062154,249.437846);
+}
+.dropdown-item:not(:focus){
+  color: rgb(112.520718,44.062154,249.437846);
+}
+.dropdown-item:focus{
+  color: rgb(112.520718,44.062154,249.437846);
+  background-color: transparent;
+}
+.dropdown-item:active{
+  color: white !important;
+  background-color: rgb(112.520718,44.062154,249.437846) !important;
+}
+.dropdown-item:hover{
+  color: white;
+  background-color: rgb(112.520718,44.062154,249.437846);
+}
+.header-layout .navbar-buttons > a:not(:disabled):not(:disabled):active {
+  background-color: rgb(112.520718,44.062154,249.437846);
+  border: 3px solid #fff;
+  color: white;
+}
+.dropdown-item-flex {
+  column-gap: 10px;
+}
+.btn-icon {
+  display: flex;
+  column-gap: 10px;
+  align-items: center;
+  padding: 0 10px;
+}
+.btn-icon i {
+  font-size: 24px;
+}
+@media (max-width: 767px) {
+  footer {
+    text-align: center;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  footer > div:first-child {
+    flex-direction: column;
+  }
+  footer > div:first-child a {
+    margin: 0 0 10px 0 !important;
+  }
+}
+/*Сторінка помилок*/
+.main-error h1 {
+  font-size: 50px;
+  font-weight: 700;
+}
+
+.main-error .image-wrapper {
+  position: relative;
+}
+.main-error img {
+  width: 30%;
+}
+@media (min-width: 700px) {
+  .main-error-404 .image-wrapper:before {
+    content: "...oh no";
+    position: absolute;
+    top: 0;
+    right: 22%;
+    font-size: 60px;
+    font-weight: 700;
+  }
+}
+@media (min-width: 992px) {
+  .main-error-403 .image-wrapper:before {
+    content: "...how did you get here..?";
+    position: absolute;
+    top: 0;
+    right: -10%;
+    font-size: 60px;
+    font-weight: 700;
+  }
+}
+@media (max-width: 1400px) {
+  .main-error-404 .image-wrapper:before {
+    right: 13%;
+  }
+  .main-error-403 .image-wrapper:before {
+    font-size: 50px;
+  }
+}
+@media (max-width: 1200px) {
+  .main-error-403 .image-wrapper:before {
+    font-size: 40px;
+    right: -3%;
+  }
+}
+@media (max-width: 991px) {
+  .main-error-404 .image-wrapper:before {
+    right: 0;
+  }
+  .main-error img {
+    width: 50%;
+  }
+}
+@media (max-width: 767px) {
+  .main-error-404 .image-wrapper:before {
+    right: -12%;
+  }
+}
+/*Сторінка реєстрації */
+.main-register, .main-login {
+  display: flex;
+  align-items: center;
+}
+
+.container-register h1, .container-login h1 {
+  font-size: 50px;
+  font-weight: 900;
+}
+.input-file {
+  display: flex;
+  flex-direction: column;
+}
+.container-register input[type="password"], .container-register input[type="text"], .container-register input[type="email"], .container-register label,
+.container-login input[type="password"],  .container-login input[type="email"], .container-login label {
+  font-weight: 700;
+  font-size: 18px;
+  border-radius: 25px;
+}
+.container-register input[type="file"] {
+  font-weight: 700;
+  font-size: 18px;
+  border-radius: 25px;
+  width: 100%;
+}
+.form-control:focus, .form-select:focus {
+  border-color: #000;
+  box-shadow: none;
+}
+.container-register form, .container-login form.main-form {
+  margin: 0 auto;
+  max-width: 500px;
+  row-gap: 15px;
+  padding: 30px;
+  border-radius: 25px;
+  box-shadow: 0 0 50px -10px rgba(0,0,0,0.7);
+}
+.remember-me {
+  display: inline-block !important;
+  margin-left: -1.2rem !important;
+}
+.remember-me > label, .remember-me > input {
+  cursor: pointer;
+  
+}
+.main-register button, .main-login form button {
+  border: 4px solid rgb(112.520718,44.062154,249.437846);
+  border-radius: 25px;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+.main-register button:hover, .main-login form button:hover {
+  border: 4px solid rgb(112.520718,44.062154,249.437846);
+  color: rgb(112.520718,44.062154,249.437846);
+  background-color: white;
+}
+.container-register form button:active{
+  border-color: rgb(112.520718,44.062154,249.437846) !important;
+  color: rgb(112.520718,44.062154,249.437846) !important;
+}
+
+.container-login form button:active{
+  border-color: rgb(112.520718,44.062154,249.437846) !important;
+  color: rgb(112.520718,44.062154,249.437846) !important;
+}
+
+.error-form-validation {
+  display: block;
+  padding-top: 3px;
+  padding-left: 1rem;
+  color: red;
+  font-weight: 700;
+  font-size: 16px;
+}
+.container-register .error-form-validation {
+  display: block;
+  padding-top: 3px;
+  padding-left: 1rem;
+  color: red;
+  font-weight: 700;
+  font-size: 16px;
+}
+.container-carad-add .error-form-validation.hidden {
+  display: none;
+}
+.container-carad-add .error-form-validation {
+  padding-top: 3px;
+  margin-bottom: -10px;
+  color: red;
+  font-weight: 700;
+  font-size: 16px;
+}
+.form-floating>.form-control:not(:placeholder-shown) {
+  padding-top: 2.3rem;
+  padding-bottom: 0.75rem;
+
+}
+
+
+.container-register .input-file label {
+  padding-left: 1rem;
+  padding-top: 0;
+}
+
+.form-floating>.form-control {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.form-floating>label {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.container-login button[type="button"] {
+  top: 50%;
+  transform: translate(0, -50%);
+}
+/*Сторінка додавання оголошення*/
+.container-carad-add h1 {
+  font-size: 40px;
+  font-weight: 900;
+}
+.container-carad-add .images-block {
+  flex-wrap: wrap;
+}
+.container-carad-add .images-block.hidden {
+  display: none !important;
+}
+
+.selected_car_image_block  {
+  overflow: hidden;
+  position: relative;
+  height: 150px;
+  width: 150px;
+}
+@media (max-width: 768px) {
+  .selected_car_image_block  {
+    height: 100px;
+    width: 100px;
+  }
+}
+.selected_car_image_block img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.container-carad-add form input, .container-carad-add form select, .container-carad-add form textarea  {
+  border-radius: 25px;
+}
+#inputEngineCapacityBlock.hidden {
+  display: none;
+}
+
+.main-carad-add form button[type=submit] {
+  border: 4px solid rgb(112.520718,44.062154,249.437846);
+  border-radius: 25px;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+.main-carad-add form button[type=submit]:hover {
+  border: 4px solid rgb(112.520718,44.062154,249.437846);
+  color: rgb(112.520718,44.062154,249.437846);
+  background-color: white;
+
+}
+.container-carad-add form button[type=submit]:active{
+  border-color: rgb(112.520718,44.062154,249.437846) !important;
+  color: rgb(112.520718,44.062154,249.437846) !important;
+  background-color: white;
+}
+
+.container-carad-add form hr {
+  border-top: 2px solid;
+  border-radius: 25px;
+}
+.container-carad-add button[type="button"] {
+  top: 50%;
+  transform: translate(0, -50%);
+}
+.container-carad-add .images-block .column {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+.container-carad-add .images-block .column .radio-block {
+  display: flex;
+  column-gap: 5px;
+  align-items: center;
+  justify-content: center;
+}
+.container-carad-add .images-block .column input[type="radio"], .container-carad-add .images-block .column label {
+  cursor: pointer;
+}
+.container-carad-add .images-block .column label {
+  margin: 0;
+}
+/*Сторінка перегляду всіх оголошень*/
+
+.container-car-ad-index .card .image-wrapper {
+  overflow: hidden;
+  border-radius: 25px;
+  position: relative;
+  padding: 0 0 63.3% 0;
+}
+.container-car-ad-index .card img {
+  border-radius: 25px;
+  transition: all 0.5s ease;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.container-car-ad-index .card {
+  border-radius: 25px;
+  transition: all 0.3s ease;
+}
+@media (min-width: 767px) {
+  .container-car-ad-index .card:hover {
+    box-shadow: 0 0 25px 12px rgba(0,0,0,0.2);
+    transform: scale(1.02);
+  }
+  .container-car-ad-index .card img:hover {
+    transform: scale(1.05);
+  }
+}
+
+.container-car-ad-index .card .card-body a.btn-view {
+  border-radius: 25px;
+}
+.container-car-ad-index .card .card-body a.card-title {
+  transition: all 0.3s ease;
+  display: inline-block;
+  color: rgb(112.520718,44.062154,249.437846);
+  text-decoration: none;
+  font-weight: 700;
+}
+.container-car-ad-index .card .card-body a.card-title:hover {
+  color: black;
+}
+
+.main-car-ad-index a.btn-view {
+  padding: 0.3rem 0.5rem;
+  border: 2px solid rgb(112.520718,44.062154,249.437846);
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+.main-car-ad-index a.btn-view:hover {
+  border: 2px solid rgb(112.520718,44.062154,249.437846);
+  color: rgb(112.520718,44.062154,249.437846);
+}
+.container-car-ad-index .card-body a.btn-view:active{
+  border-color: rgb(112.520718,44.062154,249.437846) !important;
+  color: rgb(112.520718,44.062154,249.437846) !important;
+}
+.container-car-ad-index .card-body .card-price {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: .05rem;
+}
+.container-car-ad-index .card-body div.info {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+}
+.container-car-ad-index .card .card-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+.container-car-ad-index .card .card-wrapper .car-top {
+  flex: 1 1 auto;
+}
+/*Сторінка перегляду оголошень користувача */
+.container-carad-myads h1 {
+  font-size: 40px;
+  font-weight: 900;
+}
+
+.container-carad-myads .card .image-wrapper {
+  overflow: hidden;
+  border-radius: 25px;
+  position: relative;
+  padding: 0 0 50% 0;
+}
+.container-fav-add .card .image-wrapper {
+  overflow: hidden;
+  border-radius: 25px;
+  position: relative;
+  padding: 0 0 60% 0;
+}
+.container-carad-myads .modal-confirm-delete-car-ad .modal-title {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.container-carad-myads .modal-confirm-delete-car-ad button.btn-no-action, .container-carad-myads .modal-confirm-delete-car-ad a {
+  border-radius: 25px;
+  font-size: 17px;
+  font-weight: 700;
+}
+.container-carad-myads .modal-confirm-delete-car-ad a {
+  border: 3px solid #dc3545;
+}
+.container-carad-myads .modal-confirm-delete-car-ad a:hover {
+  border: 3px solid #bb2d3b;
+}
+.container-carad-myads .modal-confirm-delete-car-ad button.btn-no-action {
+  border: 3px solid rgb(112.520718,44.062154,249.437846);
+  color: white;
+}
+.container-carad-myads .modal-confirm-delete-car-ad button.btn-no-action:hover {
+  border: 3px solid rgb(112.520718,44.062154,249.437846);
+  color: rgb(112.520718,44.062154,249.437846);
+}
+.container-carad-myads .modal-confirm-delete-car-ad button.btn-no-action:active {
+  border-color: rgb(112.520718,44.062154,249.437846) !important;
+  color: rgb(112.520718,44.062154,249.437846) !important;
+}
+
+.container-carad-myads .modal-confirm-delete-car-ad .modal-body p {
+  font-size: 17px;
+  font-weight: 600;
+}
+
+@media (max-width: 991px) {
+  .container-carad-myads .card .image-wrapper {
+    padding: 0 0 60% 0;
+  }
+}
+@media (max-width: 767px) {
+  .container-carad-myads .card .image-wrapper {
+    padding: 0 0 45% 0;
+  }
+}
+.container-carad-myads .card img {
+  border-radius: 25px;
+  transition: all 0.5s ease;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.container-carad-myads .card {
+  border-radius: 25px;
+  transition: all 0.3s ease;
+}
+.container-carad-myads .card  .card-body .card-title a {
+  transition: all 0.3s ease;
+  color: rgb(112.520718,44.062154,249.437846);
+  text-decoration: none;
+  font-size: 24px;
+  font-weight: 600;
+}
+.container-fav-add .card  .card-body .card-title+div {
+  font-size: 24px;
+  font-weight: 600;
+  border-radius: 25px;
+}
+.container-carad-myads .card .card-body .card-title a:hover {
+  color: black;
+}
+.container-carad-myads .card .card-body .card-body-inner {
+  display: flex;
+  flex-direction: column;
+}
+.container-carad-myads .card .card-body .card-body-inner .card-body-inner-top {
+  flex: 1 1 auto;
+}
+@media (min-width: 767px) {
+  .container-carad-myads .card:hover {
+    box-shadow: 0 0 25px 12px rgba(0,0,0,0.2);
+    transform: scale(1.01);
+  }
+  .container-carad-myads .card img:hover {
+    transform: scale(1.05);
+  }
+}
+.container-carad-myads .card .card-body .card-body-inner .card-body-inner-bottom  {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.container-carad-myads .card .card-body .card-body-inner .card-body-inner-bottom > div p a  {
+  color: inherit;
+  text-decoration: none;
+}
+.container-carad-myads .card .card-body .card-body-inner .card-body-inner-bottom > div p a:hover  {
+  text-decoration: underline;
+}
+@media (max-width: 991px) {
+  .container-carad-myads .card .card-body .card-body-inner .card-body-inner-bottom  {
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+    flex-direction: column;
+    row-gap: 10px;
+  }
+}
+.container-carad-myads .card .card-body .card-body-inner .card-body-inner-bottom a,  .container-carad-myads .card .card-body .card-body-inner .card-body-inner-bottom button{
+  border-radius: 25px;
+}
+/*Сторінка перегляду оголошення */
+.container-carad-view h1 {
+  font-size: 40px;
+  font-weight: 900;
+}
+.container-carad-view .title-block {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+}
+.container-carad-view .title-block a {
+  color: #dc3545;
+  transition: all 0.3s ease;
+  font-size: 40px;
+}
+.container-carad-view .title-block a:hover {
+  color: red;
+}
+.container-carad-view .carad-view-wrapper {
+  display: flex;
+  flex-direction: column-reverse;
+}
+@media (min-width: 992px) {
+  .container-carad-view .carad-view-wrapper {
+    display: flex;
+    flex-direction: row;
+    column-gap: 30px;
+  }
+  .container-carad-view .carad-view-wrapper .carad-view-left-wrapper {
+    flex: 0 1 25%;
+    height: 100%;
+  }
+  .container-carad-view .carad-view-wrapper .carad-view-right-wrapper {
+    flex: 1 1 auto;
+    height: 100%;
+  }
+}
+.container-carad-view .carad-view-price {
+  color: green;
+}
+.container-carad-view .carad-view-owner {
+  border-radius: 25px;
+  background-color: rgb(112.520718,44.062154,249.437846);
+}
+.container-carad-view .carad-view-owner {
+  color: white;
+  font-size: 18px;
+}
+.container-carad-view .carad-view-owner a {
+  color: inherit;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+.container-carad-view .carad-view-owner a:hover {
+  text-decoration: none;
+  transform: scale(1.05);
+}
+.container-carad-view .carad-view-left .carad-view-info {
+  font-size: 14px;
+}
+.container-carad-view .carad-view-right .carousel-item,  .container-carad-view .carad-view-right .carousel-item-image-one{
+  overflow: hidden;
+  border-radius: 25px;
+  position: relative;
+  padding: 0 0 60% 0;
+}
+.container-carad-view .carad-view-right .carousel-item img, .container-carad-view .carad-view-right .carousel-item-image-one img {
+  border-radius: 25px;
+  transition: all 0.5s ease;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.container-carad-view .carad-view-right .carousel-item,  .container-carad-view .carad-view-right-wrapper .table{
+  font-size: 18px;
+}
+
+.container-carad-view .carad-view-right .carousel-item,  .container-carad-view .carad-view-left .carad-view-add-to-compare a {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.container-carad-view .carad-view-right .carad-view-right-text-ad {
+  font-size: 18px;
+  padding: 0.5rem 0.5rem;
+}
+
+/*Сторінка перегляду профілю користувача */
+.main-user-profile {
+  display: flex;
+  align-items: center;
+}
+
+.container-user-profile h1 {
+  font-size: 40px;
+  font-weight: 900;
+}
+
+.main-user-profile .user-data .table {
+  font-size: 18px;
+}
+.main-user-profile .user-data .table tr:last-child {
+  border-color: transparent;
+}
+
+.main-user-profile .user-data-links a {
+  border: 4px solid rgb(112.520718,44.062154,249.437846);
+  border-radius: 25px;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+.main-user-profile .link-edit-profile {
+  font-size: 18px;
+  font-weight: 700;
+}
+.main-user-profile .user-data-links a:hover {
+  border: 4px solid rgb(112.520718,44.062154,249.437846);
+  color: rgb(112.520718,44.062154,249.437846);
+}
+.container-user-profile .user-data-links a:active{
+  border-color: rgb(112.520718,44.062154,249.437846) !important;
+  color: rgb(112.520718,44.062154,249.437846) !important;
+}
+@media (min-width: 991px) {
+  .main-user-profile .user-data-links {
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+  .main-user-profile {
+    margin: 0 auto;
+  }
+
+}
+.main-user-profile .user-data-wrapper-content{
+  padding: 10px;
+  border-radius: 25px;
+  box-shadow: 0 0 50px -10px rgba(0,0,0,0.7);
+}
+@media (min-width: 576px) {
+  .main-user-profile .user-data-wrapper-content{
+    padding: 30px;
+  }
+}
+
+/*Сторінка порівняння */
+
+.main-comparison h1 {
+  font-size: 40px;
+  font-weight: 900;
+}
+.container-comparison-body table tr th, .container-comparison-body table tr td {
+  width: 100%;
+  font-size: 17px;
+}
+.container-comparison-body table .car-title{
+  font-size: 20px;
+  text-decoration: none;
+  font-weight: 700;
+}
+.container-comparison-body table .car-title:hover{
+  color: black;
+}
+.container-comparison-body table .car-title+a{
+  font-size: 28px;
+  text-decoration: none;
+  font-weight: 700;
+  color: red;
+}
+.container-comparison-body table .car-title+a:hover{
+  color: darkred;
+}
+
+
+.container-comparison-body table .image-wrapper {
+  overflow: hidden;
+  border-radius: 25px;
+}
+.container-comparison-body table .image-wrapper img{
+  max-height: 200px;
+
+  border-radius: 25px;
+  transition: all 0.5s ease;
+}
+.container-comparison-body table .image-wrapper img:hover {
+  transform: scale(1.05);
+}
+
+/*Сторінка залишення відгуку про продавця */
+.main-userreview-add h1 {
+  font-size: 40px;
+  font-weight: 900;
+}
+.main-userreview-add form button {
+  border: 4px solid rgb(112.520718,44.062154,249.437846);
+  border-radius: 25px;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+.main-userreview-add form button:hover {
+  border: 4px solid rgb(112.520718,44.062154,249.437846);
+  color: rgb(112.520718,44.062154,249.437846);
+}
+.container-userreview-add form button:active{
+  border-color: rgb(112.520718,44.062154,249.437846) !important;
+  color: rgb(112.520718,44.062154,249.437846) !important;
+}
+
+.container-userreview-add form button:active{
+  border-color: rgb(112.520718,44.062154,249.437846) !important;
+  color: rgb(112.520718,44.062154,249.437846) !important;
+}
+.main-userreview-add form input, .main-userreview-add form textarea {
+  border-radius: 25px;
+}
+.container-userreview-add .error-form-validation {
+  padding-top: 3px;
+  margin-bottom: -7px;
+  color: red;
+  font-weight: 700;
+  font-size: 16px;
+}
+/*Сторінка перегляду відгуків про продавця */
+
+.container-userreview-view h1 {
+  font-size: 40px;
+  font-weight: 900;
+}
+.container-userreview-view .card button, .container-userreview-view .card a {
+  border-radius: 25px;
+}
+
+.container-userreview-view .modal-confirm-delete-review button.btn-no-action, .container-userreview-view .modal-confirm-delete-review a {
+  border-radius: 25px;
+  font-size: 17px;
+  font-weight: 700;
+}
+.container-userreview-view .modal-confirm-delete-review a {
+  border: 3px solid #dc3545;
+}
+.container-userreview-view .modal-confirm-delete-review a:hover {
+  border: 3px solid #bb2d3b;
+}
+.container-userreview-view .modal-confirm-delete-review button.btn-no-action {
+  border: 3px solid rgb(112.520718,44.062154,249.437846);
+  color: white;
+}
+.container-userreview-view .modal-confirm-delete-review button.btn-no-action:hover {
+  border: 3px solid rgb(112.520718,44.062154,249.437846);
+  color: rgb(112.520718,44.062154,249.437846);
+}
+.container-userreview-view .modal-confirm-delete-review button.btn-no-action:active {
+  border-color: rgb(112.520718,44.062154,249.437846) !important;
+  color: rgb(112.520718,44.062154,249.437846) !important;
+}
+.container-userreview-view .card .card-title {
+  font-size: 22px;
+}
+.container-userreview-view .card button, .container-userreview-view .card a {
+  font-size: 17px;
+  font-weight: 600;
+}
+.container-userreview-view .card .card-text {
+  font-size: 17px;
+}
+.container-userreview-view .alert button[type="button"] {
+  top: 50%;
+  transform: translate(0, -50%);
+}
+
+/*Сторінка додавання марки авто */
+
+.section-form-admin form label, .section-form-admin form input, .section-form-admin form button, .section-form-admin form select {
+  font-size: 18px;
+}
+.section-form-admin .card {
+  overflow: hidden;
+}
+.section-form-admin form input, .section-form-admin form button, .section-form-admin .card, .section-form-admin form select, .section-form-admin form textarea  {
+  border-radius: 25px;
+}
+.section-form-admin .error-form-validation {
+  color: red;
+  font-weight: 700;
+}
+/*Сторінка перегляду марок */
+
+.section-table-admin table tbody td.project-actions a, .section-table-admin table tbody td.project-actions button {
+  font-size: 16px;
+  border-radius: 25px;
+}
+.section-table-admin table th, .section-table-admin table td {
+  font-size: 18px;
+}
+.section-table-admin .card {
+  overflow: hidden;
+  border-radius: 25px;
+}
+.section-table-admin .modal button.btn-no-action, .section-table-admin .modal a {
+  border-radius: 25px;
+  font-size: 17px;
+  font-weight: 700;
+}
+.section-table-admin .modal a.btn-danger {
+  border: 3px solid #dc3545;
+}
+.section-table-admin .modal a.btn-danger:hover {
+  border: 3px solid #bb2d3b;
+}
+.section-table-admin .modal a.btn-warning {
+  border: 3px solid #ffc107;
+}
+.section-table-admin .modal a.btn-warning:hover {
+  border: 3px solid #e0a800;
+}
+.section-table-admin .modal button.btn-no-action {
+  border: 3px solid rgb(112.520718,44.062154,249.437846);
+  color: white;
+}
+.section-table-admin .modal button.btn-no-action:hover {
+  border: 3px solid rgb(112.520718,44.062154,249.437846);
+  color: rgb(112.520718,44.062154,249.437846);
+  background-color: white;
+}
+.section-table-admin .modal button.btn-no-action:active {
+  background-color: white;
+  border-color: rgb(112.520718,44.062154,249.437846) !important;
+  color: rgb(112.520718,44.062154,249.437846) !important;
+}
+.section-table-admin .modal .modal-body p {
+  font-size: 17px;
+}
+.alert-admin {
+  border-radius: 25px;
+}
+.section-user-register-admin label {
+  padding-left: 0.75rem;
+}
+.section-user-register-admin form button[type="submit"] {
+  border: 4px solid rgb(112.520718,44.062154,249.437846);
+  border-radius: 25px;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+.section-user-register-admin form button:hover {
+  border: 4px solid rgb(112.520718,44.062154,249.437846);
+  color: rgb(112.520718,44.062154,249.437846);
+  background-color: white;
+}
+.section-user-register-admin form button:active{
+  border-color: rgb(112.520718,44.062154,249.437846) !important;
+  color: rgb(112.520718,44.062154,249.437846) !important;
+  background-color: white;
+}
+.section-user-register-admin .error-form-validation {
+  padding-left: 0.75rem;
+  margin-top: 3px;
+  margin-bottom: -7px;
+
+}
+/*Сторінка відправки повідомлення адміну */
+
+
+.main-adminmessage-send{
+  display: flex;
+  align-items: center;
+}
+
+.container-adminmessage-send h1 {
+  font-size: 50px;
+  font-weight: 900;
+}
+
+.container-adminmessage-send label,  .container-adminmessage-send input {
+  font-weight: 700;
+  font-size: 18px;
+  border-radius: 25px;
+}
+.container-adminmessage-send textarea {
+  font-weight: 600;
+  font-size: 18px;
+  border-radius: 25px;
+  height: 125px;
+}
+.container-adminmessage-send form {
+  margin: 0 auto;
+  max-width: 500px;
+  row-gap: 15px;
+  padding: 30px;
+  border-radius: 25px;
+  box-shadow: 0 0 50px -10px rgba(0,0,0,0.7);
+}
+.main-adminmessage-send form button {
+  border: 4px solid rgb(112.520718,44.062154,249.437846);
+  border-radius: 25px;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+.main-adminmessage-send form button:hover {
+  border: 4px solid rgb(112.520718,44.062154,249.437846);
+  color: rgb(112.520718,44.062154,249.437846);
+}
+
+
+.container-adminmessage-send .error-form-validation {
+  color: red;
+  font-weight: bold;
+  padding-left: 0.5rem;
+  margin-bottom: -10px;
+  margin-top: 3px;
+}
+
+.section-admin-messages .card {
+  border-radius: 25px;
+  overflow: hidden;
+}
+
+.section-admin-messages .card .card-body .card-text{
+  font-size: 18px;
+}
+.section-admin-messages .card button{
+  border-radius: 25px;
+  font-size: 16px;
+}
+
+.section-admin-messages .modal button.btn-no-action, .section-admin-messages .modal a {
+  border-radius: 25px;
+  font-size: 17px;
+  font-weight: 700;
+}
+.section-admin-messages .modal a.btn-danger {
+  border: 3px solid #dc3545;
+}
+.section-admin-messages .modal a.btn-danger:hover {
+  border: 3px solid #bb2d3b;
+}
+
+.section-admin-messages .modal button.btn-no-action {
+  border: 3px solid rgb(112.520718,44.062154,249.437846);
+  color: white;
+}
+.section-admin-messages .modal button.btn-no-action:hover {
+  border: 3px solid rgb(112.520718,44.062154,249.437846);
+  color: rgb(112.520718,44.062154,249.437846);
+  background-color: white;
+}
+.section-admin-messages .modal button.btn-no-action:active {
+  background-color: white;
+  border-color: rgb(112.520718,44.062154,249.437846) !important;
+  color: rgb(112.520718,44.062154,249.437846) !important;
+}
+.section-admin-messages .modal .modal-body p {
+  font-size: 17px;
+}
+
+
+
+
+
+/*adadasdasasd*/
+
+
+.main-edit{
+  display: flex;
+  align-items: center;
+}
+
+.container-edit h1 {
+  font-size: 50px;
+  font-weight: 900;
+}
+
+.container-edit input[type="password"], .container-edit input[type="text"], .container-edit input[type="email"], .container-edit label {
+  font-weight: 700;
+  font-size: 18px;
+  border-radius: 25px;
+}
+.container-edit input[type="file"] {
+  font-weight: 700;
+  font-size: 18px;
+  border-radius: 25px;
+  width: 100%;
+}
+
+.container-edit form.form-main {
+  margin: 0 auto;
+  max-width: 500px;
+  row-gap: 15px;
+  padding: 25px;
+  border-radius: 25px;
+  box-shadow: 0 0 50px -10px rgba(0,0,0,0.7);
+}
+.main-edit form a.btn-warning {
+  border: 4px solid #ffc107;
+  border-radius: 25px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.main-edit form a.btn-danger, .danger-zone button {
+  border: 4px solid #dc3545;
+  border-radius: 25px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.main-edit button {
+  border: 4px solid rgb(112.520718,44.062154,249.437846);
+  border-radius: 25px;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+.main-edit button:hover {
+  border: 4px solid rgb(112.520718,44.062154,249.437846);
+  color: rgb(112.520718,44.062154,249.437846);
+}
+
+.container-edit form button.save:active{
+  border-color: rgb(112.520718,44.062154,249.437846) !important;
+  color: rgb(112.520718,44.062154,249.437846) !important;
+}
+
+.container-edit .error-form-validation {
+  cursor: help;
+  padding-top: 3px;
+  padding-left: 1rem;
+  margin-bottom: -10px;
+  color: red;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.container-edit .input-file label {
+  padding-left: 1rem;
+  padding-top: 0;
+}
+.container-edit form .image-wrapper {
+  position: relative;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.container-edit form .image-wrapper img {
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+}
+.container-edit form .image-wrapper input {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  border-radius: 50%;
+  opacity: 0;
+}
+.container-edit form .image-wrapper .choose-image-wrapper {
+  position: absolute;
+  padding: 7px;
+  bottom: -10%;
+  left: 50%;
+  width: 30%;
+  height: 30%;
+  background-color: white;
+  transform: translate(-50%);
+  border-radius: 50%;
+}
+.container-edit form .image-wrapper .choose-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  border-radius: unset;
+}
+.container-edit div.hidden {
+  display: none;
+}
+
+.main-change-password{
+  display: flex;
+  align-items: center;
+}
+
+.container-change-password h1 {
+  font-size: 50px;
+  font-weight: 900;
+}
+
+.container-change-password input[type="password"], .container-change-password input[type="text"], .container-change-password input[type="email"], .container-change-password label {
+  font-weight: 700;
+  font-size: 18px;
+  border-radius: 25px;
+}
+.container-change-password input[type="file"] {
+  font-weight: 700;
+  font-size: 18px;
+  border-radius: 25px;
+  width: 100%;
+}
+
+.container-change-password form {
+  margin: 0 auto;
+  max-width: 500px;
+  row-gap: 15px;
+  padding: 25px;
+  border-radius: 25px;
+  box-shadow: 0 0 50px -10px rgba(0,0,0,0.7);
+}
+.main-change-password form a.btn-warning {
+  border: 4px solid #ffc107;
+  border-radius: 25px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.main-change-password form a.btn-danger, .danger-zone button {
+  border: 4px solid #dc3545;
+  border-radius: 25px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.main-change-password button {
+  border: 4px solid rgb(112.520718,44.062154,249.437846);
+  border-radius: 25px;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+.main-change-password button:hover {
+  border: 4px solid rgb(112.520718,44.062154,249.437846);
+  color: rgb(112.520718,44.062154,249.437846);
+}
+
+.container-change-password form button:active{
+  border-color: rgb(112.520718,44.062154,249.437846) !important;
+  color: rgb(112.520718,44.062154,249.437846) !important;
+}
+
+.container-change-password .error-form-validation {
+  cursor: help;
+  padding-top: 3px;
+  padding-left: 1rem;
+  margin-bottom: -10px;
+  color: red;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.container-edit .danger-zone {
+  position: relative;
+  border: 5px solid #dc3545;
+  padding: 25px;
+  border-radius: 25px;
+  max-width: 500px;
+  margin: 0 auto;
+  box-shadow: 0 0 50px -10px rgb(0 0 0 / 70%);
+}
+.container-edit .danger-zone .danger-zone-title {
+  border: 5px solid #dc3545;
+  font-weight: 900;
+  color: #dc3545;
+  text-align: center;
+  position: absolute;
+  top: -20%;
+  background-color: white;
+  padding: 5px 10px;
+  border-radius: 25px;
+  left: 50%;
+  transform: translate(-50%);
+  width: 65%;
+
+}
+.danger-zone button:hover {
+  background-color: #bb2d3b;
+  border: 4px solid #dc3545;
+  color:white;
+}
+
+
+.container-edit .modal-confirm-delete-car-ad .modal-title {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.container-carad-myads .modal button.btn-no-action, .container-edit .modal button.btn-yes {
+  border-radius: 25px;
+  font-size: 17px;
+  font-weight: 700;
+}
+.container-edit .modal button.btn-yes {
+  border: 3px solid #dc3545;
+}
+.container-edit .modal button.btn-yes:hover {
+  border: 3px solid #bb2d3b;
+  color: white;
+}
+.container-edit .modal button.btn-no-action {
+  border: 3px solid rgb(112.520718,44.062154,249.437846);
+  color: white;
+}
+.container-edit .modal button.btn-no-action:hover {
+  border: 3px solid rgb(112.520718,44.062154,249.437846);
+  color: rgb(112.520718,44.062154,249.437846);
+}
+.container-edit .modal button.btn-no-action:active {
+  border-color: rgb(112.520718,44.062154,249.437846) !important;
+  color: rgb(112.520718,44.062154,249.437846) !important;
+}
+.container-edit .modal button.btn-yes:active {
+  border: 3px solid #bb2d3b;
+  color: white;
+}
+.container-edit .modal .modal-body p {
+  font-size: 17px;
+  font-weight: 600;
+}
+.container-edit .modal button.btn-close {
+  border: none;
+}
+
+/*Сторінка редагування відгуку*/
+
+.main-userreview-edit h1 {
+  font-size: 40px;
+  font-weight: 900;
+}
+.main-userreview-edit form button {
+  border: 4px solid rgb(112.520718,44.062154,249.437846);
+  border-radius: 25px;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+.main-userreview-edit form button:hover {
+  border: 4px solid rgb(112.520718,44.062154,249.437846);
+  color: rgb(112.520718,44.062154,249.437846);
+}
+.container-userreview-edit form button:active{
+  border-color: rgb(112.520718,44.062154,249.437846) !important;
+  color: rgb(112.520718,44.062154,249.437846) !important;
+}
+
+.container-userreview-edit form button:active{
+  border-color: rgb(112.520718,44.062154,249.437846) !important;
+  color: rgb(112.520718,44.062154,249.437846) !important;
+}
+.main-userreview-edit form input, .main-userreview-edit form textarea {
+  border-radius: 25px;
+}
+.container-userreview-edit .error-form-validation {
+  padding-top: 3px;
+  margin-bottom: -7px;
+  color: red;
+  font-weight: 700;
+  font-size: 16px;
+}
+.page-item>.page-link {
+  font-size: 18px;
+  font-weight: 600;
+  color: rgb(112.520718,44.062154,249.437846);
+}
+.page-item.active>.page-link {
+  color: white;
+  border-color:rgb(112.520718,44.062154,249.437846);
+  background-color: rgb(112.520718,44.062154,249.437846);
+}
+
+.container-car-ad-index button.btn-filter {
+  font-size: 18px;
+  border-radius: 25px;
+}
+
+.container-car-ad-index  .modal-title {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.container-car-ad-index .modal button.btn-no-action, .container-car-ad-index .modal button.btn-yes, .container-car-ad-index .modal button.btn-reset, .container-car-ad-index .modal a {
+  border-radius: 25px;
+  font-size: 17px;
+  font-weight: 700;
+}
+.container-car-ad-index .modal button.btn-yes {
+  border: 3px solid #0d6efd;
+}
+.container-car-ad-index .modal a.btn-reset {
+  border: 3px solid #ffc107;
+}
+.container-car-ad-index .modal button.btn-yes:hover {
+  border: 3px solid #0b5ed7;
+}
+.container-car-ad-index .modal a.btn-reset:hover {
+  border: 3px solid #ffca2c;
+}
+.container-car-ad-index .modal button.btn-no-action {
+  border: 3px solid rgb(112.520718,44.062154,249.437846);
+  color: white;
+}
+.container-car-ad-index .modal button.btn-no-action:hover {
+  border: 3px solid rgb(112.520718,44.062154,249.437846);
+  color: rgb(112.520718,44.062154,249.437846);
+}
+.container-car-ad-index .modal button.btn-no-action:active {
+  border-color: rgb(112.520718,44.062154,249.437846) !important;
+  color: rgb(112.520718,44.062154,249.437846) !important;
+}
+.container-car-ad-index .modal button.btn-yes:active {
+  border: 3px solid #0b5ed7;
+  color: white;
+}
+.container-car-ad-index .modal a.btn-reset:active {
+  border: 3px solid #ffca2c;
+}
+.container-car-ad-index .modal .modal-body input, .container-car-ad-index .modal .modal-body select {
+  border-radius: 25px;
+  font-size: 17px;
+  font-weight: 600;
+}
+.container-car-ad-index .modal button.btn-close {
+  border: none;
+}
+.container-car-ad-index .modal .modal-body label {
+  font-size: 17px;
+  font-weight: 600;
+}
+
+/*Сторінка редагування користувача для адміна*/
+
+
+
+.section-user-edit-admin input[type="password"], .section-user-edit-admin input[type="text"], .section-user-edit-admin input[type="email"], .section-user-edit-admin label {
+  font-weight: 700;
+  font-size: 18px;
+  border-radius: 25px;
+}
+.section-user-edit-admin input[type="file"] {
+  font-weight: 700;
+  font-size: 18px;
+  border-radius: 25px;
+  width: 100%;
+}
+
+.section-user-edit-admin form.form-main {
+  margin: 0 auto;
+  max-width: 500px;
+  row-gap: 15px;
+  padding: 25px;
+  border-radius: 25px;
+  box-shadow: 0 0 50px -10px rgba(0,0,0,0.7);
+}
+.section-user-edit-admin form a.btn-warning {
+  border: 4px solid #ffc107;
+  border-radius: 25px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.section-user-edit-admin form a.btn-danger, .danger-zone button {
+  border: 4px solid #dc3545;
+  border-radius: 25px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.section-user-edit-admin button.save {
+  border: 4px solid rgb(112.520718,44.062154,249.437846);
+  border-radius: 25px;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+.section-user-edit-admin button.save:hover {
+  border: 4px solid rgb(112.520718,44.062154,249.437846);
+  color: rgb(112.520718,44.062154,249.437846);
+  background-color: white;
+}
+
+.section-user-edit-admin form button.save:active{
+  border-color: rgb(112.520718,44.062154,249.437846) !important;
+  color: rgb(112.520718,44.062154,249.437846) !important;
+  background-color: white;
+}
+
+.section-user-edit-admin .error-form-validation {
+  cursor: help;
+  padding-top: 3px;
+  padding-left: 1rem;
+  margin-bottom: -10px;
+  color: red;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.section-user-edit-admin .input-file label {
+  padding-left: 1rem;
+  padding-top: 0;
+}
+.section-user-edit-admin form .image-wrapper {
+  position: relative;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.section-user-edit-admin form .image-wrapper img {
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+}
+.section-user-edit-admin form .image-wrapper input {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  border-radius: 50%;
+  opacity: 0;
+}
+.section-user-edit-admin form .image-wrapper .choose-image-wrapper {
+  position: absolute;
+  padding: 7px;
+  bottom: -10%;
+  left: 50%;
+  width: 30%;
+  height: 30%;
+  background-color: white;
+  transform: translate(-50%);
+  border-radius: 50%;
+}
+.section-user-edit-admin form .image-wrapper .choose-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  border-radius: unset;
+}
+.section-user-edit-admin div.hidden {
+  display: none;
+}
+
+.main-change-password{
+  display: flex;
+  align-items: center;
+}
+
+.container-change-password h1 {
+  font-size: 50px;
+  font-weight: 900;
+}
+
+.container-change-password input[type="password"], .container-change-password input[type="text"], .container-change-password input[type="email"], .container-change-password label {
+  font-weight: 700;
+  font-size: 18px;
+  border-radius: 25px;
+}
+.container-change-password input[type="file"] {
+  font-weight: 700;
+  font-size: 18px;
+  border-radius: 25px;
+  width: 100%;
+}
+
+.container-change-password form {
+  margin: 0 auto;
+  max-width: 500px;
+  row-gap: 15px;
+  padding: 25px;
+  border-radius: 25px;
+  box-shadow: 0 0 50px -10px rgba(0,0,0,0.7);
+}
+.main-change-password form a.btn-warning {
+  border: 4px solid #ffc107;
+  border-radius: 25px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.main-change-password form a.btn-danger, .danger-zone button {
+  border: 4px solid #dc3545;
+  border-radius: 25px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.main-change-password button {
+  border: 4px solid rgb(112.520718,44.062154,249.437846);
+  border-radius: 25px;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+.main-change-password button:hover {
+  border: 4px solid rgb(112.520718,44.062154,249.437846);
+  color: rgb(112.520718,44.062154,249.437846);
+}
+
+.section-user-edit-admin form button:active{
+  border-color: rgb(112.520718,44.062154,249.437846) !important;
+  color: rgb(112.520718,44.062154,249.437846) !important;
+}
+
+.section-user-edit-admin .error-form-validation {
+  cursor: help;
+  padding-top: 3px;
+  padding-left: 1rem;
+  margin-bottom: -10px;
+  color: red;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.section-user-edit-admin .danger-zone {
+  position: relative;
+  border: 5px solid #dc3545;
+  padding: 25px;
+  border-radius: 25px;
+  max-width: 500px;
+  margin: 0 auto;
+  box-shadow: 0 0 50px -10px rgb(0 0 0 / 70%);
+}
+.section-user-edit-admin .danger-zone .danger-zone-title {
+  border: 5px solid #dc3545;
+  font-weight: 900;
+  color: #dc3545;
+  text-align: center;
+  position: absolute;
+  top: -20%;
+  background-color: white;
+  padding: 5px 10px;
+  border-radius: 25px;
+  left: 50%;
+  transform: translate(-50%);
+  width: 65%;
+
+}
+.danger-zone button:hover {
+  background-color: #bb2d3b;
+  border: 4px solid #dc3545;
+  color:white;
+}
+
+
+.section-user-edit-admin .modal-confirm-delete-car-ad .modal-title {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.section-user-edit-admin .modal button.btn-no-action, .section-user-edit-admin .modal button.btn-yes {
+  border-radius: 25px;
+  font-size: 17px;
+  font-weight: 700;
+}
+.section-user-edit-admin .modal button.btn-yes {
+  border: 3px solid #dc3545;
+}
+.section-user-edit-admin .modal button.btn-yes:hover {
+  border: 3px solid #bb2d3b;
+  color: white;
+}
+.section-user-edit-admin .modal button.btn-no-action {
+  border: 3px solid rgb(112.520718,44.062154,249.437846);
+  color: white;
+}
+.section-user-edit-admin .modal button.btn-no-action:hover {
+  border: 3px solid rgb(112.520718,44.062154,249.437846);
+  color: rgb(112.520718,44.062154,249.437846);
+}
+.section-user-edit-admin .modal button.btn-no-action:active {
+  border-color: rgb(112.520718,44.062154,249.437846) !important;
+  color: rgb(112.520718,44.062154,249.437846) !important;
+}
+.section-user-edit-admin .modal button.btn-yes:active {
+  border: 3px solid #bb2d3b;
+  color: white;
+}
+.section-user-edit-admin .modal .modal-body p {
+  font-size: 17px;
+  font-weight: 600;
+}
+.section-user-edit-admin .modal button.btn-close {
+  border: none;
+}
+
+.section-user-edit-admin .modal button.btn-no-action, .section-user-edit-admin .modal a {
+  border-radius: 25px;
+  font-size: 17px;
+  font-weight: 700;
+}
+.section-user-edit-admin .modal a.btn-danger {
+  border: 3px solid #dc3545;
+}
+.section-user-edit-admin .modal a.btn-danger:hover {
+  border: 3px solid #bb2d3b;
+}
+
+.section-user-edit-admin .modal button.btn-no-action {
+  border: 3px solid rgb(112.520718,44.062154,249.437846);
+  color: white;
+}
+.section-user-edit-admin .modal button.btn-no-action:hover {
+  border: 3px solid rgb(112.520718,44.062154,249.437846);
+  color: rgb(112.520718,44.062154,249.437846);
+  background-color: white;
+}
+.section-user-edit-admin .modal button.btn-no-action:active {
+  background-color: white;
+  border-color: rgb(112.520718,44.062154,249.437846) !important;
+  color: rgb(112.520718,44.062154,249.437846) !important;
+}
+
+.section-user-changepassword-admin button {
+  border: 3px solid rgb(112.520718,44.062154,249.437846);
+  color: white;
+  font-weight: 700;
+}
+.section-user-changepassword-admin button:hover  {
+  border: 3px solid rgb(112.520718,44.062154,249.437846);
+  color: rgb(112.520718,44.062154,249.437846);
+  background-color: white;
+}
+.section-user-changepassword-admin button:active {
+  background-color: white;
+  border-color: rgb(112.520718,44.062154,249.437846) !important;
+  color: rgb(112.520718,44.062154,249.437846) !important;
+}
+.already-registered-block {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 30px;
+}
+.already-registered-block a {
+  text-decoration: none;
+}
+.already-registered-block a:hover {
+  text-decoration: underline;
+}
+
+/*section.carad-edit-admin button[type="submit"], section.section-carad-add-admin button[type="submit"] {*/
+/*    border: 4px solid rgb(112.520718,44.062154,249.437846);*/
+/*    border-radius: 25px;*/
+/*    color: white;*/
+/*    font-size: 18px;*/
+/*    font-weight: 700;*/
+/*    transition: all 0.3s ease;*/
+/*}*/
+
+/*section.carad-edit-admin button[type="submit"]:hover, section.section-carad-add-admin button[type="submit"]:hover {*/
+/*    border: 4px solid rgb(112.520718,44.062154,249.437846);*/
+/*    color: rgb(112.520718,44.062154,249.437846);*/
+/*}*/
+
+/*section.carad-edit-admin button[type="submit"]:active, section.section-carad-add-admin button[type="submit"]:active {*/
+/*    border: 4px solid rgb(112.520718,44.062154,249.437846);*/
+/*    color: rgb(112.520718,44.062154,249.437846);*/
+/*}*/
+
+

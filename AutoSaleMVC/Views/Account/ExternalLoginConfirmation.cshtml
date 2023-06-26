@@ -1,0 +1,51 @@
+﻿@model AutoSale.Domain.ViewModels.Account.ExternalLoginViewModel
+
+@{
+    ViewData["Title"] = "External login confirmation";
+}
+<main class="main main-register">
+    <div class="container container-register">
+        <h1 class="text-center mb-4">You have successfully authenticated to your @Model.ProviderDisplayName account!</h1>
+        <h5 class="text-center mb-4">Associate your @Model.ProviderDisplayName account</h5>
+        <h5 class="text-center mb-4">Please add additional information to make your account better!</h5>
+        <form asp-route-returnUrl="@Model.ReturnUrl" asp-controller="Account" asp-action="ExternalLoginConfirmation" class="d-flex flex-column" method="post">
+            <input required type="hidden" asp-for="Email">
+            <div class="form-floating">
+                <input asp-for="Name" required type="text" class="form-control" placeholder="Name">
+                <label asp-for="Name"></label>
+                <span asp-validation-for="Name" class="text-danger error-form-validation"></span>
+            </div>
+            <div class="form-floating">
+                <input required type="text" class="form-control" asp-for="Surname" placeholder="Surname">
+                <label asp-for="Surname"></label>
+                <span asp-validation-for="Surname" class="text-danger error-form-validation"></span>
+            </div>
+            <div class="form-floating">
+                <input required type="text" asp-for="LastName" class="form-control" placeholder="Last name">
+                <label asp-for="LastName"></label>
+                <span asp-validation-for="LastName" class="text-danger error-form-validation"></span>
+            </div>
+            <div class="form-floating">
+                <input required type="text" id="phone-number" class="form-control" asp-for="PhoneNumber" placeholder="Phone number">
+                <label asp-for="PhoneNumber"></label>
+                <span asp-validation-for="PhoneNumber" class="text-danger error-form-validation"></span>
+            </div>
+            @* <div class="input-group input-file"> *@
+            @*     <label asp-for="Image"></label> *@
+            @*     <div> *@
+            @*         <input asp-for="Image" accept="image/jpeg, image/png" type="file" class="form-control"> *@
+            @*     </div> *@
+            @*     <span asp-validation-for="Image" class="text-danger error-form-validation"></span> *@
+            @* </div> *@
+            <button class="btn primary-color-bg primary-color-hover" type="submit">Log in</button>
+        </form>
+    </div>
+</main>
+@section Scripts {
+    <script defer>
+        const inputPhone = document.getElementById("phone-number");
+        inputPhone.addEventListener("input", () => {
+            inputPhone.value = inputPhone.value.replace(/[^\d]/g, '');
+        });
+    </script>
+}
