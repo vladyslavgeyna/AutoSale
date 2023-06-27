@@ -16,6 +16,48 @@ namespace AutoSale.Service.Implementations
             _carImageRepository = carImageRepository;
         }
 
+        public async Task<IResponse<CarImage>> GetMainCarImageByCarIdAsync(int carId, bool included = false)
+        {
+            try
+            {
+                var carImage = included
+                    ? await _carImageRepository.Select()
+                        .Include(ci => ci.Image)
+                        .Include(ci => ci.Car)
+                        .Include(ci => ci.Car.CarBrand)
+                        .Include(ci => ci.Car.CarModel)
+                        .Include(ci => ci.Car.Currency)
+                        .Where(ci => ci.CarId == carId)
+                        .FirstOrDefaultAsync(ci => ci.IsMain)
+                    : await _carImageRepository.Select()
+                        .Where(ci => ci.CarId == carId)
+                        .FirstOrDefaultAsync(ci => ci.IsMain);
+                
+                if (carImage is null)
+                {
+                    return new Response<CarImage>
+                    {
+                        Description = "Car image not found",
+                        Code = ResponseCode.NotFound
+                    };
+                }
+                
+                return new Response<CarImage>
+                {
+                    Data = carImage,
+                    Code = ResponseCode.Ok
+                };
+            }
+            catch (Exception e)
+            {
+                return new Response<CarImage>
+                {
+                    Description = $"[CarImageService:GetMainCarImageByCarIdAsync] - {e.Message}",
+                    Code = ResponseCode.InternalServerError
+                };
+            }
+        }
+        
         public async Task<IResponse<List<CarImage>>> GetAllAsync(bool included = false)
         {
             try

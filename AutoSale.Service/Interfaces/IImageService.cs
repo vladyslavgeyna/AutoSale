@@ -1,6 +1,7 @@
 ﻿using AutoSale.Domain.Models;
 using AutoSale.Domain.Response;
 using Microsoft.AspNetCore.Http;
+using Image = AutoSale.Domain.Models.Image;
 
 namespace AutoSale.Service.Interfaces
 {

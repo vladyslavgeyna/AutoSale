@@ -1,0 +1,136 @@
+﻿@using AutoSale.Service.Interfaces
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using AutoSale.Domain.Enum.Car
+@model AutoSale.Domain.ViewModels.CarAd.MyAdsViewModel
+@inject ICarImageService carImageService
+
+@{
+    ViewData["Title"] = "My ads";
+}
+
+<main class="main main-carad-myads">
+    <div class="container container-carad-myads">
+        
+        
+        @if (Model.Message is not null)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <span class="h2 mb-0 fw-bold d-flex align-items-center"><i style="font-size: 40px" class="fa-solid fa-check"></i><span style="margin-left: 10px" >@Model.Message</span></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+        
+        @if (!Model.CarAds.Any())
+        {
+            <div style="border-radius: 25px" class="alert alert-primary py-4" role="alert">
+                <div class="h1 text-center fw-bold mb-0">You currently have no ads posted</div>
+                <div class="h2 text-center fw-bold pt-2 mb-0">But you can <a asp-controller="CarAd" asp-action="Create">create</a> it</div>
+            </div>
+        }
+        else
+        {
+            <h1 class="mb-3">My ads</h1>
+            <p class="h3 mb-4">Total ads: @Model.CarAds.Count</p>
+            <div class="row row-cols-1 g-3">
+                @foreach (var carAd in Model.CarAds)
+                {
+                    <div class="col h-100">
+                         <div class="card mb-3" >
+                             <div class="row g-0 align-items-center">
+                                 <div class="col-md-4">
+                                     <div class="image-wrapper m-3">
+                                         <a asp-controller="CarAd" asp-action="View" asp-route-id="@carAd.Id">
+                                             <img src="~/images/@((await carImageService.GetMainCarImageByCarIdAsync(carAd.CarId, true)).Data.Image.Name)" class="img-fluid rounded-start" alt="@carAd.Title">
+                                         </a>
+                                     </div>
+                                 </div>
+                                 <div class="col-md-8 align-self-stretch">
+                                     <div class="card-body py-4 py-sm-3 h-100">
+                                         <div class="card-body-inner h-100">
+                                             <div class="card-body-inner-top">
+                                                 <h5 class="card-title"><a asp-controller="CarAd" asp-action="View" asp-route-id="@carAd.Id" >@carAd.Title</a></h5>
+                                                 <div class="row row-cols-lg-1 row-cols-2 mb-xl-2 mb-lg-1 gy-1">
+                                                     <div class="col">
+                                                         <div class="info d-flex align-items-center gap-2">
+                                                             <i class="bi bi-speedometer"></i>
+                                                             <p class="m-0">@carAd.Car.Mileage thousand km.</p>
+                                                         </div>
+                                                     </div>
+                                                     <div class="col">
+                                                         <div class="info d-flex align-items-center gap-2">
+                                                             <i class="bi bi-fuel-pump-fill"></i>
+                                                             @if (carAd.Car.Fuel is Fuel.Electric)
+                                                             {
+                                                                 <p class="m-0">@carAd.Car.Fuel.ToString()</p>
+                                                             }
+                                                             else
+                                                             {
+                                                                 <p class="m-0">@carAd.Car.Fuel.ToString(), @carAd.Car.EngineCapacity liters</p>
+                                                             }
+                                                         </div>
+                                                     </div>
+                                                     <div class="col">
+                                                         <div class="info d-flex align-items-center gap-2">
+                                                             <i class="bi bi-gear-wide"></i>
+                                                             <p class="m-0">@carAd.Car.Transmission.ToString()</p>
+                                                         </div>
+                                                     </div>
+                                                     <div class="col">
+                                                         <div class="info d-flex align-items-center gap-2">
+                                                             <i class="bi bi-vinyl-fill"></i>
+                                                             <p class="m-0">@carAd.Car.WheelDrive.ToString()</p>
+                                                         </div>
+                                                     </div>
+                                                     <div class="col-12">
+                                                         <div class="info d-flex align-items-center gap-2">
+                                                             <i class="bi bi-pin-map-fill"></i>
+                                                             <p class="m-0">@carAd.Car.Region.ToString() region</p>
+                                                         </div>
+                                                     </div>
+                                                 </div>
+                                             </div>
+                                             <div class="card-body-inner-bottom pt-sm-1">
+                                                 <div >
+                                                     <p class="card-text"><small class="text-muted">Created at: @carAd.DateOfCreation.ToString("dd.MM.yyyy HH:mm")</small></p>
+                                                 </div>
+                                                 <div style="flex-wrap: wrap" class="d-flex gap-1">
+                                                     <a  class="btn btn-success">Edit</a>
+                                                     @if (carAd.IsActive)
+                                                     {
+                                                         <a  class="btn btn-primary">Deactivate</a>
+                                                     }
+                                                     else
+                                                     {
+                                                         <a  class="btn btn-primary">Activate</a>
+                                                     }
+                                                     <button data-bs-toggle="modal" data-bs-target="#confirm-delete-car-ad-@carAd.Id" type="button" class="btn btn-danger delete-btn">Delete</button>
+                                                 </div>
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                         <div class="modal modal-confirm-delete-car-ad fade" id="confirm-delete-car-ad-@carAd.Id" tabindex="-1" aria-hidden="false">
+                             <div class="modal-dialog modal-dialog-centered">
+                                 <div style="border-radius: 25px;" class="modal-content">
+                                     <div class="modal-header">
+                                         <h5 class="modal-title">Confirmation</h5>
+                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                     </div>
+                                     <div class="modal-body">
+                                         <p>Do you really want to remove this ad?</p>
+                                     </div>
+                                     <div class="modal-footer">
+                                         <button type="button" class="btn btn-no-action primary-color-bg primary-color-hover" data-bs-dismiss="modal">Cancel</button>
+                                         <a  class="btn btn-danger">Delete</a>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                }
+            </div>
+        }
+    </div>
+</main>

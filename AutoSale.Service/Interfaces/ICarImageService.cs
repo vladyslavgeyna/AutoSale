@@ -11,6 +11,8 @@ namespace AutoSale.Service.Interfaces
         
         Task<IResponse<List<CarImage>>> GetByCarIdAsync(int carId, bool included = false);
         
+        Task<IResponse<CarImage>> GetMainCarImageByCarIdAsync(int carId, bool included = false);
+        
         Task<IResponse<CarImage>> CreateAsync(CarImage carImage);
         
         Task<IResponse<CarImage>> EditAsync(CarImage carImage);

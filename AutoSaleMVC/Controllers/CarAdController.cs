@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using X.PagedList;
 
 namespace AutoSaleMVC.Controllers
 {
@@ -241,7 +242,57 @@ namespace AutoSaleMVC.Controllers
                 return View("Error");
             }
         }
-        
+
+        [HttpGet]
+        public IActionResult Index(int page)
+        {
+            var pageSize = 1;
+            page = page == 0 
+                ? 1 
+                : page;
+
+            var carAdsResponse = _carAdService.GetAllAsQueryable(true);
+
+            if (carAdsResponse.Code is not ResponseCode.Ok)
+            {
+                return View("Error");
+            }
+            
+            var carAdsQueryable = carAdsResponse.Data;
+            
+            var carAds = carAdsQueryable.ToPagedList(page, pageSize);
+
+            IndexCarAdViewModel indexCarAdViewModel = new()
+            {
+                CarAds = carAds,
+                AllCarAdsCount = carAdsQueryable.Count()
+            };
+
+            return View(indexCarAdViewModel);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> MyAds()
+        {
+            var currentUser = await _userManager.FindByNameAsync(User.Identity.Name);
+
+            var currentUserId = currentUser.Id;
+
+            var carAdsResponse = await _carAdService.GetByUserIdAsync(currentUserId, true);
+
+            if (carAdsResponse.Code is ResponseCode.InternalServerError)
+            {
+                return View("Error");
+            }
+
+            MyAdsViewModel myAdsViewModel = new()
+            {
+                CarAds = carAdsResponse.Data
+            };
+
+            return View(myAdsViewModel);
+        }
         
         
     }

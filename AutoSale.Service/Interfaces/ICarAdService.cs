@@ -8,6 +8,8 @@ namespace AutoSale.Service.Interfaces
     {
         Task<IResponse<List<CarAd>>> GetAllAsync(bool included = false);
         
+        IResponse<IQueryable<CarAd>> GetAllAsQueryable(bool included = false);
+        
         Task<IResponse<CarAd>> GetByIdAsync(int id, bool included = false);
         
         Task<IResponse<List<CarAd>>> GetByUserIdAsync(string userId, bool included = false);
