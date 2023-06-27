@@ -67,6 +67,36 @@ namespace AutoSale.Service.Implementations
             }
         }
 
+        public IResponse<IQueryable<CarAd>> GetAllAsQueryable(bool included = false)
+        {
+            try
+            {
+                var carAds = included
+                    ? _carAdRepository.Select()
+                        .Include(ca => ca.User)
+                        .Include(ca => ca.User.Image)
+                        .Include(ca => ca.Car)
+                        .Include(ca => ca.Car.CarBrand)
+                        .Include(ca => ca.Car.CarModel)
+                        .Include(ca => ca.Car.Currency)
+                    : _carAdRepository.Select();
+                
+                return new Response<IQueryable<CarAd>>
+                {
+                    Data = carAds,
+                    Code = ResponseCode.Ok
+                };
+            }
+            catch (Exception e)
+            {
+                return new Response<IQueryable<CarAd>>
+                {
+                    Description = $"[CarAdService:GetAllAsync] - {e.Message}",
+                    Code = ResponseCode.InternalServerError
+                };
+            }
+        }
+
         public async Task<IResponse<CarAd>> GetByIdAsync(int id, bool included = false)
         {
             try
