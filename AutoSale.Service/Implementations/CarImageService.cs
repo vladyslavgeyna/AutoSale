@@ -76,6 +76,7 @@ namespace AutoSale.Service.Implementations
                 {
                     return new Response<List<CarImage>>
                     {
+                        Data = carImages,
                         Description = $"Car images not found",
                         Code = ResponseCode.NotFound
                     };
@@ -157,6 +158,7 @@ namespace AutoSale.Service.Implementations
                 {
                     return new Response<List<CarImage>>
                     {
+                        Data = carImages,
                         Description = $"Car images not found",
                         Code = ResponseCode.NotFound
                     };

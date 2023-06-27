@@ -32,6 +32,7 @@ namespace AutoSale.Service.Implementations
                 {
                     return new Response<List<Car>>
                     {
+                        Data = cars,
                         Description = $"Cars not found",
                         Code = ResponseCode.NotFound
                     };

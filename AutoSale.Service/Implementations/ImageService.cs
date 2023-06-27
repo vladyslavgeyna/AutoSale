@@ -31,6 +31,7 @@ namespace AutoSale.Service.Implementations
                 {
                     return new Response<List<Image>>
                     {
+                        Data = images,
                         Description = $"Images not found",
                         Code = ResponseCode.NotFound
                     };

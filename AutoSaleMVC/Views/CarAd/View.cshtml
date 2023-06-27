@@ -1,5 +1,6 @@
 ﻿@inject IFavoriteAdService favoriteAdService
 @using AutoSale.Domain.Enum.Car
+@using AutoSale.Domain.Helpers
 @using AutoSale.Service.Interfaces
 @model AutoSale.Domain.ViewModels.CarAd.ViewCarAdViewModel
 @{
@@ -180,11 +181,11 @@
                             </tr>
                             <tr>
                                 <th scope="row">Transmission</th>
-                                <td class="ps-5">@Model.CarAd.Car.Transmission.ToString()</td>
+                                <td class="ps-5">@EnumHelper.GetEnumDisplayName(Model.CarAd.Car.Transmission)</td>
                             </tr>
                             <tr>
                                 <th scope="row">Fuel</th>
-                                <td class="ps-5">@Model.CarAd.Car.Fuel.ToString()</td>
+                                <td class="ps-5">@EnumHelper.GetEnumDisplayName(Model.CarAd.Car.Fuel)</td>
                             </tr>
                             @if (Model.CarAd.Car.Fuel is not Fuel.Electric)
                             {
@@ -219,7 +220,7 @@
                             </tr>
                             <tr>
                                 <th scope="row">Location</th>
-                                <td class="ps-5">@Model.CarAd.Car.Region region</td>
+                                <td class="ps-5">@EnumHelper.GetEnumDisplayName(Model.CarAd.Car.Region) region</td>
                             </tr>
                         </tbody>
                     </table>

@@ -30,6 +30,7 @@ namespace AutoSale.Service.Implementations
                 {
                     return new Response<List<CarModel>>
                     {
+                        Data = carModels,
                         Description = $"Car models not found",
                         Code = ResponseCode.NotFound
                     };
@@ -73,6 +74,7 @@ namespace AutoSale.Service.Implementations
                 {
                     return new Response<List<CarModel>>
                     {
+                        Data = carModels,
                         Description = $"Car models not found",
                         Code = ResponseCode.NotFound
                     };

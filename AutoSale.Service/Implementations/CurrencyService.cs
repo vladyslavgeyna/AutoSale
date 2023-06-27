@@ -26,6 +26,7 @@ namespace AutoSale.Service.Implementations
                 {
                     return new Response<List<Currency>>
                     {
+                        Data = currencies,
                         Description = $"Currencies not found",
                         Code = ResponseCode.NotFound
                     };

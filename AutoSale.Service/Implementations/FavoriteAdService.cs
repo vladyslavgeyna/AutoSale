@@ -38,6 +38,7 @@ namespace AutoSale.Service.Implementations
                 {
                     return new Response<List<FavoriteAd>>
                     {
+                        Data = favoriteAds,
                         Description = $"Favorite ads not found",
                         Code = ResponseCode.NotFound
                     };
@@ -149,6 +150,7 @@ namespace AutoSale.Service.Implementations
                 {
                     return new Response<List<FavoriteAd>>
                     {
+                        Data = favoriteAds,
                         Description = $"Favorite ads not found",
                         Code = ResponseCode.NotFound
                     };

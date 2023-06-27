@@ -1,8 +1,12 @@
 ﻿using AutoSale.Domain.Enum;
+using AutoSale.Domain.Enum.Car;
+using AutoSale.Domain.Helpers;
 using AutoSale.Domain.Models;
+using AutoSale.Domain.ViewModels.FavoriteAd;
 using AutoSale.Service.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AutoSaleMVC.Controllers
@@ -10,10 +14,13 @@ namespace AutoSaleMVC.Controllers
     public class FavoriteAdController : Controller
     {
         private readonly IFavoriteAdService _favoriteAdService;
+        private readonly UserManager<User> _userManager;
 
-        public FavoriteAdController(IFavoriteAdService favoriteAdService)
+        public FavoriteAdController(IFavoriteAdService favoriteAdService,
+            UserManager<User> userManager)
         {
             _favoriteAdService = favoriteAdService;
+            _userManager = userManager;
         }
         
         [HttpPost]
@@ -55,8 +62,30 @@ namespace AutoSaleMVC.Controllers
                 return BadRequest();
             }
         }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Index()
+        {
+
+            var currentUserId = (await _userManager.FindByNameAsync(User.Identity.Name)).Id;
+
+            var favoriteAdsResponse = await _favoriteAdService.GetByUserIdAsync(currentUserId, true);
+
+            if (favoriteAdsResponse.Code is ResponseCode.InternalServerError)
+            {
+                return View("Error");
+            }
+
+            IndexFavoriteAdViewModel indexFavoriteAdViewModel = new()
+            {
+                CurrentUserId = currentUserId,
+                FavoriteAds = favoriteAdsResponse.Data
+            };
+
+            return View(indexFavoriteAdViewModel);
+        }
+        
         
     }
-    
-    
 }

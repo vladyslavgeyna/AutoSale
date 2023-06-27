@@ -26,6 +26,7 @@ namespace AutoSale.Service.Implementations
                 {
                     return new Response<List<CarBrand>>
                     {
+                        Data = carBrands,
                         Description = $"Car brands not found",
                         Code = ResponseCode.NotFound
                     };

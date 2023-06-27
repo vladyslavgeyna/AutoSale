@@ -46,6 +46,7 @@ namespace AutoSale.Service.Implementations
                 {
                     return new Response<List<CarAd>>
                     {
+                        Data = carAds,
                         Description = $"Car ads not found",
                         Code = ResponseCode.NotFound
                     };
@@ -159,6 +160,7 @@ namespace AutoSale.Service.Implementations
                 {
                     return new Response<List<CarAd>>
                     {
+                        Data = carAds,
                         Description = $"Car ads not found",
                         Code = ResponseCode.NotFound
                     };

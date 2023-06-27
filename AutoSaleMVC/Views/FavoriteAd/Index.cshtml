@@ -1,0 +1,160 @@
+﻿@inject ICarImageService carImageService
+@using AutoSale.Service.Interfaces
+@using AutoSale.Domain.Enum.Car
+@using AutoSale.Domain.Helpers
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model AutoSale.Domain.ViewModels.FavoriteAd.IndexFavoriteAdViewModel
+
+@{
+    ViewData["Title"] = "Favorite ads";
+}
+
+<main class="main main-carad-myads">
+    <div class="container container-carad-myads container-fav-add" id="container">
+        @if (!Model.FavoriteAds.Any())
+        {
+            <div style="border-radius: 25px" class="alert alert-primary py-4" role="alert">
+                <div class="h1 text-center fw-bold mb-0">You currently have no favorite ads</div>
+            </div>
+        }
+        else
+        {
+            <h1 id="title" class="mb-3">Favorite ads</h1>
+            <p id="total-wrapper" class="h3 mb-4">Total ads: <span id="total">@Model.FavoriteAds.Count</span></p>
+            <div class="row row-cols-1 g-3" id="parent-container">
+                @foreach (var favoriteAd in Model.FavoriteAds)
+                {
+                    <div id="col-favorite-ad-@favoriteAd.CarAdId" class="col h-100">
+                        <div class="card mb-3" >
+                            <div class="row g-0 align-items-center">
+                                <div class="col-lg-4">
+                                    <div class="image-wrapper m-3">
+                                        <a asp-controller="CarAd" asp-action="View" asp-route-id="@favoriteAd.CarAd.Id" >
+                                            <img src="~/images/@((await carImageService.GetMainCarImageByCarIdAsync(favoriteAd.CarAd.CarId, true)).Data.Image.Name)" class="img-fluid rounded-start" alt="@favoriteAd.CarAd.Title">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-8 align-self-stretch">
+                                    <div class="card-body py-4 py-sm-3 h-100">
+                                        <div class="card-body-inner h-100">
+                                            <div class="card-body-inner-top">
+                                                <div class="d-flex align-items-start align-items-lg-center justify-content-lg-between flex-column flex-lg-row">
+                                                    <h5 class="card-title"><a asp-controller="CarAd" asp-action="View" asp-route-id="@favoriteAd.CarAd.Id">@favoriteAd.CarAd.Title</a></h5>
+                                                    <div class="alert-success alert p-0 px-2 mb-2"><span >@((int)favoriteAd.CarAd.Car.Price) @favoriteAd.CarAd.Car.Currency.Sign</span></div>
+                                                </div>
+                                                <div class="row row-cols-lg-1 row-cols-2 mb-xl-2 mb-lg-1 gy-1">
+                                                    <div class="col">
+                                                        <div class="info d-flex align-items-center gap-2">
+                                                            <i class="bi bi-speedometer"></i>
+                                                            <p class="m-0">@favoriteAd.CarAd.Car.Mileage thousand km.</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="info d-flex align-items-center gap-2">
+                                                            <i class="bi bi-fuel-pump-fill"></i>
+                                                            @if (favoriteAd.CarAd.Car.Fuel is Fuel.Electric)
+                                                            {
+                                                                <p class="m-0">@EnumHelper.GetEnumDisplayName(favoriteAd.CarAd.Car.Fuel)</p>
+                                                            }
+                                                            else
+                                                            {
+                                                                <p class="m-0">@EnumHelper.GetEnumDisplayName(favoriteAd.CarAd.Car.Fuel), @favoriteAd.CarAd.Car.EngineCapacity liters</p>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="info d-flex align-items-center gap-2">
+                                                            <i class="bi bi-gear-wide"></i>
+                                                            <p class="m-0">@EnumHelper.GetEnumDisplayName(favoriteAd.CarAd.Car.Transmission)</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="info d-flex align-items-center gap-2">
+                                                            <i class="bi bi-vinyl-fill"></i>
+                                                            <p class="m-0">@favoriteAd.CarAd.Car.WheelDrive.ToString()</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="info d-flex align-items-center gap-2">
+                                                            <i class="bi bi-pin-map-fill"></i>
+                                                            <p class="m-0">@EnumHelper.GetEnumDisplayName(favoriteAd.CarAd.Car.Region) region</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-body-inner-bottom pt-sm-1">
+                                                <div>
+                                                    <p class="card-text m-0"><small class="text-muted">@favoriteAd.CarAd.User.Surname @favoriteAd.CarAd.User.Name @favoriteAd.CarAd.User.LastName</small></p>
+                                                    <p class="card-text m-0"><small class="text-muted"><a href="tel:@("+38" + favoriteAd.CarAd.User.PhoneNumber)">@favoriteAd.CarAd.User.PhoneNumber</a></small></p>
+                                                    <p class="card-text m-0"><small class="text-muted"><a href="mailto:@favoriteAd.CarAd.User.Email">@favoriteAd.CarAd.User.Email</a></small></p>
+                                                </div>
+                                                <div style="flex-wrap: wrap" class="d-flex gap-1">
+                                                    <button data-caradid="@favoriteAd.CarAdId" type="button" id="delete-btn" class="btn btn-danger delete-btn">Remove from favorites</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</main>
+
+@section Scripts{
+
+    <script defer>
+    
+        $(document).ready(function () {
+            let totalAds = Number(@Model.FavoriteAds.Count);
+                    
+            function getAlert() {
+                return `<div style="border-radius: 25px" class="alert alert-primary py-4" role="alert">
+                                 <div class="h1 text-center fw-bold mb-0">You currently have no favorite ads</div>
+                    </div>`;
+            }
+                    
+            const totalAdsElem = document.getElementById("total");
+            
+            const parentElement = document.getElementById('parent-container');
+            
+            parentElement.addEventListener('click', function(event) {
+              const targetElement = event.target;
+              if (targetElement.classList.contains('delete-btn')) {
+                $.ajax({
+                    url: "/FavoriteAd/Toggle",
+                    method: "POST",
+                    data: {
+                        userId: "@Model.CurrentUserId",
+                        carAdId: targetElement.dataset.caradid,
+                    },
+                    success: function (response) {
+                        console.log("success");
+                        const adsAfterDeleting = totalAds - 1;
+                        if (adsAfterDeleting === 0) {
+                            const container = document.getElementById("container");
+                            container.innerHTML = getAlert();
+                        } else if (adsAfterDeleting >= 1) {
+                            totalAdsElem.innerHTML = adsAfterDeleting.toString();
+                            const elemToRemove = document.getElementById(`col-favorite-ad-${targetElement.dataset.caradid}`);
+                            elemToRemove.remove();
+                        }
+                        
+                        totalAds -= 1;
+                    },
+                    error: function () {
+                        
+                    },
+                    dataType: "json"
+                });
+                
+              }
+            });
+        });
+    
+    </script>
+
+}

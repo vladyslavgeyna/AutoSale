@@ -1,6 +1,7 @@
 ﻿@using AutoSale.Service.Interfaces
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using AutoSale.Domain.Enum.Car
+@using AutoSale.Domain.Helpers
 @model AutoSale.Domain.ViewModels.CarAd.MyAdsViewModel
 @inject ICarImageService carImageService
 
@@ -61,18 +62,18 @@
                                                              <i class="bi bi-fuel-pump-fill"></i>
                                                              @if (carAd.Car.Fuel is Fuel.Electric)
                                                              {
-                                                                 <p class="m-0">@carAd.Car.Fuel.ToString()</p>
+                                                                 <p class="m-0">@EnumHelper.GetEnumDisplayName(carAd.Car.Fuel)</p>
                                                              }
                                                              else
                                                              {
-                                                                 <p class="m-0">@carAd.Car.Fuel.ToString(), @carAd.Car.EngineCapacity liters</p>
+                                                                 <p class="m-0">@EnumHelper.GetEnumDisplayName(carAd.Car.Fuel), @carAd.Car.EngineCapacity liters</p>
                                                              }
                                                          </div>
                                                      </div>
                                                      <div class="col">
                                                          <div class="info d-flex align-items-center gap-2">
                                                              <i class="bi bi-gear-wide"></i>
-                                                             <p class="m-0">@carAd.Car.Transmission.ToString()</p>
+                                                             <p class="m-0">@EnumHelper.GetEnumDisplayName(carAd.Car.Transmission)</p>
                                                          </div>
                                                      </div>
                                                      <div class="col">
@@ -84,7 +85,7 @@
                                                      <div class="col-12">
                                                          <div class="info d-flex align-items-center gap-2">
                                                              <i class="bi bi-pin-map-fill"></i>
-                                                             <p class="m-0">@carAd.Car.Region.ToString() region</p>
+                                                             <p class="m-0">@EnumHelper.GetEnumDisplayName(carAd.Car.Region) region</p>
                                                          </div>
                                                      </div>
                                                  </div>
