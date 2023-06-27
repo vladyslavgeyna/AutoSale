@@ -16,6 +16,7 @@ namespace AutoSaleMVC
             services.AddScoped<ICarBrandRepository, CarBrandRepository>();
             services.AddScoped<ICarModelRepository, CarModelRepository>();
             services.AddScoped<ICurrencyRepository, CurrencyRepository>();
+            services.AddScoped<IFavoriteAdRepository, FavoriteAdRepository>();
         }
 
         public static void InitializeServices(this IServiceCollection services)
@@ -28,6 +29,7 @@ namespace AutoSaleMVC
             services.AddScoped<ICarModelService, CarModelService>();
             services.AddScoped<ICurrencyService, CurrencyService>();
             services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IFavoriteAdService, FavoriteAdService>();
         }
     }
 }

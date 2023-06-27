@@ -1,4 +1,6 @@
-﻿@using AutoSale.Domain.Enum.Car
+﻿@inject IFavoriteAdService favoriteAdService
+@using AutoSale.Domain.Enum.Car
+@using AutoSale.Service.Interfaces
 @model AutoSale.Domain.ViewModels.CarAd.ViewCarAdViewModel
 @{
     ViewData["Title"] = "View " + @Model.CarAd.Title;
@@ -8,26 +10,21 @@
 <main class="main main-carad-view">
     <div class="container container-carad-view">
         <div class="title-block mb-4 pb-2">
+            
             @if (Model.IsAuthenticated)
             {
-                if (Model.CurrentUserId != Model.CarAd.UserId)
+                @if (Model.CurrentUserId != Model.CarAd.UserId)
                 {
-                    <a id="heart-favorite-ad-link" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Видалити оголошення з обраного" ><i style="font-size: 40px" id="heart-favorite-ad" class="fa-solid fa-heart h1 m-0"></i></a>
-
-                    <a id="heart-favorite-ad-link"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Додати оголошення до обраного" ><i style="font-size: 40px" id="heart-favorite-ad" class="fa-regular fa-heart h1 m-0"></i></a>
+                    @if ((await favoriteAdService.GetByUserIdAndCarAdIdAsync(Model.CurrentUserId, Model.CarAd.Id)).Data is not null)
+                    {
+                        <span id="heart-favorite-ad-link" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Remove the ad from favorites" asp-route-id="@Model.CarAd.Id"><i style="font-size: 40px" id="heart-favorite-ad" class="fa-solid fa-heart h1 m-0"></i></span>
+                    }
+                    else
+                    {
+                        <span id="heart-favorite-ad-link"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add the ad to favorites" asp-route-id="@Model.CarAd.Id"><i style="font-size: 40px" id="heart-favorite-ad" class="fa-regular fa-heart h1 m-0"></i></span>
+                    }
                 }
             }
-            
-            @* <?php if (User::isUserAuthenticated()): ?> *@
-            @*     <?php if (User::getCurrentUserId() != $data["ad"]["user_id"]): ?> *@
-            @*         <?php if (Favoritead::hasCurrentUserFavoriteAdByCarAdId($data["ad"]["id"])): ?> *@
-            @*             <a id="heart-favorite-ad-link" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Видалити оголошення з обраного" href="/favoritead/delete/<?=$data["ad"]["id"]?>"><i style="font-size: 40px" id="heart-favorite-ad" class="fa-solid fa-heart h1 m-0"></i></a> *@
-            @*         <?php else: ?> *@
-            @*             <a id="heart-favorite-ad-link"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Додати оголошення до обраного" href="/favoritead/add/<?=$data["ad"]["id"]?>"><i style="font-size: 40px" id="heart-favorite-ad" class="fa-regular fa-heart h1 m-0"></i></a> *@
-            @*         <?php endif; ?> *@
-            @*     <?php endif; ?> *@
-            @* <?php endif; ?> *@
-            
             
             <h1 class="m-0">@Model.CarAd.Title</h1>
         </div>
@@ -36,7 +33,7 @@
             <p style="margin-top: -1.5rem; color: red" class="h2 fw-bold">@Model.Message</p>
         }
         <div class="carad-view-wrapper mt-4 ">
-            <div class="carad-view-left-wrapper mt-lg-0 mt-3">
+            <div class="carad-view-left-wrapper mt-lg-0 mt-3 col-12 col-lg-5 col-xl-4">
                 <div class="carad-view-left">
                     <div class="carad-view-price ">
                         <div style="border-radius: 25px;" class="alert alert-success p-2 ps-3 mb-4" role="alert">
@@ -44,8 +41,8 @@
                         </div>
                     </div>
                     <div class="carad-view-owner p-2 mb-3">
-                        <div class="carad-view-owner-content d-flex gap-3">
-                            <div style="width: 100px;" class="carad-view-owner-image-wrapper">
+                        <div class="carad-view-owner-content d-flex gap-2">
+                            <div style="max-width: 100px;" class="carad-view-owner-image-wrapper ">
                                 @if (Model.UserImageName is not null)
                                 {
                                     <img class="w-100" style="border-radius: 50%"  src="~/images/@Model.UserImageName" alt="Avatar">
@@ -55,7 +52,7 @@
                                     <img class="w-100" style="border-radius: 50%" src="~/images/site/default_avatar.svg" alt="Avatar">
                                 }
                             </div>
-                            <div class="carad-view-owner-data">
+                            <div class="carad-view-owner-data ">
                                 <p class="mb-2 h5">
                                     <strong>Seller</strong>
                                     @if (Model.IsAuthenticated)
@@ -102,7 +99,7 @@
 
                 </div>
             </div>
-            <div class="carad-view-right-wrapper pl-md-3">
+            <div class="carad-view-right-wrapper pl-md-3 col-12 col-lg-7 col-xl-8">
                 <div class="carad-view-right">
                     @if (Model.Images.Count != 1)
                     {
@@ -111,7 +108,7 @@
                                 <div class="carousel-indicators">
                                     @for (int i = 0; i < Model.Images.Count; i++)
                                     {
-                                        if (i == 0)
+                                        if (Model.Images[i].IsMain)
                                         {
                                             <button class="active" aria-current="true" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="@i" aria-label="Slide @(i + 1)"></button>
                                         }
@@ -238,25 +235,67 @@
 @section Scripts {
     <script defer src="https://cdn.jsdelivr.net/npm/@scriptLinkPart/ui@4.0/dist/fancybox.umd.js"></script>
     <script defer>
+        
+        $(document).ready(function () {
+            const toggleFavoriteAd = document.getElementById("heart-favorite-ad-link");
+                
+            if (toggleFavoriteAd !== null) {
+                $('#heart-favorite-ad-link').on('click', function(e) {
+                    e.preventDefault();
+                    const $this = $(this);
+                    $.ajax({
+                        url: "/FavoriteAd/Toggle",
+                        method: "POST",
+                        data: {
+                            userId: "@Model.CurrentUserId",
+                            carAdId: @Model.CarAd.Id,
+                        },
+                        success: function (response) {
+                            const heartElem = document.getElementById("heart-favorite-ad");
+                            if (response.isExist) {
+                                $('[data-bs-toggle="tooltip"]').tooltip();
+                                $this.attr('data-bs-title', 'Remove the ad from favorites')
+                                    .tooltip('dispose')
+                                    .tooltip('show');
+                                heartElem.classList.remove("fa-regular");
+                                heartElem.classList.add("fa-solid");
+                            } else {
+                                $('[data-bs-toggle="tooltip"]').tooltip();
+                                $this.attr('data-bs-title', 'Add the ad to favorites')
+                                    .tooltip('dispose')
+                                    .tooltip('show');
+                                heartElem.classList.remove("fa-solid");
+                                heartElem.classList.add("fa-regular");
+                            }
+                        },
+                        error: function () {
+                            
+                        },
+                        dataType: "json"
+                    });
+                });
+            }
+            
+        });
+            
         const heart = document.getElementById("heart-favorite-ad");
         const heartLink = document.getElementById("heart-favorite-ad-link");
-        heartLink.addEventListener("mouseover", () => {
+        if (heart !== null && heartLink !== null) {
+            heartLink.addEventListener("mouseover", () => {
             if (heart.classList.contains("fa-regular")) {
-                heart.classList.remove("fa-regular");
-                heart.classList.add("fa-solid");
+                heart.style.fontWeight = "900";
             } else {
-                heart.classList.remove("fa-solid");
-                heart.classList.add("fa-regular");
+                heart.style.fontWeight = "500";
             }
-        });
-        heartLink.addEventListener("mouseout", () => {
+            });
+            heartLink.addEventListener("mouseout", () => {
             if (heart.classList.contains("fa-regular")) {
-                heart.classList.remove("fa-regular");
-                heart.classList.add("fa-solid");
+                 heart.style.fontWeight = "500";
             } else {
-                heart.classList.remove("fa-solid");
-                heart.classList.add("fa-regular");
+                 heart.style.fontWeight = "900";
             }
-        });
+            });
+        }
+    
     </script>
 }

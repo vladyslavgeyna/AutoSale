@@ -21,6 +21,7 @@ namespace AutoSaleMVC.Controllers
         private readonly ICarModelService _carModelService;
         private readonly UserManager<User> _userManager;
         private readonly ICarImageService _carImageService;
+        private readonly IImageService _imageService;
 
 
         public CarAdController(ICarAdService carAdService,
@@ -28,7 +29,8 @@ namespace AutoSaleMVC.Controllers
             ICarBrandService carBrandService,
             ICarModelService carModelService, 
             UserManager<User> userManager,
-            ICarImageService carImageService)
+            ICarImageService carImageService,
+            IImageService imageService)
         {
             _carAdService = carAdService;
             _currencyService = currencyService;
@@ -36,6 +38,7 @@ namespace AutoSaleMVC.Controllers
             _carModelService = carModelService;
             _userManager = userManager;
             _carImageService = carImageService;
+            _imageService = imageService;
         }
 
         [HttpGet]
@@ -182,6 +185,7 @@ namespace AutoSaleMVC.Controllers
             return View(createCarAdViewModel);
         }
 
+        [HttpGet]
         public async Task<IActionResult> View(int id)
         {
             var result = await _carAdService.GetByIdAsync(id, true);
@@ -195,14 +199,32 @@ namespace AutoSaleMVC.Controllers
             {
                 var isAuthenticated = User.Identity.IsAuthenticated;
 
+                var carAdUser = await _userManager.FindByIdAsync(result.Data.UserId);
+
+                if (carAdUser is null)
+                {
+                    return View("Error");
+                }
+                
                 var currentUserId = isAuthenticated 
                     ? (await _userManager.FindByNameAsync(User.Identity.Name)).Id 
                     : null;
-                var a = await _userManager.FindByNameAsync(User.Identity.Name);
-                var currentUserImageName = isAuthenticated 
-                    ? (await _userManager.FindByNameAsync(User.Identity.Name)).Image.Name 
-                    : null;
                 
+                string? carAdUserImageName = null;
+                
+                if (carAdUser.ImageId is not null)
+                {
+                    var carAdUserImageResponse = await _imageService.GetByIdAsync((int)carAdUser.ImageId);
+                    if (carAdUserImageResponse.Code is ResponseCode.InternalServerError)
+                    {
+                        return View("Error");
+                    }
+                    if (carAdUserImageResponse.Code is ResponseCode.Ok)
+                    {
+                        carAdUserImageName = carAdUserImageResponse.Data.Name;
+                    }
+                }
+
                 if (isAuthenticated
                     && currentUserId != result.Data.UserId
                     && !result.Data.IsActive)
@@ -215,7 +237,7 @@ namespace AutoSaleMVC.Controllers
                     {
                         CurrentUserId = currentUserId,
                         IsAuthenticated = isAuthenticated,
-                        UserImageName = currentUserImageName
+                        UserImageName = carAdUserImageName
                     };
 
                     if (isAuthenticated
@@ -257,8 +279,8 @@ namespace AutoSaleMVC.Controllers
             {
                 return View("Error");
             }
-            
-            var carAdsQueryable = carAdsResponse.Data;
+
+            var carAdsQueryable = carAdsResponse.Data.Where(ca => ca.IsActive);
             
             var carAds = carAdsQueryable.ToPagedList(page, pageSize);
 

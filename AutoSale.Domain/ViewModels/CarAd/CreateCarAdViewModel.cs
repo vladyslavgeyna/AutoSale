@@ -78,7 +78,7 @@ namespace AutoSale.Domain.ViewModels.CarAd
 
         [Required(ErrorMessage = "Text is required")]
         [MinLength(10, ErrorMessage = "The minimum text length must be at least 10 characters long")]
-        [MaxLength(500, ErrorMessage = "The maximum text length is 500 characters long")]
+        [MaxLength(700, ErrorMessage = "The maximum text length is 500 characters long")]
         [Display(Name = "Ad text (car description)")]
         public string Text { get; set; } = null!;
         

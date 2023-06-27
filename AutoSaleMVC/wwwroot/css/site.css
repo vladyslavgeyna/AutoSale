@@ -48,7 +48,16 @@ div.os-host-scrollbar-horizontal-hidden .nav-link {
 }
 
 /*Головний шаблон*/
-
+.btn:focus,.btn:active, a:active, a:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s;
+}
 .wrapper-layout {
   padding-top: 4rem;
   min-height: 100%;
@@ -78,7 +87,9 @@ a {
 .primary-color-hover:hover {
   color: rgb(112.520718,44.062154,249.437846) ;
 }
-
+a.primary-color-hover:hover {
+  color: rgb(112.520718,44.062154,249.437846) ;
+}
 .header-layout .navbar-brand {
   padding: 5px;
 }
@@ -705,12 +716,12 @@ footer ul {
   align-items: center;
   column-gap: 10px;
 }
-.container-carad-view .title-block a {
+.container-carad-view .title-block a, .container-carad-view .title-block span {
   color: #dc3545;
   transition: all 0.3s ease;
   font-size: 40px;
 }
-.container-carad-view .title-block a:hover {
+.container-carad-view .title-block a:hover, .container-carad-view .title-block span:hover {
   color: red;
 }
 .container-carad-view .carad-view-wrapper {
@@ -724,13 +735,16 @@ footer ul {
     column-gap: 30px;
   }
   .container-carad-view .carad-view-wrapper .carad-view-left-wrapper {
-    flex: 0 1 25%;
+    /*flex: 0 1 25%;*/
     height: 100%;
   }
   .container-carad-view .carad-view-wrapper .carad-view-right-wrapper {
-    flex: 1 1 auto;
+    /*flex: 1 1 auto;*/
     height: 100%;
   }
+}
+.main-car-ad-index .card .card-body a:hover {
+  background-color: white;
 }
 .container-carad-view .carad-view-price {
   color: green;
@@ -751,7 +765,10 @@ footer ul {
 }
 .container-carad-view .carad-view-owner a:hover {
   text-decoration: none;
-  transform: scale(1.05);
+  transform: scale(1.03);
+}
+#heart-favorite-ad-link {
+  cursor: pointer !important;
 }
 .container-carad-view .carad-view-left .carad-view-info {
   font-size: 14px;
