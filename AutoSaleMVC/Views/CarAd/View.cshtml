@@ -1,10 +1,11 @@
 ﻿@inject IFavoriteAdService favoriteAdService
+@inject ICarComparisonService carComparisonService
 @using AutoSale.Domain.Enum.Car
 @using AutoSale.Domain.Helpers
 @using AutoSale.Service.Interfaces
 @model AutoSale.Domain.ViewModels.CarAd.ViewCarAdViewModel
 @{
-    ViewData["Title"] = "View " + @Model.CarAd.Title;
+    ViewData["Title"] = "View " + Model.CarAd.Title;
     var scriptLinkPart = "@fancyapps";
 }
 
@@ -14,15 +15,15 @@
             
             @if (Model.IsAuthenticated)
             {
-                @if (Model.CurrentUserId != Model.CarAd.UserId)
+                if (Model.CurrentUserId != Model.CarAd.UserId)
                 {
-                    @if ((await favoriteAdService.GetByUserIdAndCarAdIdAsync(Model.CurrentUserId, Model.CarAd.Id)).Data is not null)
+                    if ((await favoriteAdService.GetByUserIdAndCarAdIdAsync(Model.CurrentUserId, Model.CarAd.Id)).Data is not null)
                     {
-                        <span id="heart-favorite-ad-link" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Remove the ad from favorites" asp-route-id="@Model.CarAd.Id"><i style="font-size: 40px" id="heart-favorite-ad" class="fa-solid fa-heart h1 m-0"></i></span>
+                        <span id="heart-favorite-ad-link" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Remove the ad from favorites"><i style="font-size: 40px" id="heart-favorite-ad" class="fa-solid fa-heart h1 m-0"></i></span>
                     }
                     else
                     {
-                        <span id="heart-favorite-ad-link"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add the ad to favorites" asp-route-id="@Model.CarAd.Id"><i style="font-size: 40px" id="heart-favorite-ad" class="fa-regular fa-heart h1 m-0"></i></span>
+                        <span id="heart-favorite-ad-link"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add the ad to favorites"><i style="font-size: 40px" id="heart-favorite-ad" class="fa-regular fa-heart h1 m-0"></i></span>
                     }
                 }
             }
@@ -73,22 +74,30 @@
                     <div class="carad-view-add-to-compare mb-3">
                         <p style="border-radius: 25px;" class="mb-2"><a style="border-radius: 25px;" class="btn btn-warning w-100 py-2"><i class="fa-regular fa-comments pe-2"></i>All reviews</a></p>
                     </div>
-                    @* <?php if (User::isUserAuthenticated()): ?> *@
-                        @* <?php if (User::getCurrentUserId() != $data["ad"]["user_id"]): ?> *@
+                    
+                    @if (Model.IsAuthenticated)
+                    {
+                        if (Model.CurrentUserId != Model.CarAd.UserId)
+                        {
                             <div class="carad-view-add-to-compare mb-3">
                                 <p style="border-radius: 25px;" class="mb-2"><a style="border-radius: 25px;"  class="btn btn-primary w-100 py-2"><i style="transform: rotateY(180deg);" class="fa-regular fa-comment ps-2"></i>Leave a review</a></p>
                             </div>
-                            @* <?php if (Carcomparison::hasCurrentUserCarComparisonByCarAdId($data["ad"]["id"])): ?> *@
-                                <div class="carad-view-add-to-compare mb-3">
-                                    <p style="border-radius: 25px;" class="mb-2"><a style="border-radius: 25px;" class="btn btn-success w-100 py-2"><i class="fa-solid fa-scale-balanced pe-2"></i>Remove car from comparison</a></p>
+                            
+                            if ((await carComparisonService.GetByUserIdAndCarAdIdAsync(Model.CurrentUserId, Model.CarAd.Id)).Data is not null)
+                            {
+                                <div id="button-comparison" type="button" style="border-radius: 25px;" class="btn btn-success w-100 py-2 mb-2">
+                                    <i class="fa-solid fa-scale-balanced pe-2"></i><span>Remove car from comparison</span>
                                 </div>
-                            @* <?php else: ?> *@
-                                <div class="carad-view-add-to-compare mb-3">
-                                    <p style="border-radius: 25px;" class="mb-2"><a style="border-radius: 25px;"  class="btn btn-success w-100 py-2"><i class="fa-solid fa-scale-balanced pe-2"></i>Add car to comparison</a></p>
+                            }
+                            else
+                            {
+                                <div id="button-comparison" type="button" style="border-radius: 25px;" class="btn btn-success w-100 py-2 mb-2">
+                                    <i class="fa-solid fa-scale-balanced pe-2"></i><span>Add car to comparison</span>
                                 </div>
-                            @* <?php endif; ?> *@
-                        @* <?php endif; ?> *@
-                    @* <?php endif; ?> *@
+                            }
+                        }
+                    }
+                    
                     <div class="carad-view-info ps-2 ">
                         <div class="carad-view-created">
                             <p class="mb-2">The ad has been created at: <strong>@Model.CarAd.DateOfCreation.ToString("dd.MM.yyyy HH:mm")</strong></p>
@@ -239,6 +248,36 @@
         
         $(document).ready(function () {
             const toggleFavoriteAd = document.getElementById("heart-favorite-ad-link");
+            
+            const toggleCarComparison = document.getElementById("button-comparison");
+            
+            if (toggleCarComparison !== null) {
+                $('#button-comparison').on('click', function(e) {
+                    e.preventDefault();
+                    const textElem = toggleCarComparison.querySelector("span");
+                    $.ajax({
+                        url: "/CarComparison/Toggle",
+                        method: "POST",
+                        data: {
+                            userId: "@Model.CurrentUserId",
+                            carAdId: @Model.CarAd.Id,
+                        },
+                        success: function (response) {
+                            if (response.isExist) {
+                                textElem.innerHTML = "Remove car from comparison";
+                                
+                            } else {
+                                textElem.innerHTML = "Add car to comparison";
+                                
+                            }
+                        },
+                        error: function () {
+                            
+                        },
+                        dataType: "json"
+                    });
+                });
+            }
                 
             if (toggleFavoriteAd !== null) {
                 $('#heart-favorite-ad-link').on('click', function(e) {

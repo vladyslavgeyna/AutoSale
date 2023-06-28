@@ -7,21 +7,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AutoSale.Service.Implementations
 {
-    public class FavoriteAdService : IFavoriteAdService
+    public class CarComparisonService : ICarComparisonService
     {
-        private readonly IFavoriteAdRepository _favoriteAdRepository;
+        private readonly ICarComparisionRepository _carComparisionRepository;
 
-        public FavoriteAdService(IFavoriteAdRepository favoriteAdRepository)
+        public CarComparisonService(ICarComparisionRepository carComparisionRepository)
         {
-            _favoriteAdRepository = favoriteAdRepository;
+            _carComparisionRepository = carComparisionRepository;
         }
         
-        public async Task<IResponse<List<FavoriteAd>>> GetAllAsync(bool included = false)
+        public async Task<IResponse<List<CarComparison>>> GetAllAsync(bool included = false)
         {
             try
             {
-                var favoriteAds = included
-                    ? await _favoriteAdRepository.Select()
+                var carComparisons = included
+                    ? await _carComparisionRepository.Select()
                         .Include(fa => fa.User)
                         .Include(fa => fa.User.Image)
                         .Include(fa => fa.CarAd)
@@ -32,40 +32,40 @@ namespace AutoSale.Service.Implementations
                         .Include(fa => fa.CarAd.Car.CarModel)
                         .Include(fa => fa.CarAd.Car.Currency)
                         .ToListAsync()
-                    : await _favoriteAdRepository.Select().ToListAsync();
+                    : await _carComparisionRepository.Select().ToListAsync();
                 
-                if (!favoriteAds.Any())
+                if (!carComparisons.Any())
                 {
-                    return new Response<List<FavoriteAd>>
+                    return new Response<List<CarComparison>>
                     {
-                        Data = favoriteAds,
-                        Description = $"Favorite ads not found",
+                        Data = carComparisons,
+                        Description = $"Car comparisons not found",
                         Code = ResponseCode.NotFound
                     };
                 }
                 
-                return new Response<List<FavoriteAd>>
+                return new Response<List<CarComparison>>
                 {
-                    Data = favoriteAds,
+                    Data = carComparisons,
                     Code = ResponseCode.Ok
                 };
             }
             catch (Exception e)
             {
-                return new Response<List<FavoriteAd>>
+                return new Response<List<CarComparison>>
                 {
-                    Description = $"[FavoriteAdService:GetAllAsync] - {e.Message}",
+                    Description = $"[CarComparisonService:GetAllAsync] - {e.Message}",
                     Code = ResponseCode.InternalServerError
                 };
             }
         }
 
-        public async Task<IResponse<FavoriteAd>> GetByIdAsync(int id, bool included = false)
+        public async Task<IResponse<CarComparison>> GetByIdAsync(int id, bool included = false)
         {
             try
             {
-                var favoriteAd = included
-                    ? await _favoriteAdRepository.Select()
+                var carComparison = included
+                    ? await _carComparisionRepository.Select()
                         .Include(fa => fa.User)
                         .Include(fa => fa.User.Image)
                         .Include(fa => fa.CarAd)
@@ -76,61 +76,61 @@ namespace AutoSale.Service.Implementations
                         .Include(fa => fa.CarAd.Car.CarModel)
                         .Include(fa => fa.CarAd.Car.Currency)
                         .FirstOrDefaultAsync(fa => fa.Id == id)
-                    : await _favoriteAdRepository.GetByIdAsync(id);
+                    : await _carComparisionRepository.GetByIdAsync(id);
 
-                if (favoriteAd is null)
+                if (carComparison is null)
                 {
-                    return new Response<FavoriteAd>
+                    return new Response<CarComparison>
                     {
-                        Description = $"Favorite ad not found",
+                        Description = $"Car comparison not found",
                         Code = ResponseCode.NotFound
                     };
                 }
                 
-                return new Response<FavoriteAd>
+                return new Response<CarComparison>
                 {
-                    Data = favoriteAd,
+                    Data = carComparison,
                     Code = ResponseCode.Ok
                 };
             }
             catch (Exception e)
             {
-                return new Response<FavoriteAd>
+                return new Response<CarComparison>
                 {
-                    Description = $"[FavoriteAdService:GetByIdAsync] - {e.Message}",
+                    Description = $"[CarComparisonService:GetByIdAsync] - {e.Message}",
                     Code = ResponseCode.InternalServerError
                 };
             }
         }
 
-        public async Task<IResponse<FavoriteAd>> CreateAsync(FavoriteAd favoriteAd)
+        public async Task<IResponse<CarComparison>> CreateAsync(CarComparison carComparison)
         {
             try
             {
-                favoriteAd = await _favoriteAdRepository.InsertAsync(favoriteAd);
+                carComparison = await _carComparisionRepository.InsertAsync(carComparison);
                 
-                return new Response<FavoriteAd>
+                return new Response<CarComparison>
                 {
-                    Data = favoriteAd,
+                    Data = carComparison,
                     Code = ResponseCode.Ok
                 };
             }
             catch (Exception e)
             {
-                return new Response<FavoriteAd>
+                return new Response<CarComparison>
                 {
-                    Description = $"[FavoriteAdService:CreateAsync] - {e.Message}",
+                    Description = $"[CarComparisonService:CreateAsync] - {e.Message}",
                     Code = ResponseCode.InternalServerError
                 };
             }
         }
 
-        public async Task<IResponse<List<FavoriteAd>>> GetByUserIdAsync(string userId, bool included = false)
+        public async Task<IResponse<List<CarComparison>>> GetByUserIdAsync(string userId, bool included = false)
         {
             try
             {
-                var favoriteAds = included
-                    ? await _favoriteAdRepository.Select()
+                var carComparisons = included
+                    ? await _carComparisionRepository.Select()
                         .Include(fa => fa.User)
                         .Include(fa => fa.User.Image)
                         .Include(fa => fa.CarAd)
@@ -142,42 +142,42 @@ namespace AutoSale.Service.Implementations
                         .Include(fa => fa.CarAd.Car.Currency)
                         .Where(fa => fa.UserId == userId && fa.CarAd.IsActive)
                         .ToListAsync()
-                    : await _favoriteAdRepository.Select()
+                    : await _carComparisionRepository.Select()
                         .Where(fa => fa.UserId == userId && fa.CarAd.IsActive)
                         .ToListAsync();
 
-                if (!favoriteAds.Any())
+                if (!carComparisons.Any())
                 {
-                    return new Response<List<FavoriteAd>>
+                    return new Response<List<CarComparison>>
                     {
-                        Data = favoriteAds,
-                        Description = $"Favorite ads not found",
+                        Data = carComparisons,
+                        Description = $"Car comparisons not found",
                         Code = ResponseCode.NotFound
                     };
                 }
                 
-                return new Response<List<FavoriteAd>>
+                return new Response<List<CarComparison>>
                 {
-                    Data = favoriteAds,
+                    Data = carComparisons,
                     Code = ResponseCode.Ok
                 };
             }
             catch (Exception e)
             {
-                return new Response<List<FavoriteAd>>
+                return new Response<List<CarComparison>>
                 {
-                    Description = $"[FavoriteAdService:GetByUserIdAsync] - {e.Message}",
+                    Description = $"[CarComparisonService:GetByUserIdAsync] - {e.Message}",
                     Code = ResponseCode.InternalServerError
                 };
             }
         }
 
-        public async Task<IResponse<FavoriteAd>> GetByUserIdAndCarAdIdAsync(string userId, int carAdId, bool included = false)
+        public async Task<IResponse<CarComparison>> GetByUserIdAndCarAdIdAsync(string userId, int carAdId, bool included = false)
         {
             try
             {
-                var favoriteAd = included
-                    ? await _favoriteAdRepository.Select()
+                var carComparison = included
+                    ? await _carComparisionRepository.Select()
                         .Include(fa => fa.User)
                         .Include(fa => fa.User.Image)
                         .Include(fa => fa.CarAd)
@@ -189,36 +189,36 @@ namespace AutoSale.Service.Implementations
                         .Include(fa => fa.CarAd.Car.Currency)
                         .Where(fa => fa.UserId == userId && fa.CarAdId == carAdId)
                         .FirstOrDefaultAsync()
-                    : await _favoriteAdRepository.Select()
+                    : await _carComparisionRepository.Select()
                         .Where(fa => fa.UserId == userId && fa.CarAdId == carAdId)
                         .FirstOrDefaultAsync();
 
-                if (favoriteAd is null)
+                if (carComparison is null)
                 {
-                    return new Response<FavoriteAd>
+                    return new Response<CarComparison>
                     {
-                        Description = $"Favorite ad not found",
+                        Description = $"Car comparison not found",
                         Code = ResponseCode.NotFound
                     };
                 }
                 
-                return new Response<FavoriteAd>
+                return new Response<CarComparison>
                 {
-                    Data = favoriteAd,
+                    Data = carComparison,
                     Code = ResponseCode.Ok
                 };
             }
             catch (Exception e)
             {
-                return new Response<FavoriteAd>
+                return new Response<CarComparison>
                 {
-                    Description = $"[FavoriteAdService:GetByUserIdAndCarAdIdAsync] - {e.Message}",
+                    Description = $"[CarComparisonService:GetByUserIdAndCarAdIdAsync] - {e.Message}",
                     Code = ResponseCode.InternalServerError
                 };
             }
         }
 
-        public async Task<IResponse<FavoriteAd>> EditAsync(FavoriteAd favoriteAd)
+        public async Task<IResponse<CarComparison>> EditAsync(CarComparison carComparison)
         {
             throw new NotImplementedException();
         }
@@ -227,19 +227,19 @@ namespace AutoSale.Service.Implementations
         {
             try
             {
-                var favoriteAd = await _favoriteAdRepository.GetByIdAsync(id);
+                var carComparison = await _carComparisionRepository.GetByIdAsync(id);
                 
-                if (favoriteAd is null)
+                if (carComparison is null)
                 {
                     return new Response<bool>
                     {
                         Data = false,
-                        Description = $"Favorite ad not found",
+                        Description = $"Car comparison not found",
                         Code = ResponseCode.NotFound
                     };
                 }
 
-                await _favoriteAdRepository.DeleteAsync(favoriteAd);
+                await _carComparisionRepository.DeleteAsync(carComparison);
                 
                 return new Response<bool>
                 {
@@ -252,7 +252,7 @@ namespace AutoSale.Service.Implementations
                 return new Response<bool>
                 {
                     Data = false,
-                    Description = $"[FavoriteAdService:RemoveAsync] - {e.Message}",
+                    Description = $"[CarComparisonService:RemoveAsync] - {e.Message}",
                     Code = ResponseCode.InternalServerError
                 };
             }

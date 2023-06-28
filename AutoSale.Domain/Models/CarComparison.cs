@@ -11,7 +11,5 @@
         public int CarAdId { get; set; }
 
         public CarAd CarAd { get; set; } = null!;
-
-
     }
 }

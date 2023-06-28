@@ -1,0 +1,204 @@
+﻿@using AutoSale.Service.Interfaces
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using AutoSale.Domain.Helpers
+@model AutoSale.Domain.ViewModels.CarComparison.IndexCarComparisonViewModel
+@inject ICarImageService carImageService
+@{
+    ViewData["Title"] = "Car comparisons";
+}
+
+<main class="main main-comparison">
+    @if (Model.CarComparisons.Any())
+    {
+        <div class="container container-comparison-top">
+            <h1 class="mb-3">Car comparisons</h1>
+        </div>
+    }
+    <div style="overflow-x: auto" class="container container-comparison-body">
+            
+        @if (!Model.CarComparisons.Any())
+        {
+            <div style="border-radius: 25px" class="alert alert-primary py-4" role="alert">
+                <div class="h1 text-center fw-bold mb-0">You currently have no ads added to comparison</div>
+            </div>
+        }
+        else
+        {
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <td></td>
+                    @foreach (var carComparison in Model.CarComparisons)
+                    {
+                        <td class="p-4 car-ad-@carComparison.CarAdId" >
+                            <div class="d-flex align-items-center justify-content-between gap-2">
+                                <a class="car-title primary-color" asp-controller="CarAd" asp-action="View" asp-route-id="@carComparison.CarAdId">@carComparison.CarAd.Title</a>
+                                <span id="tooltip-for-@carComparison.CarAdId" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Remove from comparison"><i data-caradid="@carComparison.CarAdId" class="fa-solid fa-xmark h-100 remove-from-comparison"></i></span>
+                            </div>
+                            <div class="image-wrapper mt-3">
+                                <a asp-controller="CarAd" asp-action="View" asp-route-id="@carComparison.CarAdId">
+                                    <img src="~/images/@((await carImageService.GetMainCarImageByCarIdAsync(carComparison.CarAd.CarId, true)).Data.Image.Name)" alt="Image of a car">
+                                </a>
+                            </div>
+                        </td>
+                    }
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">Price</th>
+                    @foreach (var carComparison in Model.CarComparisons)
+                    {
+                        <td class="car-ad-@carComparison.CarAdId" >@((int)carComparison.CarAd.Car.Price) @carComparison.CarAd.Car.Currency.Sign</td>
+                    }
+                </tr>
+                <tr>
+                    <th scope="row">Brand</th>
+                    @foreach (var carComparison in Model.CarComparisons)
+                    {
+                        <td class="car-ad-@carComparison.CarAdId" >@carComparison.CarAd.Car.CarBrand.Name</td>
+                    }
+                </tr>
+                <tr>
+                    <th scope="row">Model</th>
+                    @foreach (var carComparison in Model.CarComparisons)
+                    {
+                        <td class="car-ad-@carComparison.CarAdId" >@carComparison.CarAd.Car.CarModel.Name</td>
+                    }
+                </tr>
+                <tr>
+                    <th scope="row">Year of production</th>
+                    @foreach (var carComparison in Model.CarComparisons)
+                    {
+                        <td class="car-ad-@carComparison.CarAdId" >@carComparison.CarAd.Car.YearOfProduction</td>
+                    }
+                </tr>
+                <tr>
+                    <th scope="row">Mileage</th>
+                    @foreach (var carComparison in Model.CarComparisons)
+                    {
+                        <td class="car-ad-@carComparison.CarAdId" >@carComparison.CarAd.Car.Mileage thousand km.</td>
+                    }
+                </tr>
+                <tr>
+                    <th scope="row">Transmission</th>
+                    @foreach (var carComparison in Model.CarComparisons)
+                    {
+                        <td class="car-ad-@carComparison.CarAdId" >@EnumHelper.GetEnumDisplayName(carComparison.CarAd.Car.Transmission)</td>
+                    }
+                </tr>
+                <tr>
+                    <th scope="row">Fuel</th>
+                    @foreach (var carComparison in Model.CarComparisons)
+                    {
+                        <td class="car-ad-@carComparison.CarAdId" >@EnumHelper.GetEnumDisplayName(carComparison.CarAd.Car.Fuel)</td>
+                    }
+                </tr>
+                <tr>
+                    <th scope="row">Engine capacity</th>
+                    @foreach (var carComparison in Model.CarComparisons)
+                    {
+                        <td class="car-ad-@carComparison.CarAdId" >@(carComparison.CarAd.Car.EngineCapacity is not null ? carComparison.CarAd.Car.EngineCapacity.ToString() + " liters" : "-")</td>
+                    }
+                </tr>
+                <tr>
+                    <th scope="row">Wheel drive</th>
+                    @foreach (var carComparison in Model.CarComparisons)
+                    {
+                        <td class="car-ad-@carComparison.CarAdId" >@carComparison.CarAd.Car.WheelDrive.ToString()</td>
+                    }
+                </tr>
+                <tr>
+                    <th scope="row">Color</th>
+                    @foreach (var carComparison in Model.CarComparisons)
+                    {
+                        <td class="car-ad-@carComparison.CarAdId" >@carComparison.CarAd.Car.Color.ToString()</td>
+                    }
+                </tr>
+                <tr>
+                    <th scope="row">Number of seats</th>
+                    @foreach (var carComparison in Model.CarComparisons)
+                    {
+                        <td class="car-ad-@carComparison.CarAdId" >@carComparison.CarAd.Car.NumberOfSeats</td>
+                    }
+                </tr>
+                <tr>
+                    <th scope="row">Additional options</th>
+                    @foreach (var carComparison in Model.CarComparisons)
+                    {
+                        if (carComparison.CarAd.Car.AdditionalOptions is null)
+                        {
+                            <td class="car-ad-@carComparison.CarAdId" >-</td>
+                        }
+                        else
+                        {
+                            <td class="car-ad-@carComparison.CarAdId" >@carComparison.CarAd.Car.AdditionalOptions</td>
+                        }
+                    }
+                </tr>
+                <tr>
+                    <th scope="row">Location</th>
+                    @foreach (var carComparison in Model.CarComparisons)
+                    {
+                        <td class="car-ad-@carComparison.CarAdId" >@carComparison.CarAd.Car.Region region</td>
+                    }
+                </tr>
+                </tbody>
+            </table>
+        }
+            
+    </div>
+    
+</main>
+
+@section Scripts{
+    <script defer>
+        $(document).ready(function () {
+            function getAlert() {
+                return `<div style="overflow-x: auto" class="container container-comparison-body"><div style="border-radius: 25px" class="alert alert-primary py-4" role="alert">
+                            <div class="h1 text-center fw-bold mb-0">You currently have no ads added to comparison</div>
+                        </div></div>`;
+            }
+            let totalAds = Number(@Model.CarComparisons.Count);
+            const removeElemParentElem = document.querySelector("table thead tr");
+            removeElemParentElem.addEventListener("click", (e) => {
+                const targetElement = e.target;
+                
+                if (targetElement.classList.contains('remove-from-comparison')) {
+                
+                    $.ajax({
+                        url: "/CarComparison/Toggle",
+                        method: "POST",
+                        data: {
+                            userId: "@Model.CurrentUserId",
+                            carAdId: targetElement.dataset.caradid,
+                        },
+                        success: function (response) {
+                           const adsAfterDeleting = totalAds - 1;
+                          $(`#tooltip-for-${targetElement.dataset.caradid}`).tooltip('disable')
+                          $(`#tooltip-for-${targetElement.dataset.caradid}`).tooltip('dispose')
+                           if (adsAfterDeleting === 0) {
+                               const container = document.querySelector("main.main-comparison");
+                               container.innerHTML = getAlert();
+                           } else if (adsAfterDeleting >= 1) {
+                           
+                               const elemsToDelete = document.querySelectorAll(`.car-ad-${targetElement.dataset.caradid}`);
+
+                               elemsToDelete.forEach((element) => {
+                                 element.remove();
+                               });
+                           }
+                           
+                           totalAds -= 1;
+                        },
+                        error: function () {
+                            
+                        },
+                        dataType: "json"
+                    });
+                
+                }
+            })
+        });
+    </script>
+}

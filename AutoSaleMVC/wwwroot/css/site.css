@@ -769,6 +769,7 @@ footer ul {
 }
 #heart-favorite-ad-link {
   cursor: pointer !important;
+  display: inherit !important;
 }
 .container-carad-view .carad-view-left .carad-view-info {
   font-size: 14px;
@@ -793,11 +794,14 @@ footer ul {
   font-size: 18px;
 }
 
-.container-carad-view .carad-view-right .carousel-item,  .container-carad-view .carad-view-left .carad-view-add-to-compare a {
+.container-carad-view .carad-view-right .carousel-item, .container-carad-view .carad-view-left .carad-view-add-to-compare a {
   font-size: 18px;
   font-weight: 700;
 }
-
+#button-comparison, #button-comparison > * {
+  font-size: 18px !important;
+  font-weight: 700 !important;
+}
 .container-carad-view .carad-view-right .carad-view-right-text-ad {
   font-size: 18px;
   padding: 0.5rem 0.5rem;
@@ -880,13 +884,14 @@ footer ul {
 .container-comparison-body table .car-title:hover{
   color: black;
 }
-.container-comparison-body table .car-title+a{
+.container-comparison-body table .car-title+a, .container-comparison-body table .car-title+span{
   font-size: 28px;
   text-decoration: none;
   font-weight: 700;
   color: red;
+  cursor: pointer;
 }
-.container-comparison-body table .car-title+a:hover{
+.container-comparison-body table .car-title+a:hover, .container-comparison-body table .car-title+span:hover{
   color: darkred;
 }
 
