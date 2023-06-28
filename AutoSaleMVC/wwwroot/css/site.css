@@ -1529,6 +1529,7 @@ footer ul {
 .container-car-ad-index .modal button.btn-no-action:hover {
   border: 3px solid rgb(112.520718,44.062154,249.437846);
   color: rgb(112.520718,44.062154,249.437846);
+  background-color: white;
 }
 .container-car-ad-index .modal button.btn-no-action:active {
   border-color: rgb(112.520718,44.062154,249.437846) !important;

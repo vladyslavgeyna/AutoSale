@@ -266,9 +266,9 @@ namespace AutoSaleMVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index(int page)
+        public async Task<IActionResult> Index(int page, int carBrandId, int carModelId, Region region, int yearFrom, int yearTo, int priceFrom, int priceTo, CarAdsOrderByOptions carAdsOrderByOptions)
         {
-            var pageSize = 1;
+            var pageSize = 10;
             page = page == 0 
                 ? 1 
                 : page;
@@ -281,14 +281,127 @@ namespace AutoSaleMVC.Controllers
             }
 
             var carAdsQueryable = carAdsResponse.Data.Where(ca => ca.IsActive);
+
+            if (carBrandId != 0)
+            {
+                carAdsQueryable = carAdsQueryable.Where(ca => ca.Car.CarBrandId == carBrandId);
+            }
+            
+            if (carModelId != 0)
+            {
+                carAdsQueryable = carAdsQueryable.Where(ca => ca.Car.CarModelId == carModelId);
+            }
+            
+            if (region != 0)
+            {
+                carAdsQueryable = carAdsQueryable.Where(ca => ca.Car.Region == region);
+            }
+            
+            if (yearFrom != 0 && yearTo == 0)
+            {
+                carAdsQueryable = carAdsQueryable.Where(ca => ca.Car.YearOfProduction >= yearFrom);
+            }
+            else if (yearFrom == 0 && yearTo != 0)
+            {
+                carAdsQueryable = carAdsQueryable.Where(ca => ca.Car.YearOfProduction <= yearTo);
+            }
+            else if (yearTo != 0 && yearFrom != 0)
+            {
+                if (yearFrom <= yearTo)
+                {
+                    carAdsQueryable = carAdsQueryable.Where(ca => ca.Car.YearOfProduction >= yearFrom && ca.Car.YearOfProduction <= yearTo);
+                }
+            }
+            
+            if (priceFrom != 0 && priceTo == 0)
+            {
+                carAdsQueryable = carAdsQueryable.Where(ca => ca.Car.Price >= priceFrom);
+            }
+            else if (priceTo != 0 && priceFrom == 0)
+            {
+                carAdsQueryable = carAdsQueryable.Where(ca => ca.Car.Price <= priceTo);
+            }
+            else if (priceTo != 0 && priceFrom != 0)
+            {
+                if (priceFrom <= priceTo)
+                {
+                    carAdsQueryable = carAdsQueryable.Where(ca => ca.Car.YearOfProduction >= priceFrom && ca.Car.YearOfProduction <= priceTo);
+                }
+            }
+
+            if (carAdsOrderByOptions is CarAdsOrderByOptions.FromCheapToExpensive)
+            {
+                carAdsQueryable = carAdsQueryable.OrderBy(ca => ca.Car.Price);
+            }
+            else if (carAdsOrderByOptions is CarAdsOrderByOptions.FromExpensiveToCheap)
+            {
+                carAdsQueryable = carAdsQueryable.OrderByDescending(ca => ca.Car.Price);
+            }
+            else if (carAdsOrderByOptions is CarAdsOrderByOptions.YearOfProductionInAscendingOrder)
+            {
+                carAdsQueryable = carAdsQueryable.OrderBy(ca => ca.Car.YearOfProduction);
+            }
+            else if (carAdsOrderByOptions is CarAdsOrderByOptions.YearOfProductionDescending)
+            {
+                carAdsQueryable = carAdsQueryable.OrderByDescending(ca => ca.Car.YearOfProduction);
+            }
+            else if (carAdsOrderByOptions is CarAdsOrderByOptions.MileageInAscendingOrder)
+            {
+                carAdsQueryable = carAdsQueryable.OrderBy(ca => ca.Car.Mileage);
+            }
+            else if (carAdsOrderByOptions is CarAdsOrderByOptions.MileageDescending)
+            {
+                carAdsQueryable = carAdsQueryable.OrderByDescending(ca => ca.Car.Mileage);
+            }
             
             var carAds = carAdsQueryable.ToPagedList(page, pageSize);
 
+            var carBrands = await _carBrandService.GetAllAsync();
+
+            if (carBrands.Code is not ResponseCode.Ok)
+            {
+                return View("Error");
+            }
+            
+            List<CarModel> carModels = new(); 
+            
+            if (carBrandId != 0)
+            {
+                var response = await _carModelService.GetByCarBrandIdAsync(carBrandId);
+                if (response.Code is not ResponseCode.Ok)
+                {
+                    return View("Error");
+                }
+
+                carModels = response.Data;
+            }
+            
             IndexCarAdViewModel indexCarAdViewModel = new()
             {
                 CarAds = carAds,
-                AllCarAdsCount = carAdsQueryable.Count()
+                AllCarAdsCount = carAdsQueryable.Count(),
             };
+
+            foreach (var carBrand in carBrands.Data)
+            {
+                indexCarAdViewModel.CarBrands.Add(new SelectListItem()
+                {
+                    Text = carBrand.Name,
+                    Value = carBrand.Id.ToString()
+                });
+            }
+
+            if (carModels.Any())
+            {
+                foreach (var carModel in carModels)
+                {
+                    indexCarAdViewModel.CarModels.Add(new SelectListItem()
+                    {
+                        Text = carModel.Name,
+                        Value = carModel.Id.ToString()
+                    });
+                }
+            }
 
             return View(indexCarAdViewModel);
         }
