@@ -281,79 +281,26 @@ namespace AutoSaleMVC.Controllers
             }
 
             var carAdsQueryable = carAdsResponse.Data.Where(ca => ca.IsActive);
+            
+            carAdsQueryable = carAdsQueryable.Where(ca =>
+                (carBrandId == 0 || ca.Car.CarBrandId == carBrandId) &&
+                (carModelId == 0 || ca.Car.CarModelId == carModelId) &&
+                (region == 0 || ca.Car.Region == region) &&
+                (yearFrom == 0 || (yearTo == 0 && ca.Car.YearOfProduction >= yearFrom) || (yearTo != 0 && yearFrom <= yearTo && ca.Car.YearOfProduction >= yearFrom && ca.Car.YearOfProduction <= yearTo)) &&
+                (priceFrom == 0 || (priceTo == 0 && ca.Car.Price >= priceFrom) || (priceTo != 0 && priceFrom <= priceTo && ca.Car.Price >= priceFrom && ca.Car.Price <= priceTo))
+            );
+            
+            carAdsQueryable = carAdsOrderByOptions switch
+            {
+                CarAdsOrderByOptions.FromCheapToExpensive => carAdsQueryable.OrderBy(ca => ca.Car.Price),
+                CarAdsOrderByOptions.FromExpensiveToCheap => carAdsQueryable.OrderByDescending(ca => ca.Car.Price),
+                CarAdsOrderByOptions.YearOfProductionInAscendingOrder => carAdsQueryable.OrderBy(ca => ca.Car.YearOfProduction),
+                CarAdsOrderByOptions.YearOfProductionDescending => carAdsQueryable.OrderByDescending(ca => ca.Car.YearOfProduction),
+                CarAdsOrderByOptions.MileageInAscendingOrder => carAdsQueryable.OrderBy(ca => ca.Car.Mileage),
+                CarAdsOrderByOptions.MileageDescending => carAdsQueryable.OrderByDescending(ca => ca.Car.Mileage),
+                _ => carAdsQueryable
+            };
 
-            if (carBrandId != 0)
-            {
-                carAdsQueryable = carAdsQueryable.Where(ca => ca.Car.CarBrandId == carBrandId);
-            }
-            
-            if (carModelId != 0)
-            {
-                carAdsQueryable = carAdsQueryable.Where(ca => ca.Car.CarModelId == carModelId);
-            }
-            
-            if (region != 0)
-            {
-                carAdsQueryable = carAdsQueryable.Where(ca => ca.Car.Region == region);
-            }
-            
-            if (yearFrom != 0 && yearTo == 0)
-            {
-                carAdsQueryable = carAdsQueryable.Where(ca => ca.Car.YearOfProduction >= yearFrom);
-            }
-            else if (yearFrom == 0 && yearTo != 0)
-            {
-                carAdsQueryable = carAdsQueryable.Where(ca => ca.Car.YearOfProduction <= yearTo);
-            }
-            else if (yearTo != 0 && yearFrom != 0)
-            {
-                if (yearFrom <= yearTo)
-                {
-                    carAdsQueryable = carAdsQueryable.Where(ca => ca.Car.YearOfProduction >= yearFrom && ca.Car.YearOfProduction <= yearTo);
-                }
-            }
-            
-            if (priceFrom != 0 && priceTo == 0)
-            {
-                carAdsQueryable = carAdsQueryable.Where(ca => ca.Car.Price >= priceFrom);
-            }
-            else if (priceTo != 0 && priceFrom == 0)
-            {
-                carAdsQueryable = carAdsQueryable.Where(ca => ca.Car.Price <= priceTo);
-            }
-            else if (priceTo != 0 && priceFrom != 0)
-            {
-                if (priceFrom <= priceTo)
-                {
-                    carAdsQueryable = carAdsQueryable.Where(ca => ca.Car.YearOfProduction >= priceFrom && ca.Car.YearOfProduction <= priceTo);
-                }
-            }
-
-            if (carAdsOrderByOptions is CarAdsOrderByOptions.FromCheapToExpensive)
-            {
-                carAdsQueryable = carAdsQueryable.OrderBy(ca => ca.Car.Price);
-            }
-            else if (carAdsOrderByOptions is CarAdsOrderByOptions.FromExpensiveToCheap)
-            {
-                carAdsQueryable = carAdsQueryable.OrderByDescending(ca => ca.Car.Price);
-            }
-            else if (carAdsOrderByOptions is CarAdsOrderByOptions.YearOfProductionInAscendingOrder)
-            {
-                carAdsQueryable = carAdsQueryable.OrderBy(ca => ca.Car.YearOfProduction);
-            }
-            else if (carAdsOrderByOptions is CarAdsOrderByOptions.YearOfProductionDescending)
-            {
-                carAdsQueryable = carAdsQueryable.OrderByDescending(ca => ca.Car.YearOfProduction);
-            }
-            else if (carAdsOrderByOptions is CarAdsOrderByOptions.MileageInAscendingOrder)
-            {
-                carAdsQueryable = carAdsQueryable.OrderBy(ca => ca.Car.Mileage);
-            }
-            else if (carAdsOrderByOptions is CarAdsOrderByOptions.MileageDescending)
-            {
-                carAdsQueryable = carAdsQueryable.OrderByDescending(ca => ca.Car.Mileage);
-            }
-            
             var carAds = carAdsQueryable.ToPagedList(page, pageSize);
 
             var carBrands = await _carBrandService.GetAllAsync();
