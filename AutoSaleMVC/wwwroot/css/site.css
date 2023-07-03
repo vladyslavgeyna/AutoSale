@@ -840,6 +840,7 @@ footer ul {
 .main-user-profile .user-data-links a:hover {
   border: 4px solid rgb(112.520718,44.062154,249.437846);
   color: rgb(112.520718,44.062154,249.437846);
+  background-color: white;
 }
 .container-user-profile .user-data-links a:active{
   border-color: rgb(112.520718,44.062154,249.437846) !important;

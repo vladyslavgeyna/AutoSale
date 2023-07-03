@@ -22,6 +22,7 @@ namespace AutoSaleMVC.Controllers
         private readonly UserManager<User> _userManager;
         private readonly ICarImageService _carImageService;
         private readonly IImageService _imageService;
+        private readonly IFavoriteAdService _favoriteAdService;
 
 
         public CarAdController(ICarAdService carAdService,
@@ -30,7 +31,8 @@ namespace AutoSaleMVC.Controllers
             ICarModelService carModelService, 
             UserManager<User> userManager,
             ICarImageService carImageService,
-            IImageService imageService)
+            IImageService imageService,
+            IFavoriteAdService favoriteAdService)
         {
             _carAdService = carAdService;
             _currencyService = currencyService;
@@ -39,6 +41,7 @@ namespace AutoSaleMVC.Controllers
             _userManager = userManager;
             _carImageService = carImageService;
             _imageService = imageService;
+            _favoriteAdService = favoriteAdService;
         }
 
         [HttpGet]
@@ -233,11 +236,19 @@ namespace AutoSaleMVC.Controllers
                 }
                 else
                 {
+                    var countResponse = await _favoriteAdService.GetCountOfFavoriteAdsByCarAdId(id);
+
+                    if (countResponse.Code is not ResponseCode.Ok)
+                    {
+                        return View("Error");
+                    }
+                    
                     ViewCarAdViewModel viewCarAdViewModel = new()
                     {
                         CurrentUserId = currentUserId,
                         IsAuthenticated = isAuthenticated,
-                        UserImageName = carAdUserImageName
+                        UserImageName = carAdUserImageName,
+                        CountOfAddedToFavorite = countResponse.Data
                     };
 
                     if (isAuthenticated

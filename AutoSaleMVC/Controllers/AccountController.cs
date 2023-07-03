@@ -336,10 +336,46 @@ namespace AutoSaleMVC.Controllers
             
             return View();
         }
-        
-        
-        
-        
+
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Index()
+        {
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+
+            if (user is null)
+            {
+                return View("Error");
+            }
+            
+            string? currentUserImageName = null;
+            if (User.Identity.IsAuthenticated)
+            {
+                if (user.ImageId is not null)
+                {
+                    var currentUserImageResponse = await _imageService.GetByIdAsync((int)user.ImageId);
+                    if (currentUserImageResponse.Code is ResponseCode.Ok)
+                    {
+                        currentUserImageName = currentUserImageResponse.Data.Name;
+                    }
+                }
+            }
+            
+            IndexViewModel indexViewModel = new()
+            {
+                Name = user.Name,
+                Surname = user.Surname,
+                LastName = user.LastName,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                UserImageName = currentUserImageName
+            };
+
+            return View(indexViewModel);
+        }
+
+
 
     }
 }

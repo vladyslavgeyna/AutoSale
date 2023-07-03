@@ -257,5 +257,29 @@ namespace AutoSale.Service.Implementations
                 };
             }
         }
+
+        public async Task<IResponse<int>> GetCountOfFavoriteAdsByCarAdId(int carAdId)
+        {
+            try
+            {
+                var count = await _favoriteAdRepository.Select()
+                    .Where(fa => fa.CarAdId == carAdId)
+                    .CountAsync();
+                
+                return new Response<int>
+                {
+                    Data = count,
+                    Code = ResponseCode.Ok
+                };
+            }
+            catch (Exception e)
+            {
+                return new Response<int>
+                {
+                    Description = $"[FavoriteAdService:GetCountOfFavoriteAdsByCarAdId] - {e.Message}",
+                    Code = ResponseCode.InternalServerError
+                };
+            }
+        }
     }
 }

@@ -85,13 +85,13 @@
                             
                             if ((await carComparisonService.GetByUserIdAndCarAdIdAsync(Model.CurrentUserId, Model.CarAd.Id)).Data is not null)
                             {
-                                <div id="button-comparison" type="button" style="border-radius: 25px;" class="btn btn-success w-100 py-2 mb-2">
+                                <div id="button-comparison" type="button" style="border-radius: 25px;" class="btn btn-success w-100 py-2 mb-3">
                                     <i class="fa-solid fa-scale-balanced pe-2"></i><span>Remove car from comparison</span>
                                 </div>
                             }
                             else
                             {
-                                <div id="button-comparison" type="button" style="border-radius: 25px;" class="btn btn-success w-100 py-2 mb-2">
+                                <div id="button-comparison" type="button" style="border-radius: 25px;" class="btn btn-success w-100 py-2 mb-3">
                                     <i class="fa-solid fa-scale-balanced pe-2"></i><span>Add car to comparison</span>
                                 </div>
                             }
@@ -103,7 +103,7 @@
                             <p class="mb-2">The ad has been created at: <strong>@Model.CarAd.DateOfCreation.ToString("dd.MM.yyyy HH:mm")</strong></p>
                         </div>
                         <div class="carad-view-favorites-count">
-                            <p class="mb-2">Saved to favorites: <strong>100000000</strong></p>
+                            <p class="mb-2">Saved to favorites: <strong id="count-of-added-to-favorite">@Model.CountOfAddedToFavorite</strong></p>
                         </div>
                     </div>
 
@@ -251,6 +251,10 @@
             
             const toggleCarComparison = document.getElementById("button-comparison");
             
+            const countOfAddedToFavoriteElem = document.getElementById("count-of-added-to-favorite");
+            
+            let currentCountOfAddedToFavorite = Number(@Model.CountOfAddedToFavorite);
+            
             if (toggleCarComparison !== null) {
                 $('#button-comparison').on('click', function(e) {
                     e.preventDefault();
@@ -299,6 +303,8 @@
                                     .tooltip('show');
                                 heartElem.classList.remove("fa-regular");
                                 heartElem.classList.add("fa-solid");
+                                currentCountOfAddedToFavorite += 1;
+                                countOfAddedToFavoriteElem.innerHTML = currentCountOfAddedToFavorite.toString();
                             } else {
                                 $('[data-bs-toggle="tooltip"]').tooltip();
                                 $this.attr('data-bs-title', 'Add the ad to favorites')
@@ -306,6 +312,8 @@
                                     .tooltip('show');
                                 heartElem.classList.remove("fa-solid");
                                 heartElem.classList.add("fa-regular");
+                                currentCountOfAddedToFavorite -= 1;
+                                countOfAddedToFavoriteElem.innerHTML = currentCountOfAddedToFavorite.toString();
                             }
                         },
                         error: function () {

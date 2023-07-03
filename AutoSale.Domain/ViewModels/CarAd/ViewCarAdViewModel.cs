@@ -16,5 +16,7 @@ namespace AutoSale.Domain.ViewModels.CarAd
         public bool IsAuthenticated { get; set; }
 
         public string? UserImageName { get; set; }
+
+        public int CountOfAddedToFavorite { get; set; }
     }
 }
