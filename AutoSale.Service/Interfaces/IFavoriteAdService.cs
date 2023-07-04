@@ -20,6 +20,5 @@ namespace AutoSale.Service.Interfaces
         Task<IResponse<bool>> RemoveAsync(int id);
         
         Task<IResponse<int>> GetCountOfFavoriteAdsByCarAdId(int carAdId);
-        
     }
 }

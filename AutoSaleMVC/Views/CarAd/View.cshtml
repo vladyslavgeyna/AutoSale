@@ -72,7 +72,7 @@
                         </div>
                     </div>
                     <div class="carad-view-add-to-compare mb-3">
-                        <p style="border-radius: 25px;" class="mb-2"><a style="border-radius: 25px;" class="btn btn-warning w-100 py-2"><i class="fa-regular fa-comments pe-2"></i>All reviews</a></p>
+                        <p style="border-radius: 25px;" class="mb-2"><a asp-controller="UserReview" asp-action="View" asp-route-id="@Model.CarAd.UserId" style="border-radius: 25px;" class="btn btn-warning w-100 py-2"><i class="fa-regular fa-comments pe-2"></i>All reviews</a></p>
                     </div>
                     
                     @if (Model.IsAuthenticated)
@@ -80,7 +80,7 @@
                         if (Model.CurrentUserId != Model.CarAd.UserId)
                         {
                             <div class="carad-view-add-to-compare mb-3">
-                                <p style="border-radius: 25px;" class="mb-2"><a style="border-radius: 25px;"  class="btn btn-primary w-100 py-2"><i style="transform: rotateY(180deg);" class="fa-regular fa-comment ps-2"></i>Leave a review</a></p>
+                                <p style="border-radius: 25px;" class="mb-2"><a style="border-radius: 25px;" asp-controller="UserReview" asp-action="Create" asp-route-id="@Model.CarAd.UserId" class="btn btn-primary w-100 py-2"><i style="transform: rotateY(180deg);" class="fa-regular fa-comment ps-2"></i>Leave a review</a></p>
                             </div>
                             
                             if ((await carComparisonService.GetByUserIdAndCarAdIdAsync(Model.CurrentUserId, Model.CarAd.Id)).Data is not null)
@@ -330,18 +330,18 @@
         const heartLink = document.getElementById("heart-favorite-ad-link");
         if (heart !== null && heartLink !== null) {
             heartLink.addEventListener("mouseover", () => {
-            if (heart.classList.contains("fa-regular")) {
-                heart.style.fontWeight = "900";
-            } else {
-                heart.style.fontWeight = "500";
-            }
+                if (heart.classList.contains("fa-regular")) {
+                    heart.style.fontWeight = "900";
+                } else {
+                    heart.style.fontWeight = "500";
+                }
             });
             heartLink.addEventListener("mouseout", () => {
-            if (heart.classList.contains("fa-regular")) {
-                 heart.style.fontWeight = "500";
-            } else {
-                 heart.style.fontWeight = "900";
-            }
+                if (heart.classList.contains("fa-regular")) {
+                     heart.style.fontWeight = "500";
+                } else {
+                     heart.style.fontWeight = "900";
+                }
             });
         }
     

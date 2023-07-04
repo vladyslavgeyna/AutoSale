@@ -248,7 +248,7 @@ namespace AutoSaleMVC.Controllers
                         CurrentUserId = currentUserId,
                         IsAuthenticated = isAuthenticated,
                         UserImageName = carAdUserImageName,
-                        CountOfAddedToFavorite = countResponse.Data
+                        CountOfAddedToFavorite = countResponse.Data,
                     };
 
                     if (isAuthenticated

@@ -176,7 +176,7 @@ namespace AutoSale.Service.Implementations
             {
                 return new Response<List<CarAd>>
                 {
-                    Description = $"[CarAdService:GetByUserIdAsync] - {e.Message}",
+                    Description = $"[CarAdService:GetByUserIdToAsync] - {e.Message}",
                     Code = ResponseCode.InternalServerError
                 };
             }

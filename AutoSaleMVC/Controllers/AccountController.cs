@@ -369,7 +369,8 @@ namespace AutoSaleMVC.Controllers
                 LastName = user.LastName,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
-                UserImageName = currentUserImageName
+                UserImageName = currentUserImageName,
+                UserId = user.Id
             };
 
             return View(indexViewModel);

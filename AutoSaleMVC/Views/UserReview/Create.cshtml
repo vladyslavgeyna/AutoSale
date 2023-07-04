@@ -1,0 +1,25 @@
+﻿@model AutoSale.Domain.ViewModels.UserReview.CreateUserReviewViewModel
+
+@{
+    ViewData[""] = $"Leaving a review about the seller: {Model.UserTo.Surname} {Model.UserTo.Name} {Model.UserTo.LastName}";
+}
+
+<main class="main main-userreview-add">
+    <div class="container container-userreview-add">
+        <h1 class="mb-3">Review of the seller:<br>@Model.UserTo.Surname @Model.UserTo.Name @Model.UserTo.LastName</h1>
+        <form asp-controller="UserReview" asp-action="Create" method="post">
+            <input type="hidden" asp-for="UserIdTo">
+            <div class="mb-3">
+                <label asp-for="Title" class="form-label"></label>
+                <input asp-for="Title" required type="text" class="form-control" id="inputTitle">
+                <span style="margin-left: -1rem; display: inline-block!important;" asp-validation-for="Title" class="text-danger error-form-validation"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Text" class="form-label"></label>
+                <textarea asp-for="Text" required class="form-control" id="FormControlTextareaText" style="height: 100px; resize: none;"></textarea>
+                <span style="margin-left: -1rem; display: inline-block!important;" asp-validation-for="Text" class="text-danger error-form-validation"></span>
+            </div>
+            <button id="btn-add-ad" class="btn primary-color-bg primary-color-hover" type="submit">Leave a review</button>
+        </form>
+    </div>
+</main>

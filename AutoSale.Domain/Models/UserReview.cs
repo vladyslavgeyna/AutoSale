@@ -19,5 +19,7 @@ namespace AutoSale.Domain.Models
         
         [ForeignKey("UserIdTo")]
         public User UserTo { get; set; } = null!;
+
+        public DateTime DateOfCreation { get; set; }
     }
 }

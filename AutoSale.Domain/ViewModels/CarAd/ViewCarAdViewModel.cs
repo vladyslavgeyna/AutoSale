@@ -12,7 +12,7 @@ namespace AutoSale.Domain.ViewModels.CarAd
         public string? Message { get; set; }
 
         public string? CurrentUserId { get; set; }
-
+        
         public bool IsAuthenticated { get; set; }
 
         public string? UserImageName { get; set; }

@@ -56,7 +56,7 @@
                     <a asp-controller="CarAd" asp-action="MyAds" class="btn primary-color-bg primary-color-hover px-4 "><i class="fa-solid fa-pager pe-2 "></i>My ads</a>
                     <a asp-controller="FavoriteAd" asp-action="Index" class="btn primary-color-bg primary-color-hover px-4 "><i class="fa-solid fa-heart pe-2 "></i>Favorite</a>
                     <a asp-controller="CarComparison" asp-action="Index" class="btn primary-color-bg primary-color-hover px-4"><i class="fa-solid fa-scale-balanced pe-2 "></i>Comparison</a>
-                    <a class="btn primary-color-bg primary-color-hover px-4"><i class="fa-regular fa-comments pe-2"></i>Reviews of me</a>
+                    <a asp-controller="UserReview" asp-action="View" asp-route-id="@Model.UserId" class="btn primary-color-bg primary-color-hover px-4"><i class="fa-regular fa-comments pe-2"></i>Reviews of me</a>
                 </div>
             </div>
         </div>

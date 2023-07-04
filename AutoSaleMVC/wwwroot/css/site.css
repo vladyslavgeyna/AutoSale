@@ -927,6 +927,7 @@ footer ul {
 .main-userreview-add form button:hover {
   border: 4px solid rgb(112.520718,44.062154,249.437846);
   color: rgb(112.520718,44.062154,249.437846);
+  background-color: white;
 }
 .container-userreview-add form button:active{
   border-color: rgb(112.520718,44.062154,249.437846) !important;

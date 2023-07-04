@@ -166,7 +166,7 @@ namespace AutoSale.Service.Implementations
             {
                 return new Response<List<CarComparison>>
                 {
-                    Description = $"[CarComparisonService:GetByUserIdAsync] - {e.Message}",
+                    Description = $"[CarComparisonService:GetByUserIdToAsync] - {e.Message}",
                     Code = ResponseCode.InternalServerError
                 };
             }

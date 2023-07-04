@@ -166,7 +166,7 @@ namespace AutoSale.Service.Implementations
             {
                 return new Response<List<FavoriteAd>>
                 {
-                    Description = $"[FavoriteAdService:GetByUserIdAsync] - {e.Message}",
+                    Description = $"[FavoriteAdService:GetByUserIdToAsync] - {e.Message}",
                     Code = ResponseCode.InternalServerError
                 };
             }
