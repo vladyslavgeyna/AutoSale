@@ -119,7 +119,7 @@ namespace AutoSaleMVC.Controllers
 
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(loginViewModel.Email, loginViewModel.Password, loginViewModel.RememberMe, false);
+                var result = await _signInManager.PasswordSignInAsync(loginViewModel.Email, loginViewModel.Password, loginViewModel.RememberMe, true);
                 if (result.Succeeded)
                 {
                     return LocalRedirect(returnUrl);
@@ -240,43 +240,50 @@ namespace AutoSaleMVC.Controllers
         [HttpGet]
         public async Task<IActionResult> ExternalLoginCallback(string? returnUrl = null, string? remoteError = null)
         {
-            if (User.Identity.IsAuthenticated)
+            try
             {
-                return RedirectToAction("Index", "Home");
-            }
-            
-            returnUrl ??= Url.Content("~/");
-
-            if (remoteError is not null)
-            {
-                ModelState.AddModelError(string.Empty, "Error from external provider");
-                return View("Login");
-            }
-
-            var info = await _signInManager.GetExternalLoginInfoAsync();
-
-            if (info is null)
-            {
-                return RedirectToAction("Login");
-            }
-            
-            var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false);
-
-            if (result.Succeeded)
-            {
-                await _signInManager.UpdateExternalAuthenticationTokensAsync(info);
-                return LocalRedirect(returnUrl);
-            }
-            else
-            {
-                var email = info.Principal.FindFirstValue(ClaimTypes.Email);
-                ExternalLoginViewModel externalLoginViewModel = new()
+                if (User.Identity.IsAuthenticated)
                 {
-                    ReturnUrl = returnUrl,
-                    ProviderDisplayName = info.ProviderDisplayName ?? "",
-                    Email = email
-                };
-                return View("ExternalLoginConfirmation", externalLoginViewModel);
+                    return RedirectToAction("Index", "Home");
+                }
+            
+                returnUrl ??= Url.Content("~/");
+
+                if (remoteError is not null)
+                {
+                    ModelState.AddModelError(string.Empty, "Error from external provider");
+                    return View("Login");
+                }
+
+                var info = await _signInManager.GetExternalLoginInfoAsync();
+
+                if (info is null)
+                {
+                    return RedirectToAction("Login");
+                }
+            
+                var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false);
+
+                if (result.Succeeded)
+                {
+                    await _signInManager.UpdateExternalAuthenticationTokensAsync(info);
+                    return LocalRedirect(returnUrl);
+                }
+                else
+                {
+                    var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+                    ExternalLoginViewModel externalLoginViewModel = new()
+                    {
+                        ReturnUrl = returnUrl,
+                        ProviderDisplayName = info.ProviderDisplayName ?? "",
+                        Email = email
+                    };
+                    return View("ExternalLoginConfirmation", externalLoginViewModel);
+                }
+            }
+            catch (Exception)
+            {
+                return View("Error");
             }
         }
 

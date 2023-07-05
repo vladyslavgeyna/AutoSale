@@ -360,5 +360,39 @@ namespace AutoSale.Service.Implementations
                 };
             }
         }
+
+        public async Task<IResponse<bool>> ToggleIsActiveAsync(int id)
+        {
+            try
+            {
+                var carAd = await _carAdRepository.GetByIdAsync(id);
+
+                if (carAd is null)
+                {
+                    return new Response<bool>
+                    {
+                        Code = ResponseCode.NotFound
+                    };
+                }
+
+                carAd.IsActive = !carAd.IsActive;
+
+                await _carAdRepository.UpdateAsync(carAd);
+
+                return new Response<bool>
+                {
+                    Data = carAd.IsActive,
+                    Code = ResponseCode.Ok
+                };
+            }
+            catch (Exception e)
+            {
+                return new Response<bool>
+                {
+                    Description = $"[CarAdService:ToggleIsActiveAsync] - {e.Message}",
+                    Code = ResponseCode.InternalServerError
+                };
+            }
+        }
     }
 }

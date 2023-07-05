@@ -21,6 +21,9 @@ body, html {
 .admin-main-error div div {
   margin-top: 50px;
 }
+.btn-light:active, .btn-light:focus {
+  color: rgb(112.520718,44.062154,249.437846) ;
+}
 .wrapper-admin-layout nav.main-header .nav-item a {
   font-weight: 700;
   font-size: 18px;
@@ -597,13 +600,21 @@ footer ul {
   font-size: 22px;
   font-weight: 700;
 }
-
-.container-carad-myads .modal-confirm-delete-car-ad button.btn-no-action, .container-carad-myads .modal-confirm-delete-car-ad a {
+img.not-active-image {
+  filter: grayscale(100%) brightness(75%);
+  -webkit-filter: grayscale(100%)  brightness(75%);
+  transition: all 0.3s ease;
+}
+img.not-active-image:hover {
+  filter: grayscale(0) brightness(1);
+  -webkit-filter: grayscale(0) brightness(1);
+}
+.container-carad-myads .modal-confirm-delete-car-ad button.btn-no-action, .container-carad-myads .modal-confirm-delete-car-ad a, .container-carad-myads .modal-confirm-delete-car-ad button.delete {
   border-radius: 25px;
   font-size: 17px;
   font-weight: 700;
 }
-.container-carad-myads .modal-confirm-delete-car-ad a {
+.container-carad-myads .modal-confirm-delete-car-ad a, .container-carad-myads .modal-confirm-delete-car-ad button.delete {
   border: 3px solid #dc3545;
 }
 .container-carad-myads .modal-confirm-delete-car-ad a:hover {
@@ -958,15 +969,15 @@ footer ul {
   border-radius: 25px;
 }
 
-.container-userreview-view .modal-confirm-delete-review button.btn-no-action, .container-userreview-view .modal-confirm-delete-review a {
+.container-userreview-view .modal-confirm-delete-review button.btn-no-action, .container-userreview-view .modal-confirm-delete-review a, .container-userreview-view .modal-confirm-delete-review button.delete-user-review {
   border-radius: 25px;
   font-size: 17px;
   font-weight: 700;
 }
-.container-userreview-view .modal-confirm-delete-review a {
+.container-userreview-view .modal-confirm-delete-review a, .container-userreview-view .modal-confirm-delete-review button.delete-user-review {
   border: 3px solid #dc3545;
 }
-.container-userreview-view .modal-confirm-delete-review a:hover {
+.container-userreview-view .modal-confirm-delete-review a:hover, .container-userreview-view .modal-confirm-delete-review button.delete-user-review:hover {
   border: 3px solid #bb2d3b;
 }
 .container-userreview-view .modal-confirm-delete-review button.btn-no-action {

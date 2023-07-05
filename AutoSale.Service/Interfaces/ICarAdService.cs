@@ -19,5 +19,7 @@ namespace AutoSale.Service.Interfaces
         Task<IResponse<CarAd>> EditAsync(CarAd carAd);
         
         Task<IResponse<bool>> RemoveAsync(int id);
+        
+        Task<IResponse<bool>> ToggleIsActiveAsync(int id);
     }
 }

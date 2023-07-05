@@ -31,11 +31,11 @@
         else
         {
             <h1 class="mb-3">My ads</h1>
-            <p class="h3 mb-4">Total ads: @Model.CarAds.Count</p>
-            <div class="row row-cols-1 g-3">
+            <p class="h3 mb-4">Total ads: <span id="total-ads">@Model.CarAds.Count</span></p>
+            <div class="row ads-row row-cols-1 g-3">
                 @foreach (var carAd in Model.CarAds)
                 {
-                    <div class="col h-100">
+                    <div class="col col-for-ad-@carAd.Id h-100">
                          <div class="card mb-3" >
                              <div class="row g-0 align-items-center">
                                  <div class="col-md-4">
@@ -98,11 +98,11 @@
                                                      <a  class="btn btn-success">Edit</a>
                                                      @if (carAd.IsActive)
                                                      {
-                                                         <a  class="btn btn-primary">Deactivate</a>
+                                                         <button data-caradid="@carAd.Id" class="btn btn-primary toggle-is-active">Deactivate</button>
                                                      }
                                                      else
                                                      {
-                                                         <a  class="btn btn-primary">Activate</a>
+                                                         <button data-caradid="@carAd.Id" class="btn btn-primary toggle-is-active">Activate</button>
                                                      }
                                                      <button data-bs-toggle="modal" data-bs-target="#confirm-delete-car-ad-@carAd.Id" type="button" class="btn btn-danger delete-btn">Delete</button>
                                                  </div>
@@ -120,11 +120,11 @@
                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                      </div>
                                      <div class="modal-body">
-                                         <p>Do you really want to remove this ad?</p>
+                                         <p>Do you really want to delete this ad?</p>
                                      </div>
                                      <div class="modal-footer">
                                          <button type="button" class="btn btn-no-action primary-color-bg primary-color-hover" data-bs-dismiss="modal">Cancel</button>
-                                         <a  class="btn btn-danger">Delete</a>
+                                         <button data-caradid="@carAd.Id" class="btn btn-danger delete delete-carad" data-bs-dismiss="modal">Delete</button>
                                      </div>
                                  </div>
                              </div>
@@ -135,3 +135,92 @@
         }
     </div>
 </main>
+@section Scripts{
+    <script defer>
+    
+    $(document).ready(function () {
+    
+        let currentAdsCount = Number(@Model.CarAds.Count);
+    
+        function getAlert() {
+            return `<div style="border-radius: 25px" class="alert alert-primary py-4" role="alert">
+                        <div class="h1 text-center fw-bold mb-0">You currently have no ads posted</div>
+                        <div class="h2 text-center fw-bold pt-2 mb-0">But you can <a href="/CarAd/Create" >create</a> it</div>
+                    </div>`;
+        }
+        
+        const container = document.querySelector(".container-carad-myads");
+        
+        const row = document.querySelector(".ads-row");
+    
+        const totalAdsElem = document.getElementById("total-ads");
+    
+        row.addEventListener("click", (e) =>{
+            
+            const target = e.target;
+            
+            
+            if (target.classList.contains("toggle-is-active")) {
+            
+                $.ajax({
+                    url: "/CarAd/ToggleIsActive",
+                    method: "POST",
+                    data: {
+                        id: target.dataset.caradid,
+                    },
+                    success: function (response) {
+                        if (response.isActive) {
+                            
+                            target.innerHTML = "Deactivate";
+                            
+                        } else {
+                        
+                            target.innerHTML = "Activate";
+                            
+                        }
+                        
+                    },
+                    error: function () {
+                        
+                    },
+                    dataType: "json"
+                });
+            
+            }
+            
+        
+            if (target.classList.contains('delete-carad')) {
+            
+                $.ajax({
+                    url: "/CarAd/Delete",
+                    method: "POST",
+                    data: {
+                        id: target.dataset.caradid,
+                    },
+                    success: function (response) {
+                        const adsAfterDeleting = currentAdsCount - 1;
+                        if (adsAfterDeleting === 0) {
+                            
+                            container.innerHTML = getAlert();
+                            
+                        } else if (adsAfterDeleting >= 1) {
+                            totalAdsElem.innerHTML = adsAfterDeleting.toString();
+                            const col = document.querySelector(`.col-for-ad-${target.dataset.caradid}`);
+                            col.remove();
+                        }
+                        
+                        currentAdsCount -= 1;
+                    },
+                    error: function () {
+                        
+                    },
+                    dataType: "json"
+                });
+            
+            }
+        });
+    
+    });
+    
+    </script>
+}

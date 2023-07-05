@@ -107,7 +107,20 @@ namespace AutoSaleMVC.Controllers
             }
 
             return RedirectToAction("View", new { id = createUserReviewViewModel.UserIdTo });
+        }
 
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var deleteUserReviewResponse = await _userReviewService.RemoveAsync(id);
+
+            if (deleteUserReviewResponse.Code is not ResponseCode.Ok)
+            {
+                return BadRequest();
+            }
+            
+            return Json(new { });
         }
 
 

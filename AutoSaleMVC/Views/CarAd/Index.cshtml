@@ -103,7 +103,14 @@
                                 <div class="car-top">
                                     <div class="m-2 image-wrapper ">
                                         <a asp-controller="CarAd" asp-action="View" asp-route-id="@carAd.Id">
-                                            <img src="~/images/@((await carImageService.GetMainCarImageByCarIdAsync(carAd.CarId, true)).Data.Image.Name)" class="card-img-top " alt="@carAd.Title">
+                                            @if (carAd.IsActive)
+                                            {
+                                                <img src="~/images/@((await carImageService.GetMainCarImageByCarIdAsync(carAd.CarId, true)).Data.Image.Name)" class="card-img-top " alt="@carAd.Title">
+                                            }
+                                            else
+                                            {
+                                                <img src="~/images/@((await carImageService.GetMainCarImageByCarIdAsync(carAd.CarId, true)).Data.Image.Name)" class="card-img-top not-active-image" alt="@carAd.Title">
+                                            }
                                         </a>
                                     </div>
                                     <div class="card-body pb-0">

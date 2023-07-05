@@ -37,7 +37,7 @@
             
             @foreach (var userReview in Model.UserReviews)
             {
-                <div class="card mb-4" style="border-radius: 25px; overflow: hidden">
+                <div class="card card-for-review-@userReview.Id mb-4" style="border-radius: 25px; overflow: hidden">
                     <h5 class="card-header py-2 fw-bold d-flex align-items-center justify-content-between">
                         <p class="p-0 m-0">
                             @userReview.UserFrom.Surname @userReview.UserFrom.Name @userReview.UserFrom.LastName
@@ -60,7 +60,7 @@
                 </div>
                 @if (Model.IsAuthenticated && userReview.UserIdFrom == Model.CurrentUserId)
                 {
-                    <div class="modal modal-confirm-delete-review fade" id="confirm-delete-review-@userReview.Id" tabindex="-1" aria-hidden="false">
+                    <div class="modal modal-for-review-@userReview.Id modal-confirm-delete-review fade" id="confirm-delete-review-@userReview.Id" tabindex="-1" aria-hidden="false">
                         <div class="modal-dialog modal-dialog-centered">
                             <div style="border-radius: 25px;" class="modal-content">
                                 <div class="modal-header">
@@ -72,7 +72,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-no-action primary-color-bg primary-color-hover" data-bs-dismiss="modal">Cancel</button>
-                                    <a  class="btn btn-danger">Delete</a>
+                                    <button data-userreviewid="@userReview.Id" type="button" class="btn btn-danger delete-user-review" data-bs-dismiss="modal">Delete</button>
                                 </div>
                             </div>
                         </div>
@@ -82,3 +82,60 @@
         }
     </div>
 </main>
+@section Scripts{
+    <script defer>
+    
+    $(document).ready(function () {
+    
+        let currentReviewsCount = Number(@Model.UserReviews.Count);
+    
+        function getAlert() {
+            return `<div style="border-radius: 25px" class="alert alert-primary py-4" role="alert">
+                        <div class="h1 text-center fw-bold mb-0">This seller has not received any reviews yet</div>
+                        <div class="h2 text-center fw-bold pt-2 mb-0">But you can <a href="/UserReview/Create/@Model.UserTo.Id" >leave</a> it</div>
+                    </div>`;
+        }
+        
+        const container = document.querySelector(".container-userreview-view");
+    
+        container.addEventListener("click", (e) =>{
+            
+            const target = e.target;
+        
+            if (target.classList.contains('delete-user-review')) {
+            
+                $.ajax({
+                    url: "/UserReview/Delete",
+                    method: "POST",
+                    data: {
+                        id: target.dataset.userreviewid,
+                    },
+                    success: function (response) {
+                        const reviewsAfterDeleting = currentReviewsCount - 1;
+                        if (reviewsAfterDeleting === 0) {
+                            
+                            container.innerHTML = getAlert();
+                            
+                        } else if (reviewsAfterDeleting >= 1) {
+                            
+                            const card = document.querySelector(`.card-for-review-${target.dataset.userreviewid}`);
+                            card.remove();
+                            const modal = document.querySelector(`.modal-for-review-${target.dataset.userreviewid}`);
+                            modal.remove();
+                        }
+                        
+                        currentReviewsCount -= 1;
+                    },
+                    error: function () {
+                        
+                    },
+                    dataType: "json"
+                });
+            
+            }
+        });
+    
+    });
+    
+    </script>
+}

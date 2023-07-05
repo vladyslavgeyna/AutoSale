@@ -291,8 +291,19 @@ namespace AutoSaleMVC.Controllers
                 return View("Error");
             }
 
-            var carAdsQueryable = carAdsResponse.Data.Where(ca => ca.IsActive);
-            
+            IQueryable<CarAd> carAdsQueryable;
+
+            if (User.Identity.IsAuthenticated)
+            {
+                var currentUserId = (await _userManager.FindByNameAsync(User.Identity.Name)).Id;
+                
+                carAdsQueryable = carAdsResponse.Data.Where(ca => ca.IsActive || (!ca.IsActive && ca.UserId == currentUserId));
+            }
+            else
+            {
+                carAdsQueryable = carAdsResponse.Data.Where(ca => ca.IsActive);
+            }
+
             carAdsQueryable = carAdsQueryable.Where(ca =>
                 (carBrandId == 0 || ca.Car.CarBrandId == carBrandId) &&
                 (carModelId == 0 || ca.Car.CarModelId == carModelId) &&
@@ -386,7 +397,35 @@ namespace AutoSaleMVC.Controllers
 
             return View(myAdsViewModel);
         }
-        
-        
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var deleteCarAdResponse = await _carAdService.RemoveAsync(id);
+
+            if (deleteCarAdResponse.Code is not ResponseCode.Ok)
+            {
+                return BadRequest();
+            }
+
+            return Json(new { });
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> ToggleIsActive(int id)
+        {
+            var toggleResponse = await _carAdService.ToggleIsActiveAsync(id);
+
+            if (toggleResponse.Code is not ResponseCode.Ok)
+            {
+                return BadRequest();
+            }
+            
+            return Json(new { isActive = toggleResponse.Data });
+        }
+
+
     }
 }
