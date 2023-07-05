@@ -818,6 +818,32 @@ img.not-active-image:hover {
   padding: 0.5rem 0.5rem;
 }
 
+.headcol {
+  position: sticky;
+  left: 0;
+  background-color: white !important;
+  z-index: 10;
+  height: 100%;
+  margin-left: -10px;
+}
+.headcol:after {
+  content: '';
+  position: absolute;
+  height: 100%;
+  width: 1px;
+  background-color: #dee2e6;
+  top: 0;
+  right: 0;
+}
+.headcol:before {
+  content: '';
+  position: absolute;
+  height: 100%;
+  width: 1px;
+  background-color: #dee2e6;
+  top: 0;
+  left: -1px;
+}
 /*Сторінка перегляду профілю користувача */
 .main-user-profile {
   display: flex;

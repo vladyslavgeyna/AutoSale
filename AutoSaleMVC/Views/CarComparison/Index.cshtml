@@ -14,7 +14,7 @@
             <h1 class="mb-3">Car comparisons</h1>
         </div>
     }
-    <div style="overflow-x: auto" class="container container-comparison-body">
+    <div style="overflow-x: auto" class="container container-comparison-body p-0">
             
         @if (!Model.CarComparisons.Any())
         {
@@ -27,7 +27,7 @@
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <td></td>
+                    <td class="headcol"></td>
                     @foreach (var carComparison in Model.CarComparisons)
                     {
                         <td class="p-4 car-ad-@carComparison.CarAdId" >
@@ -46,84 +46,84 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <th scope="row">Price</th>
+                    <th class="headcol" scope="row">Price</th>
                     @foreach (var carComparison in Model.CarComparisons)
                     {
                         <td class="car-ad-@carComparison.CarAdId" >@((int)carComparison.CarAd.Car.Price) @carComparison.CarAd.Car.Currency.Sign</td>
                     }
                 </tr>
                 <tr>
-                    <th scope="row">Brand</th>
+                    <th class="headcol" scope="row">Brand</th>
                     @foreach (var carComparison in Model.CarComparisons)
                     {
                         <td class="car-ad-@carComparison.CarAdId" >@carComparison.CarAd.Car.CarBrand.Name</td>
                     }
                 </tr>
                 <tr>
-                    <th scope="row">Model</th>
+                    <th class="headcol" scope="row">Model</th>
                     @foreach (var carComparison in Model.CarComparisons)
                     {
                         <td class="car-ad-@carComparison.CarAdId" >@carComparison.CarAd.Car.CarModel.Name</td>
                     }
                 </tr>
                 <tr>
-                    <th scope="row">Year of production</th>
+                    <th class="headcol" scope="row">Year of production</th>
                     @foreach (var carComparison in Model.CarComparisons)
                     {
                         <td class="car-ad-@carComparison.CarAdId" >@carComparison.CarAd.Car.YearOfProduction</td>
                     }
                 </tr>
                 <tr>
-                    <th scope="row">Mileage</th>
+                    <th class="headcol" scope="row">Mileage</th>
                     @foreach (var carComparison in Model.CarComparisons)
                     {
                         <td class="car-ad-@carComparison.CarAdId" >@carComparison.CarAd.Car.Mileage thousand km.</td>
                     }
                 </tr>
                 <tr>
-                    <th scope="row">Transmission</th>
+                    <th class="headcol" scope="row">Transmission</th>
                     @foreach (var carComparison in Model.CarComparisons)
                     {
                         <td class="car-ad-@carComparison.CarAdId" >@EnumHelper.GetEnumDisplayName(carComparison.CarAd.Car.Transmission)</td>
                     }
                 </tr>
                 <tr>
-                    <th scope="row">Fuel</th>
+                    <th class="headcol" scope="row">Fuel</th>
                     @foreach (var carComparison in Model.CarComparisons)
                     {
                         <td class="car-ad-@carComparison.CarAdId" >@EnumHelper.GetEnumDisplayName(carComparison.CarAd.Car.Fuel)</td>
                     }
                 </tr>
                 <tr>
-                    <th scope="row">Engine capacity</th>
+                    <th class="headcol" scope="row">Engine capacity</th>
                     @foreach (var carComparison in Model.CarComparisons)
                     {
                         <td class="car-ad-@carComparison.CarAdId" >@(carComparison.CarAd.Car.EngineCapacity is not null ? carComparison.CarAd.Car.EngineCapacity.ToString() + " liters" : "-")</td>
                     }
                 </tr>
                 <tr>
-                    <th scope="row">Wheel drive</th>
+                    <th class="headcol" scope="row">Wheel drive</th>
                     @foreach (var carComparison in Model.CarComparisons)
                     {
                         <td class="car-ad-@carComparison.CarAdId" >@carComparison.CarAd.Car.WheelDrive.ToString()</td>
                     }
                 </tr>
                 <tr>
-                    <th scope="row">Color</th>
+                    <th class="headcol" scope="row">Color</th>
                     @foreach (var carComparison in Model.CarComparisons)
                     {
                         <td class="car-ad-@carComparison.CarAdId" >@carComparison.CarAd.Car.Color.ToString()</td>
                     }
                 </tr>
                 <tr>
-                    <th scope="row">Number of seats</th>
+                    <th class="headcol" scope="row">Number of seats</th>
                     @foreach (var carComparison in Model.CarComparisons)
                     {
                         <td class="car-ad-@carComparison.CarAdId" >@carComparison.CarAd.Car.NumberOfSeats</td>
                     }
                 </tr>
                 <tr>
-                    <th scope="row">Additional options</th>
+                    <th class="headcol" scope="row">Additional options</th>
                     @foreach (var carComparison in Model.CarComparisons)
                     {
                         if (carComparison.CarAd.Car.AdditionalOptions is null)
@@ -137,7 +137,7 @@
                     }
                 </tr>
                 <tr>
-                    <th scope="row">Location</th>
+                    <th class="headcol" scope="row">Location</th>
                     @foreach (var carComparison in Model.CarComparisons)
                     {
                         <td class="car-ad-@carComparison.CarAdId" >@carComparison.CarAd.Car.Region region</td>

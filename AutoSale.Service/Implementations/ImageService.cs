@@ -15,6 +15,8 @@ namespace AutoSale.Service.Implementations
         private readonly IImageRepository _imageRepository;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private const int CompressImageQuality = 40;
+        private const int MaxSizeInPixelsToAllowResize = 1920;
+        private const int NewSizeInPixelsAfterResize = 1280;
         public ImageService(IImageRepository imageRepository, IWebHostEnvironment webHostEnvironment)
         {
             _imageRepository = imageRepository;
@@ -106,6 +108,37 @@ namespace AutoSale.Service.Implementations
             return fileName;
         }
         
+        // private async Task<string?> _createFileAndGetName(IFormFile formFile, int quality)
+        // {
+        //     var wwwrootPath = _webHostEnvironment.WebRootPath;
+        //     var extension = Path.GetExtension(formFile.FileName);
+        //     string path, fileName;
+        //
+        //     do
+        //     {
+        //         fileName = Guid.NewGuid().ToString() + extension;
+        //         path = Path.Combine(wwwrootPath, "images", fileName);
+        //
+        //     } while (File.Exists(path));
+        //
+        //     using (var sourceImage = await SixLabors.ImageSharp.Image.LoadAsync(formFile.OpenReadStream()))
+        //     {
+        //         using (var outputStream = new MemoryStream())
+        //         {
+        //             var encoder = new JpegEncoder
+        //             {
+        //                 Quality = quality
+        //             };
+        //
+        //             await sourceImage.SaveAsync(outputStream, encoder);
+        //
+        //             await File.WriteAllBytesAsync(path, outputStream.ToArray());
+        //         }
+        //     }
+        //
+        //     return fileName;
+        // }
+        
         private async Task<string?> _createFileAndGetName(IFormFile formFile, int quality)
         {
             var wwwrootPath = _webHostEnvironment.WebRootPath;
@@ -116,11 +149,26 @@ namespace AutoSale.Service.Implementations
             {
                 fileName = Guid.NewGuid().ToString() + extension;
                 path = Path.Combine(wwwrootPath, "images", fileName);
-
+                
             } while (File.Exists(path));
 
             using (var sourceImage = await SixLabors.ImageSharp.Image.LoadAsync(formFile.OpenReadStream()))
             {
+                if (sourceImage.Width >= MaxSizeInPixelsToAllowResize && sourceImage.Width >= sourceImage.Height)
+                {
+                    int newWidth = NewSizeInPixelsAfterResize;
+                    int newHeight = (int)(((float)sourceImage.Height / sourceImage.Width) * newWidth);
+
+                    sourceImage.Mutate(x => x.Resize(newWidth, newHeight));
+                }
+                else if (sourceImage.Height >= MaxSizeInPixelsToAllowResize && sourceImage.Height >= sourceImage.Width)
+                {
+                    int newHeight = NewSizeInPixelsAfterResize;
+                    int newWidth = (int)(((float)sourceImage.Width / sourceImage.Height) * newHeight);
+
+                    sourceImage.Mutate(x => x.Resize(newWidth, newHeight));
+                }
+
                 using (var outputStream = new MemoryStream())
                 {
                     var encoder = new JpegEncoder
@@ -136,6 +184,7 @@ namespace AutoSale.Service.Implementations
 
             return fileName;
         }
+
 
         public async Task<IResponse<Image>> CreateAsync(IFormFile formFile)
         {
