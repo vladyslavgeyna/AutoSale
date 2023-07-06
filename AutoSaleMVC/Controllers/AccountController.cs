@@ -18,18 +18,21 @@ namespace AutoSaleMVC.Controllers
         private readonly IImageService _imageService;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IEmailService _emailService;
+        private readonly IUserService _userService;
 
         public AccountController(UserManager<User> userManager, 
             SignInManager<User> signInManager, 
             IImageService imageService,
             RoleManager<IdentityRole> roleManager,
-            IEmailService emailService)
+            IEmailService emailService,
+            IUserService userService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _imageService = imageService;
             _roleManager = roleManager;
             _emailService = emailService;
+            _userService = userService;
         }
 
         [HttpGet]
@@ -506,6 +509,81 @@ namespace AutoSaleMVC.Controllers
             }
             return View(editViewModel);
         }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult ChangePassword()
+        {
+            return View(new ChangePasswordViewModel());
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel changePasswordViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(changePasswordViewModel);
+            }
+
+            var currentUser = await _userManager.FindByNameAsync(User.Identity.Name);
+            
+            if (currentUser is null)
+            {
+                return View("Error");
+            }
+            
+            var result = await _userManager.ChangePasswordAsync(currentUser, changePasswordViewModel.CurrentPassword, changePasswordViewModel.NewPassword);
+
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index");
+            }
+            
+            foreach (var error in result.Errors)
+            {
+                changePasswordViewModel.ErrorMessages.Add(error.Description);
+            }
+
+            return View(changePasswordViewModel);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Delete(DeleteViewModel deleteViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("Edit");
+            }
+
+            var currentUser = await _userManager.FindByNameAsync(User.Identity.Name);
+
+            if (currentUser is null)
+            {
+                return View("Error");
+            }
+
+            var passwordMatch = await _userManager.CheckPasswordAsync(currentUser, deleteViewModel.Password);
+
+            if (!passwordMatch)
+            {
+                return RedirectToAction("Edit");
+            }
+            
+
+            // var result = await _userManager.DeleteAsync(currentUser);
+            var result = await _userService.RemoveAsync(currentUser);
+            
+            if (result.Code is ResponseCode.Ok)
+            {
+                await _signInManager.SignOutAsync();
+                return RedirectToAction("Index", "Home");
+            }
+            
+            return RedirectToAction("Edit");
+        }
+
 
 
     }

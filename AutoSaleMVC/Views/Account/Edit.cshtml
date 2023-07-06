@@ -66,7 +66,7 @@
             }
             <button class="btn primary-color-bg primary-color-hover save" type="submit">Save changes</button>
             <hr class="p-0 m-0 mx-4">
-            <a class="btn btn-warning" >Change password</a>
+            <a asp-controller="Account" asp-action="ChangePassword" class="btn btn-warning" >Change password</a>
         </form>
         <div style="max-width: 500px; margin: 0 auto" class="mt-4 mb-5 pt-3 pb-3">
             <hr >
@@ -103,10 +103,10 @@
                         <h5 class="modal-title">Confirmation</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form  method="post" class="modal-footer flex-column">
+                    <form asp-controller="Account" asp-action="Delete" method="post" class="modal-footer flex-column">
                         <div style="flex: 1 1 auto; align-self: stretch; font-size: 16px" class="form-floating">
-                            <input required type="password" class="form-control" name="delete_profile_password" id="floatingPasswordDelete" placeholder="Password">
-                            <label for="floatingPasswordDelete">Enter your password</label>
+                            <input asp-for="DeleteViewModel.Password" required type="password" class="form-control" id="floatingPasswordDelete" placeholder="Enter your password">
+                            <label asp-for="DeleteViewModel.Password"></label>
                         </div>
                         <div class="mt-2" style="align-self: flex-end">
                             <button type="button" class="btn btn-no-action primary-color-bg primary-color-hover" data-bs-dismiss="modal">Cancel</button>

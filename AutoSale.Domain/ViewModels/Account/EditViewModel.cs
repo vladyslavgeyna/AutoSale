@@ -41,5 +41,7 @@ namespace AutoSale.Domain.ViewModels.Account
 
         public string? UserImageName { get; set; }
 
+        public DeleteViewModel DeleteViewModel { get; set; } = null!;
+
     }
 }

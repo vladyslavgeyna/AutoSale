@@ -1440,7 +1440,6 @@ img.navbar-avatar {
 }
 
 .container-change-password .error-form-validation {
-  cursor: help;
   padding-top: 3px;
   padding-left: 1rem;
   margin-bottom: -10px;
@@ -1793,6 +1792,7 @@ img.navbar-avatar {
 .main-change-password button:hover {
   border: 4px solid rgb(112.520718,44.062154,249.437846);
   color: rgb(112.520718,44.062154,249.437846);
+  background-color: white;
 }
 
 .section-user-edit-admin form button:active{

@@ -532,19 +532,19 @@ namespace AutoSaleMVC.Migrations
                     b.HasOne("AutoSale.Domain.Models.CarBrand", "CarBrand")
                         .WithMany()
                         .HasForeignKey("CarBrandId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AutoSale.Domain.Models.CarModel", "CarModel")
                         .WithMany()
                         .HasForeignKey("CarModelId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AutoSale.Domain.Models.Currency", "Currency")
                         .WithMany()
                         .HasForeignKey("CurrencyId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("CarBrand");
@@ -559,13 +559,13 @@ namespace AutoSaleMVC.Migrations
                     b.HasOne("AutoSale.Domain.Models.Car", "Car")
                         .WithMany()
                         .HasForeignKey("CarId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AutoSale.Domain.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Car");
@@ -578,13 +578,13 @@ namespace AutoSaleMVC.Migrations
                     b.HasOne("AutoSale.Domain.Models.CarAd", "CarAd")
                         .WithMany()
                         .HasForeignKey("CarAdId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AutoSale.Domain.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("CarAd");
@@ -597,13 +597,13 @@ namespace AutoSaleMVC.Migrations
                     b.HasOne("AutoSale.Domain.Models.Car", "Car")
                         .WithMany()
                         .HasForeignKey("CarId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AutoSale.Domain.Models.Image", "Image")
                         .WithMany()
                         .HasForeignKey("ImageId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Car");
@@ -616,7 +616,7 @@ namespace AutoSaleMVC.Migrations
                     b.HasOne("AutoSale.Domain.Models.CarBrand", "CarBrand")
                         .WithMany()
                         .HasForeignKey("CarBrandId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("CarBrand");
@@ -627,13 +627,13 @@ namespace AutoSaleMVC.Migrations
                     b.HasOne("AutoSale.Domain.Models.CarAd", "CarAd")
                         .WithMany()
                         .HasForeignKey("CarAdId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AutoSale.Domain.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("CarAd");
@@ -645,8 +645,7 @@ namespace AutoSaleMVC.Migrations
                 {
                     b.HasOne("AutoSale.Domain.Models.Image", "Image")
                         .WithMany()
-                        .HasForeignKey("ImageId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("ImageId");
 
                     b.Navigation("Image");
                 });
@@ -656,13 +655,13 @@ namespace AutoSaleMVC.Migrations
                     b.HasOne("AutoSale.Domain.Models.User", "UserFrom")
                         .WithMany()
                         .HasForeignKey("UserIdFrom")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AutoSale.Domain.Models.User", "UserTo")
                         .WithMany()
                         .HasForeignKey("UserIdTo")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("UserFrom");
@@ -675,7 +674,7 @@ namespace AutoSaleMVC.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -684,7 +683,7 @@ namespace AutoSaleMVC.Migrations
                     b.HasOne("AutoSale.Domain.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -693,7 +692,7 @@ namespace AutoSaleMVC.Migrations
                     b.HasOne("AutoSale.Domain.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -702,13 +701,13 @@ namespace AutoSaleMVC.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AutoSale.Domain.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -717,7 +716,7 @@ namespace AutoSaleMVC.Migrations
                     b.HasOne("AutoSale.Domain.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

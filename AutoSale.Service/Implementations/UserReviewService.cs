@@ -93,6 +93,34 @@ namespace AutoSale.Service.Implementations
             }
         }
 
+        public IResponse<IQueryable<UserReview>> GetAllAsQueryable(bool included = false)
+        {
+            try
+            {
+                var userReviews = included
+                    ? _userReviewRepository.Select()
+                        .Include(ur => ur.UserTo)
+                        .Include(ur => ur.UserTo.Image)
+                        .Include(ur => ur.UserFrom)
+                        .Include(ur => ur.UserFrom.Image)
+                    : _userReviewRepository.Select();
+                
+                return new Response<IQueryable<UserReview>>
+                {
+                    Data = userReviews,
+                    Code = ResponseCode.Ok
+                };
+            }
+            catch (Exception e)
+            {
+                return new Response<IQueryable<UserReview>>
+                {
+                    Description = $"[UserReviewService:GetAllAsQueryable] - {e.Message}",
+                    Code = ResponseCode.InternalServerError
+                };
+            }
+        }
+
         public async Task<IResponse<UserReview>> CreateAsync(UserReview userReview)
         {
             try

@@ -34,6 +34,7 @@ namespace AutoSaleMVC
             services.AddScoped<IFavoriteAdService, FavoriteAdService>();
             services.AddScoped<ICarComparisonService, CarComparisonService>();
             services.AddScoped<IUserReviewService, UserReviewService>();
+            services.AddScoped<IUserService, UserService>();
         }
     }
 }

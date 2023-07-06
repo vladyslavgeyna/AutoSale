@@ -9,6 +9,8 @@ namespace AutoSale.Service.Interfaces
         
         Task<IResponse<UserReview>> GetByIdAsync(int id, bool included = false);
         
+        IResponse<IQueryable<UserReview>> GetAllAsQueryable(bool included = false);
+        
         Task<IResponse<UserReview>> CreateAsync(UserReview userReview);
         
         Task<IResponse<List<UserReview>>> GetByUserIdToAsync(string userIdTo, bool included = false);

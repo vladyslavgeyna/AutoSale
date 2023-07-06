@@ -4,6 +4,7 @@
     {
         Ok,
         NotFound,
-        InternalServerError
+        InternalServerError,
+        Error,
     }
 }
