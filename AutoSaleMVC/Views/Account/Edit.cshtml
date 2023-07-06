@@ -1,0 +1,173 @@
+﻿@model AutoSale.Domain.ViewModels.Account.EditViewModel
+
+@{
+    ViewData["Title"] = "Editing profile";
+}
+
+<main class="main main main-edit">
+    <div class="container container container-edit">
+        <h1  class="text-center mb-4">Editing profile</h1>
+        <form asp-controller="Account" asp-action="Edit" class="d-flex flex-column form-main" method="post" enctype="multipart/form-data">
+            <div class="form-floating row justify-content-center">
+                <div class="image-wrapper col-5 col-lg-4 p-0" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Choose image">
+                    @if (Model.UserImageName is not null)
+                    {
+                        <img id="avatar-image" src="~/images/@Model.UserImageName" alt="Avatar">
+                    }
+                    else
+                    {
+                        <img id="avatar-image" alt="Avatar" src="~/images/site/default_avatar.svg">
+                    }
+                    <div class="choose-image-wrapper">
+                        <img src="~/images/site/camera.svg" class="choose-image" alt="Choose image">
+                    </div>
+                    <input accept="image/jpeg, image/png" type="file" id="inputFile" asp-for="Image">
+                </div>
+                
+                <div class="text-center file-name mt-3 fw-bold"></div>
+                @if (Model.UserImageName is not null)
+                {
+                    <div class="d-flex justify-content-center delete-image-wrapper">
+                        <button type="button" class="btn btn-danger delete-image">Delete image</button>
+                    </div> 
+                }
+            </div>
+            <div class="form-floating">
+                <input required type="text" class="form-control" asp-for="Name" id="floatingName" placeholder="Name">
+                <label asp-for="Name"></label>
+                <span asp-validation-for="Name" class="text-danger error-form-validation"></span>
+            </div>
+            <div class="form-floating">
+                <input required type="text" asp-for="Surname" class="form-control" id="floatingSurname" placeholder="Surname">
+                <label asp-for="Surname"></label>
+                <span asp-validation-for="Surname" class="text-danger error-form-validation"></span>
+            </div>
+            <div class="form-floating">
+                <input required type="text" asp-for="LastName" class="form-control" id="floatingLastname" placeholder="Last name">
+                <label asp-for="LastName"></label>
+                <span asp-validation-for="LastName" class="text-danger error-form-validation"></span>
+            </div>
+            <div class="form-floating">
+                <input required type="email" asp-for="Email" class="form-control" id="floatingLogin" placeholder="Email">
+                <label asp-for="Email"></label>
+                <span asp-validation-for="Email" class="text-danger error-form-validation"></span>
+            </div>
+            <div class="form-floating">
+                <input required type="text" class="form-control" asp-for="PhoneNumber" id="floatingPhone" placeholder="Phone number">
+                <label asp-for="PhoneNumber"></label>
+                <span asp-validation-for="PhoneNumber" class="text-danger error-form-validation"></span>
+            </div>
+            @if (Model.ErrorMessages.Any())
+            {
+                foreach (var message in Model.ErrorMessages)
+                {
+                    <p class="text-danger">@message</p>
+                }
+            }
+            <button class="btn primary-color-bg primary-color-hover save" type="submit">Save changes</button>
+            <hr class="p-0 m-0 mx-4">
+            <a class="btn btn-warning" >Change password</a>
+        </form>
+        <div style="max-width: 500px; margin: 0 auto" class="mt-4 mb-5 pt-3 pb-3">
+            <hr >
+        </div>
+        <div class="danger-zone">
+            <div class="danger-zone-title h2 ">
+                Danger zone
+            </div>
+            <div class="danger-zone-body mt-4 text-center">
+                <button data-bs-toggle="modal" data-bs-target="#confirm-delete-profile-confirm" class="btn btn-danger mt-3">Delete profile</button>
+            </div>
+        </div>
+        <div class="modal modal-confirm-delete-profile-confirm fade" id="confirm-delete-profile-confirm" tabindex="-1" aria-hidden="false">
+            <div class="modal-dialog modal-dialog-centered">
+                <div style="border-radius: 25px;" class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirmation</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to delete your profile?<br>This action is irreversible!<br><br>Attention! If the profile is deleted, all ads and other data related to it will be deleted!</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-no-action primary-color-bg primary-color-hover" data-bs-dismiss="modal">Cancel</button>
+                        <button data-bs-toggle="modal" data-bs-target="#confirm-delete-profile" class="btn btn-danger btn-yes confirm-delete-profile-confirm">Delete profile</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal modal-confirm-delete-profile fade" id="confirm-delete-profile" tabindex="-1" aria-hidden="false">
+            <div class="modal-dialog modal-dialog-centered">
+                <div style="border-radius: 25px;" class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirmation</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form  method="post" class="modal-footer flex-column">
+                        <div style="flex: 1 1 auto; align-self: stretch; font-size: 16px" class="form-floating">
+                            <input required type="password" class="form-control" name="delete_profile_password" id="floatingPasswordDelete" placeholder="Password">
+                            <label for="floatingPasswordDelete">Enter your password</label>
+                        </div>
+                        <div class="mt-2" style="align-self: flex-end">
+                            <button type="button" class="btn btn-no-action primary-color-bg primary-color-hover" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-danger btn-yes">Delete profile</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+@section Scripts{
+    <script defer>
+    
+        $(document).ready(function () {
+        
+            document.querySelector(".confirm-delete-profile-confirm").addEventListener("click", () => {
+                $('.modal').modal('hide');
+            });
+        
+            const imageElem = document.getElementById("avatar-image");
+            const navbarImageElem = document.querySelector(".navbar-avatar");
+            const deleteImageWrapper = document.querySelector(".delete-image-wrapper");
+            document.querySelector(".delete-image")?.addEventListener("click", () => {
+            
+                $.ajax({
+                    url: "/Image/DeleteCurrentUserImage",
+                    method: "POST",
+                    success: function (response) {
+                       deleteImageWrapper.remove();
+                       imageElem.src = "/images/site/default_avatar.svg";
+                       navbarImageElem.src = "/images/site/default_avatar.svg";
+                    },
+                    error: function () {
+                        
+                    },
+                    dataType: "json"
+                });
+            });
+            
+            // <div class="modal modal-confirm-delete-profile fade show" id="confirm-delete-profile" tabindex="-1" aria-modal="true" role="dialog" style="display: block;">
+            // <div class="modal modal-confirm-delete-profile fade" id="confirm-delete-profile" tabindex="-1" style="display: none;" aria-hidden="true">
+            
+    
+            const inputPhone = document.getElementById("floatingPhone");
+            const blockFileName = document.querySelector(".file-name");
+            inputPhone.addEventListener("input", () => {
+                inputPhone.value = inputPhone.value.replace(/[^\d]/g, '');
+            });
+            const inputFile = document.getElementById("inputFile");
+            inputFile.addEventListener("change", () => {
+                if (inputFile.files.length == 0) {
+                    blockFileName.innerHTML = "";
+                    blockFileName.classList.add("hidden");
+                } else {
+                    blockFileName.innerHTML = inputFile.files[0].name;
+                    blockFileName.classList.remove("hidden");
+                }
+            });
+        });
+    
+    </script>
+}

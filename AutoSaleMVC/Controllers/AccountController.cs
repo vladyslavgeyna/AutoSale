@@ -7,6 +7,7 @@ using AutoSale.Service.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AutoSaleMVC.Controllers
 {
@@ -383,6 +384,128 @@ namespace AutoSaleMVC.Controllers
             return View(indexViewModel);
         }
 
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Edit()
+        {
+            var currentUser = await _userManager.FindByNameAsync(User.Identity.Name);
+
+            if (currentUser is null)
+            {
+                return View("Error");
+            }
+            
+            string? currentUserImageName = null;
+            if (User.Identity.IsAuthenticated)
+            {
+                if (currentUser.ImageId is not null)
+                {
+                    var currentUserImageResponse = await _imageService.GetByIdAsync((int)currentUser.ImageId);
+                    if (currentUserImageResponse.Code is ResponseCode.Ok)
+                    {
+                        currentUserImageName = currentUserImageResponse.Data.Name;
+                    }
+                }
+            }
+
+            EditViewModel editViewModel = new()
+            {
+                Name = currentUser.Name,
+                Surname = currentUser.Surname,
+                LastName = currentUser.LastName,
+                PhoneNumber = currentUser.PhoneNumber,
+                Email = currentUser.Email,
+                UserImageName = currentUserImageName
+            };
+            
+            return View(editViewModel);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Edit(EditViewModel editViewModel)
+        {
+            var currentUser = await _userManager.FindByNameAsync(User.Identity.Name);
+
+            if (currentUser is null)
+            {
+                return View("Error");
+            }
+            
+            string? currentUserImageName = null;
+            if (User.Identity.IsAuthenticated)
+            {
+                if (currentUser.ImageId is not null)
+                {
+                    var currentUserImageResponse = await _imageService.GetByIdAsync((int)currentUser.ImageId);
+                    if (currentUserImageResponse.Code is ResponseCode.Ok)
+                    {
+                        currentUserImageName = currentUserImageResponse.Data.Name;
+                    }
+                }
+            }
+
+            editViewModel.UserImageName = currentUserImageName;
+            
+            if (!ModelState.IsValid)
+            {
+                return View(editViewModel);
+            }
+
+            var userWithEnteredPhoneNumber = await _userManager.Users
+                .FirstOrDefaultAsync(u => u.PhoneNumber == editViewModel.PhoneNumber && u.Id != currentUser.Id);
+
+            if (userWithEnteredPhoneNumber is not null)
+            {
+                editViewModel.ErrorMessages.Add($"The phone number '{editViewModel.PhoneNumber}' is already taken.");
+                return View(editViewModel);
+            }
+            
+            IResponse<Image>? response = null;
+            if (editViewModel.Image is not null)
+            {
+                if (currentUser.ImageId is null)
+                {
+                    response = await _imageService.CreateAsync(editViewModel.Image);
+
+                    if (response.Code is not ResponseCode.Ok)
+                    {
+                        return View("Error");
+                    }
+                }
+                else
+                {
+                    response = await _imageService.EditAsync((int)currentUser.ImageId, editViewModel.Image);
+
+                    if (response.Code is not ResponseCode.Ok)
+                    {
+                        return View("Error");
+                    }
+                }
+            }
+            
+            currentUser.Name = editViewModel.Name;
+            currentUser.Surname = editViewModel.Surname;
+            currentUser.LastName = editViewModel.LastName;
+            currentUser.Email = editViewModel.Email;
+            currentUser.UserName = editViewModel.Email;
+            currentUser.PhoneNumber = editViewModel.PhoneNumber;
+            currentUser.ImageId = response?.Data.Id;
+
+            var result = await _userManager.UpdateAsync(currentUser);
+
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index");
+            }
+
+            foreach (var error in result.Errors)
+            {
+                editViewModel.ErrorMessages.Add(error.Description);
+            }
+            return View(editViewModel);
+        }
 
 
     }

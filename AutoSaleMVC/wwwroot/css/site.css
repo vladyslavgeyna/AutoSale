@@ -933,20 +933,41 @@ img.not-active-image:hover {
   color: darkred;
 }
 
-
 .container-comparison-body table .image-wrapper {
   overflow: hidden;
   border-radius: 25px;
 }
 .container-comparison-body table .image-wrapper img{
   max-height: 200px;
-
   border-radius: 25px;
   transition: all 0.5s ease;
 }
-.container-comparison-body table .image-wrapper img:hover {
-  transform: scale(1.05);
+
+@media (max-width: 576px) {
+  .container-comparison-body table .image-wrapper img{
+    max-height: 150px;
+  }
+  .container-comparison-body table .image-wrapper {
+    margin-top: 0 !important;
+  }
+
+  .container-comparison-body table tr th, .container-comparison-body table tr td {
+    font-size: 15px;
+  }
+  .container-comparison-body table .car-title{
+    font-size: 18px;
+  }
+
+  .container-comparison-body .table>:not(caption)>*>* {
+    padding: 0.25rem 0.25rem; 
+  }
 }
+@media (min-width: 576px) {
+  .container-comparison-body table .image-wrapper img:hover {
+    transform: scale(1.05);
+  }
+}
+
 
 /*Сторінка залишення відгуку про продавця */
 .main-userreview-add h1 {
@@ -1265,7 +1286,7 @@ img.not-active-image:hover {
   font-size: 18px;
   font-weight: 700;
 }
-.main-edit form a.btn-danger, .danger-zone button {
+.main-edit form a.btn-danger, .main-edit form button.btn-danger, .danger-zone button {
   border: 4px solid #dc3545;
   border-radius: 25px;
   font-size: 18px;
@@ -1279,9 +1300,10 @@ img.not-active-image:hover {
   font-weight: 700;
   transition: all 0.3s ease;
 }
-.main-edit button:hover {
+.main-edit button:not(.btn-danger):hover {
   border: 4px solid rgb(112.520718,44.062154,249.437846);
   color: rgb(112.520718,44.062154,249.437846);
+  background-color: white;
 }
 
 .container-edit form button.save:active{
@@ -1290,7 +1312,6 @@ img.not-active-image:hover {
 }
 
 .container-edit .error-form-validation {
-  cursor: help;
   padding-top: 3px;
   padding-left: 1rem;
   margin-bottom: -10px;
@@ -1311,8 +1332,22 @@ img.not-active-image:hover {
 
 .container-edit form .image-wrapper img {
   border-radius: 50%;
+  margin: 0 auto;
   width: 100%;
-  height: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+}
+img.navbar-avatar {
+  aspect-ratio: 1/1;
+  object-fit: cover;
+}
+.main-user-profile .user-data-wrapper-content img {
+  aspect-ratio: 1/1;
+  object-fit: cover;
+}
+.container-carad-view .carad-view-owner-content img {
+  aspect-ratio: 1/1;
+  object-fit: cover;
 }
 .container-edit form .image-wrapper input {
   position: absolute;

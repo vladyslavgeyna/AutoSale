@@ -7,7 +7,7 @@
     ViewData["Title"] = "Car comparisons";
 }
 
-<main class="main main-comparison">
+<main class="main main-comparison px-3">
     @if (Model.CarComparisons.Any())
     {
         <div class="container container-comparison-top">
@@ -161,7 +161,7 @@
             }
             let totalAds = Number(@Model.CarComparisons.Count);
             const removeElemParentElem = document.querySelector("table thead tr");
-            removeElemParentElem.addEventListener("click", (e) => {
+            removeElemParentElem?.addEventListener("click", (e) => {
                 const targetElement = e.target;
                 
                 if (targetElement.classList.contains('remove-from-comparison')) {
